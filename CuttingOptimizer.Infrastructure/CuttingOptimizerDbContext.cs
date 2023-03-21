@@ -4,8 +4,6 @@ namespace CuttingOptimizer.Infrastructure
 {
     public class CuttingOptimizerDbContext : DbContext
     {
-        private Settings settings = new Settings();
-
         public CuttingOptimizerDbContext()
         {
             
@@ -13,7 +11,7 @@ namespace CuttingOptimizer.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(settings.SqlConnectionString);
+            optionsBuilder.UseSqlServer("Server =.\\SQLEXPRESS; Database = CuttingOptimizer; Trusted_Connection = True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
