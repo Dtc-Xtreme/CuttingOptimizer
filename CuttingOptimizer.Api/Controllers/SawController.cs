@@ -6,30 +6,30 @@ namespace CuttingOptimizer.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PlateController : Controller
+    public class SawController : Controller
     {
-        private IList<Plate> Plates;
+        private IList<Saw> Saws;
 
-        public PlateController()
+        public SawController()
         {
-            Plates = new List<Plate>
+            Saws = new List<Saw>
             {
-                new Plate("PLC2000/1300/5",2000,1300,5),
-                new Plate("PLC3000/1900/10",3000,1900,10),
+                new Saw("IS5",5),
+                new Saw("IS10",10),
             };
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(Plates == null ? NotFound() : Ok(Plates));
+            return Ok(Saws == null ? NotFound() : Ok(Saws));
         }
 
         [HttpGet("name")]
         public async Task<IActionResult> FindByName(string name)
         {
-            IList<Plate> resultList = Plates.Where(c => c.ID.ToLower().Contains(name.ToLower())).ToList();
-            if (resultList.Count == 0) resultList = null;
+            IList<Saw> resultList = Saws.Where(c => c.ID.ToLower().Contains(name.ToLower())).ToList();
+            if(resultList.Count == 0) resultList = null;
             return resultList == null ? NotFound() : Ok(resultList);
         }
     }

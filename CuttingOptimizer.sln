@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Infrastruc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Web", "CuttingOptimizer.Web\CuttingOptimizer.Web.csproj", "{D238B8A9-B16F-46F9-ABEF-70A232181D47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuttingOptimizer.Api.Tests", "CuttingOptimizer.Api.Tests\CuttingOptimizer.Api.Tests.csproj", "{D08C88CE-A4B4-4E3C-AF8F-2EE485A662E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D08C88CE-A4B4-4E3C-AF8F-2EE485A662E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08C88CE-A4B4-4E3C-AF8F-2EE485A662E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08C88CE-A4B4-4E3C-AF8F-2EE485A662E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08C88CE-A4B4-4E3C-AF8F-2EE485A662E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
