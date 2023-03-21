@@ -1,4 +1,6 @@
-﻿using CuttingOptimizer.Web.Models;
+﻿using CuttingOptimizer.Domain.Models;
+using CuttingOptimizer.Web.Models;
+using CuttingOptimizer.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,9 +20,16 @@ namespace CuttingOptimizer.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Calculator()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Calculator(PlateViewModel plateViewModel)
+        {
+            return View(plateViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

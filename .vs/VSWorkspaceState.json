@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CuttingOptimizer"
+    "\\CuttingOptimizer.Web",
+    "\\CuttingOptimizer.Web\\Views",
+    "\\CuttingOptimizer.Web\\Views\\Home",
+    "\\CuttingOptimizer.Web\\wwwroot",
+    "\\CuttingOptimizer.Web\\wwwroot\\css"
   ],
-  "SelectedNode": "\\CuttingOptimizer\\CuttingOptimizer.sln",
+  "SelectedNode": "\\CuttingOptimizer.Web\\wwwroot\\css\\site.css",
   "PreviewInSolutionExplorer": false
 }
