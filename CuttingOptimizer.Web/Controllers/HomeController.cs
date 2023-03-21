@@ -1,5 +1,4 @@
 ﻿using CuttingOptimizer.Domain.Models;
-using CuttingOptimizer.Web.Models;
 using CuttingOptimizer.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -27,7 +26,7 @@ namespace CuttingOptimizer.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Calculator(PlateViewModel plateViewModel)
+        public IActionResult Calculator(CalculatorViewModel plateViewModel)
         {
             return View(plateViewModel);
         }

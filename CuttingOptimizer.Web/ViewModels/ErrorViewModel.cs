@@ -1,4 +1,4 @@
-namespace CuttingOptimizer.Web.Models
+namespace CuttingOptimizer.Web.ViewModels
 {
     public class ErrorViewModel
     {

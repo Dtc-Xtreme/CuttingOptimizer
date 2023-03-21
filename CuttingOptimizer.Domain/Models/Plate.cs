@@ -29,5 +29,7 @@ namespace CuttingOptimizer.Domain.Models
 
         [Range(0, 1000)]
         public int Height { get; set; }
+
+        public bool Veneer { get; set; }
     }
 }
