@@ -3,7 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Api", "CuttingOptimizer.Api\CuttingOptimizer.Api.csproj", "{2D688B58-B5FC-4616-94E6-FE6B2B59A135}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.AppLogic", "CuttingOptimizer.AppLogic\CuttingOptimizer.AppLogic.csproj", "{6B32E797-D24E-4B2D-9BBC-46C8C3D52354}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Domain", "CuttingOptimizer.Domain\CuttingOptimizer.Domain.csproj", "{93FA74A3-5988-495C-B391-B88C236D1F4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Infrastructure", "CuttingOptimizer.Infrastructure\CuttingOptimizer.Infrastructure.csproj", "{8A1A76FB-A0AD-4FE4-A56E-0A43146BCEDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Web", "CuttingOptimizer.Web\CuttingOptimizer.Web.csproj", "{D238B8A9-B16F-46F9-ABEF-70A232181D47}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D688B58-B5FC-4616-94E6-FE6B2B59A135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D688B58-B5FC-4616-94E6-FE6B2B59A135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D688B58-B5FC-4616-94E6-FE6B2B59A135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D688B58-B5FC-4616-94E6-FE6B2B59A135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B32E797-D24E-4B2D-9BBC-46C8C3D52354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B32E797-D24E-4B2D-9BBC-46C8C3D52354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B32E797-D24E-4B2D-9BBC-46C8C3D52354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B32E797-D24E-4B2D-9BBC-46C8C3D52354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93FA74A3-5988-495C-B391-B88C236D1F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93FA74A3-5988-495C-B391-B88C236D1F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93FA74A3-5988-495C-B391-B88C236D1F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93FA74A3-5988-495C-B391-B88C236D1F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A1A76FB-A0AD-4FE4-A56E-0A43146BCEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A1A76FB-A0AD-4FE4-A56E-0A43146BCEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A1A76FB-A0AD-4FE4-A56E-0A43146BCEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A1A76FB-A0AD-4FE4-A56E-0A43146BCEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D238B8A9-B16F-46F9-ABEF-70A232181D47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
