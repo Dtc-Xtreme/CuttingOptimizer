@@ -1,38 +1,71 @@
-﻿@model PlateViewModel
+﻿@model CalculatorViewModel
 
 <div class="text-center">
     <h1 class="display-4">Calculator</h1>
 </div>
 
 <div>
-    <form>
+    <form method="post">
         <h2>Saw</h2>
 
-        <div class="form-inline m-3">
-            <input type="text" class="form-control" placeholder="serial" asp-for="@Model.Saw.ID">
-            <input type="number" class="form-control" placeholder="thickness" asp-for="@Model.Saw.Thickness">
+        <div class="form-inline m-2">
+            <input type="text" class="form-control" placeholder="Serial" disabled />
+            <input type="text" class="form-control" placeholder="Thickness" disabled />
+        </div>
+
+        <div class="form-inline m-2">
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Saw.ID" />
+            <input type="number" class="form-control" placeholder="Thickness" asp-for="@Model.Saw.Thickness" />
         </div>
 
         <h2>Plates <button class="btn btn-warning">Add</button></h2>
         <div class="form-inline m-2">
-            <input type="text" class="form-control" placeholder="serial" disabled>
-            <input type="text" class="form-control" placeholder="Width" disabled>
-            <input type="text" class="form-control" placeholder="Length" disabled>
-            <input type="text" class="form-control" placeholder="Height" disabled>
+            <input type="text" class="form-control input-small" placeholder="#" disabled />
+            <input type="text" class="form-control" placeholder="Serial" disabled />
+            <input type="text" class="form-control" placeholder="Width" disabled />
+            <input type="text" class="form-control" placeholder="Length" disabled />
+            <input type="text" class="form-control" placeholder="Height" disabled />
         </div>
 
         <div class="form-inline m-2">
-            <input type="text" class="form-control" placeholder="serial" asp-for="@Model.Plates[0].ID">
-            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[0].Width">
-            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[0].Length">
-            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[0].Height">
+            <input type="number" class="form-control input-small" placeholder="Quantity" value="1" asp-for="@Model.Plates[0].Quantity" />
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[0].Plate.ID" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[0].Plate.Width" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[0].Plate.Length" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[0].Plate.Height" />
         </div>
 
         <div class="form-inline m-2">
-            <input type="text" class="form-control" placeholder="serial" asp-for="@Model.Plates[1].ID">
-            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[1].Width">
-            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[1].Length">
-            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[1].Height">
+            <input type="number" class="form-control input-small" placeholder="Quantity" value="1" asp-for="@Model.Plates[1].Quantity" />
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[1].Plate.ID" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[1].Plate.Width" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[1].Plate.Length" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[1].Plate.Height" />
+        </div>
+
+        <h2>Products <button class="btn btn-warning">Add</button></h2>
+        <div class="form-inline m-2">
+            <input type="text" class="form-control input-small" placeholder="Quantity" value="#" disabled />
+            <input type="text" class="form-control" placeholder="Width" disabled />
+            <input type="text" class="form-control" placeholder="Length" disabled />
+            <input type="text" class="form-control" placeholder="Height" disabled />
+            <input type="text" class="form-control" placeholder="Info" disabled />
+        </div>
+
+        <div class="form-inline m-2">
+            <input type="number" class="form-control input-small" placeholder="quantity" value="1" asp-for="@Model.Products[0].Quantity" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Products[0].Product.Width" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Products[0].Product..Length" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Products[0].Product..Height" />
+            <input type="text" class="form-control" placeholder="info" asp-for="@Model.Products[0].Product.Info" />
+        </div>
+
+        <div class="form-inline m-2">
+            <input type="number" class="form-control input-small" placeholder="quantity" value="1" asp-for="@Model.Products[1].Quantity"  />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Products[1].Product.Width" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Products[1].Product..Length" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Products[1].Product..Height" />
+            <input type="text" class="form-control" placeholder="info" asp-for="@Model.Products[1].Product..Info" />
         </div>
 
         <div class="form-check-inline">
@@ -44,9 +77,15 @@
 <div>
     @if(Model != null)
     {
-        @foreach (Plate pl in Model.Plates)
+        @foreach (PlateWithQuantity pl in Model.Plates)
         {
-            <div><label>Height:</label> @pl.Height</div>
+            <div>
+                <span><label>Quantity:</label> @pl.Quantity</span>
+                <span><label>Serial:</label> @pl.Plate.ID</span>
+                <span><label>Width:</label> @pl.Plate.Width</span>
+                <span><label>Length:</label> @pl.Plate.Length</span>
+                <span><label>Heigth:</label> @pl.Plate.Height</span>
+            </div>
         }
     }
 </div>

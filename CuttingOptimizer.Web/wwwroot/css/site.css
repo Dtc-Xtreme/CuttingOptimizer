@@ -21,3 +21,7 @@ body {
     border: 1px solid;
     border-color: red;
 }
+
+.input-small{
+    width: 5.1rem !important;
+}
