@@ -31,7 +31,7 @@ namespace CuttingOptimizer.Domain.Models
         [Range(10, 100000)]
         public int Length { get; set; }
 
-        [Range(10, 50)]
+        [Range(0, 50)]
         public int Height { get; set; }
 
         public string Info { get; set; }

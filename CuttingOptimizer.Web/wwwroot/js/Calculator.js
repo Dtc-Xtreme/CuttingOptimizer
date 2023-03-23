@@ -49,57 +49,132 @@
             }
         }
     )
-
-
-
-    //// set the dimensions and margins of the graph
-    //const margin = { top: 10, right: 10, bottom: 10, left: 10 },
-    //    width = 445 - margin.left - margin.right,
-    //    height = 445 - margin.top - margin.bottom;
-
-    //// append the svg object to the body of the page
-    //const svg = d3.select("#my_dataviz")
-    //    .append("svg")
-    //    .attr("width", width + margin.left + margin.right)
-    //    .attr("height", height + margin.top + margin.bottom)
-    //    .append("g")
-    //    .attr("transform",
-    //        `translate(${margin.left}, ${margin.top})`);
-
-
-    //// read json data
-    //d3.json(dataUrl).then(function (data) {
-    //    const root = d3.hierarchy(data).sum(function (d) { return d.value }) // Here the size of each leave is given in the 'value' field in input data
-
-    //    // Then d3.treemap computes the position of each element of the hierarchy
-    //    let treemap = d3.treemap()
-    //        .size([width, height])
-    //        .padding(2)
-    //        (root);
-
-    //    console.log(treemap);
-
-    //    // use this information to add rectangles:
-    //    svg
-    //        .selectAll("rect")
-    //        .data(root.leaves())
-    //        .join("rect")
-    //        .attr('x', function (d) { return d.x0; })
-    //        .attr('y', function (d) { return d.y0; })
-    //        .attr('width', function (d) { return d.x1 - d.x0; })
-    //        .attr('height', function (d) { return d.y1 - d.y0; })
-    //        .style("stroke", "red")
-    //        .style("fill", "slateblue")
-
-    //    // and to add the text labels
-    //    svg
-    //        .selectAll("text")
-    //        .data(root.leaves())
-    //        .join("text")
-    //        .attr("x", function (d) { return d.x0 + 5 })    // +10 to adjust position (more right)
-    //        .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
-    //        .text(function (d) { return d.data.name })
-    //        .attr("font-size", "15px")
-    //        .attr("fill", "white")
-    //})
 })
+
+// Classes
+class Saw {
+    constructor(serial, thickness) {
+        this.serial = serial;
+        this.thickness = thickness;
+    }
+}
+
+class Plate {
+    constructor(quantity, serial, width, length, height, vineer) {
+        this.quantity = quantity;
+        this.serial = serial;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.vineer = vineer;
+    }
+}
+
+class Product {
+    constructor(quantity, width, length, height, info) {
+        this.quantity = quantity;
+        this.width = width;
+        this.length = length;
+        this.height = height;
+        this.info = info;
+    }
+}
+
+const svgArea = document.getElementById("svgArea");
+const canvasArea = document.getElementById("canvasArea");
+
+// Submit calculator form
+function submit() {
+    let form = document.getElementById("calculatorData");
+
+    const saw = createSaw()
+    const plates = createPlates();
+    const products = createProducts();
+
+    createCanvas(plates);
+
+    placeProductsOnCanvas(products)
+}
+
+function createSaw(input) {
+    let saw = new Saw(document.getElementById("Saw_ID").value, document.getElementById("Saw_Thickness").value)
+    return saw;
+}
+
+function createPlates() {
+    let plates = [];
+
+    let platesInput = document.querySelectorAll('[id^="Plates_"');
+
+    let counter = platesInput.length / 6;
+    for (let x = 0; x < platesInput.length; x = x + 6) {
+        //console.log(x);
+        plates.push(new Plate(platesInput[x].value, platesInput[x + 1].value, platesInput[x + 2].value, platesInput[x + 3].value, platesInput[x + 4].value, platesInput[x + 5].checked));
+    }
+    //console.log(plates);
+    return plates;
+}
+
+function createProducts(input) {
+    let products = [];
+
+    let productsInput = document.querySelectorAll('[id^="Products_"');
+
+    let counter = productsInput.length / 5;
+    for (let x = 0; x < productsInput.length; x = x + 5) {
+        //console.log(x);
+        products.push(new Product(productsInput[x].value, productsInput[x + 1].value, productsInput[x + 2].value, productsInput[x + 3].value, productsInput[x + 4].value));
+    }
+    //console.log(products);
+    return products;
+}
+
+function createCanvas(plateArray) {
+    const diffWidth = plateArray.reduce((a, b) => {
+        return Math.max(a.width, b.width) / 100;
+    })
+
+    const maxWidth = plateArray.reduce((a, b) => {
+        return Math.max(a.width, b.width);
+    })
+
+    while (this.svgArea.firstChild) {
+        this.svgArea.firstChild.remove()
+    }
+
+    for (let x = 0; x < plateArray.length; x++) {
+        // Header
+        const h2 = document.createElement("h3");
+        h2.innerText = plateArray[x].serial;
+        // SVG
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.id = plateArray[x].serial;
+        svg.setAttributeNS(null, "viewBox", "0 0 " + plateArray[x].width + " " + plateArray[x].length);
+
+        const width = plateArray[x].width / diffWidth;
+        svg.style = "width: " + width + "%";
+
+        this.svgArea.appendChild(h2);
+        this.svgArea.appendChild(svg);
+    }
+}
+
+function placeProductsOnCanvas(products) {
+    const svg = document.getElementsByTagName("svg");
+
+    let prod1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    prod1.setAttribute("width", products[0].width);
+    prod1.setAttribute("height", products[0].length);
+    prod1.setAttribute("x", 0);
+    prod1.setAttribute("y", 0);
+
+    let prod2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    prod2.setAttribute("width", products[0].width);
+    prod2.setAttribute("height", products[0].length);
+    prod2.setAttribute("x", 0);
+    prod2.setAttribute("y", 0);
+
+    svg[0].appendChild(prod1);
+    svg[1].appendChild(prod2);
+    //console.log(svg);
+}

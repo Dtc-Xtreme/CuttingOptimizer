@@ -26,8 +26,19 @@ body {
     width: 5.1rem !important;
 }
 
-svg{
-    background-color: black;
-    width: 1000px;
-    height: 600px;
+svg {
+    display: block;
+    background-color: white;
+    border: 1px solid black;
+}
+
+rect{
+    fill:lightgray;
+    stroke-width:1;
+    stroke:gray;
+}
+
+h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }

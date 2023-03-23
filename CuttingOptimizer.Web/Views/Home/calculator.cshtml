@@ -5,7 +5,7 @@
 </div>
 
 <div>
-    <form method="post">
+    <form id="calculatorData" method="post" action="javascript:submit()">
         <h2>Saw</h2>
 
         <div class="form-inline m-2">
@@ -14,8 +14,8 @@
         </div>
 
         <div class="form-inline m-2">
-            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Saw.ID" />
-            <input type="number" class="form-control" placeholder="Thickness" asp-for="@Model.Saw.Thickness" />
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Saw.ID" value="sx1" />
+            <input type="number" class="form-control" placeholder="Thickness" asp-for="@Model.Saw.Thickness" value="1"/>
         </div>
 
         <h2>Plates <button class="btn btn-warning">Add</button></h2>
@@ -30,19 +30,19 @@
 
         <div class="form-inline m-2">
             <input type="number" class="form-control input-small" placeholder="Quantity" value="1" asp-for="@Model.Plates[0].Quantity" />
-            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[0].Plate.ID" />
-            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[0].Plate.Width" />
-            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[0].Plate.Length" />
-            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[0].Plate.Height" />
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[0].Plate.ID" value="pl1" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[0].Plate.Width" value="3000" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[0].Plate.Length" value="800" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[0].Plate.Height" value="5" />
             <input type="checkbox" class="form-check m-2" asp-for="@Model.Plates[0].Plate.Veneer" />
         </div>
 
         <div class="form-inline m-2">
             <input type="number" class="form-control input-small" placeholder="Quantity" value="1" asp-for="@Model.Plates[1].Quantity" />
-            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[1].Plate.ID" />
-            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[1].Plate.Width" />
-            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[1].Plate.Length" />
-            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[1].Plate.Height" />
+            <input type="text" class="form-control" placeholder="Serial" asp-for="@Model.Plates[1].Plate.ID" value="pl2" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Plates[1].Plate.Width" value="2000" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Plates[1].Plate.Length" value="600" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Plates[1].Plate.Height" value="10" />
             <input type="checkbox" class="form-checkp m-2" asp-for="@Model.Plates[1].Plate.Veneer" />
         </div>
 
@@ -57,19 +57,19 @@
 
         <div class="form-inline m-2">
             <input type="number" class="form-control input-small" placeholder="quantity" value="1" asp-for="@Model.Products[0].Quantity" />
-            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Products[0].Product.Width" />
-            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Products[0].Product.Length" />
-            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Products[0].Product.Height" />
-            <input type="text" class="form-control" placeholder="info" asp-for="@Model.Products[0].Product.Info" />
+            <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Products[0].Product.Width" value="2000" />
+            <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Products[0].Product.Length" value="600" />
+            <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Products[0].Product.Height" value="0" />
+            <input type="text" class="form-control" placeholder="info" asp-for="@Model.Products[0].Product.Info" value="10" />
         </div>
 
-        <div class="form-inline m-2">
+@*        <div class="form-inline m-2">
             <input type="number" class="form-control input-small" placeholder="quantity" value="1" asp-for="@Model.Products[1].Quantity"  />
             <input type="number" class="form-control" placeholder="Width" asp-for="@Model.Products[1].Product.Width" />
             <input type="number" class="form-control" placeholder="Length" asp-for="@Model.Products[1].Product.Length" />
             <input type="number" class="form-control" placeholder="Height" asp-for="@Model.Products[1].Product.Height" />
             <input type="text" class="form-control" placeholder="info" asp-for="@Model.Products[1].Product.Info" />
-        </div>
+        </div>*@
 
         <div asp-validation-summary="All"></div>
 
@@ -81,7 +81,19 @@
 
 <div>
     <h2>Visualization</h2>
-    <svg id="canvas"></svg>
+    <div id="canvasArea">
+
+    </div>
+    <div id="svgArea">
+@*        <svg viewBox="0 0 3500 800" style="width:100%; border: solid black 1px;">
+            <rect width="2000" height="600" x="0" y="0" />
+        </svg>
+        <br>
+        <svg viewBox="0 0 2000 700" style="width:100%; border: solid black 1px;">
+            <rect width="2000" height="600" x="0" y="0" />
+
+        </svg>*@
+    </div>
 </div>
 
 @if (Model != null)
