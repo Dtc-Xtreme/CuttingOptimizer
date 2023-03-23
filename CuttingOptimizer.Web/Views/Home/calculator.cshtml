@@ -80,17 +80,22 @@
 </div>
 
 <div>
-    @if(Model != null)
+    <h2>Visualization</h2>
+    <svg id="canvas"></svg>
+</div>
+
+@if (Model != null)
+{
+<div>
+    @foreach (PlateWithQuantity pl in Model.Plates)
     {
-        @foreach (PlateWithQuantity pl in Model.Plates)
-        {
-            <div>
-                <span><label>Quantity:</label> @pl.Quantity</span>
-                <span><label>Serial:</label> @pl.Plate.ID</span>
-                <span><label>Width:</label> @pl.Plate.Width</span>
-                <span><label>Length:</label> @pl.Plate.Length</span>
-                <span><label>Heigth:</label> @pl.Plate.Height</span>
-            </div>
-        }
+        <div>
+            <span><label>Quantity:</label> @pl.Quantity</span>
+            <span><label>Serial:</label> @pl.Plate.ID</span>
+            <span><label>Width:</label> @pl.Plate.Width</span>
+            <span><label>Length:</label> @pl.Plate.Length</span>
+            <span><label>Heigth:</label> @pl.Plate.Height</span>
+        </div>
     }
 </div>
+}
