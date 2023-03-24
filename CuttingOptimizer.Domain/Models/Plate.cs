@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CuttingOptimizer.Domain.Models
 {
@@ -30,6 +31,11 @@ namespace CuttingOptimizer.Domain.Models
         [Range(0, 1000)]
         public int Height { get; set; }
 
+        [NotMapped]
+        [Range(0, 1000)]
+        public int Trim { get; set; }
+
         public bool Veneer { get; set; }
+
     }
 }
