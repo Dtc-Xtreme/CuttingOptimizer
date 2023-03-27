@@ -1,92 +1,105 @@
 ﻿@page "/calculator"
+@using CuttingOptimizer.AppLogic.Services;
 @using CuttingOptimizer.Blazor.Models;
+@using CuttingOptimizer.Blazor.Services;
 @using CuttingOptimizer.Domain.Models;
+@inject ICalculatorService calculateService;
+@inject IDrawingService drawingService;
 
 <PageTitle>Calculator</PageTitle>
 
 <h2>Calculator</h2>
-
 <EditForm Model="@calculatorModel" OnSubmit="@HandleSubmit">
-    <DataAnnotationsValidator />
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h3>Zaag</h3>
-                <div class="form-group">
-                    <label for="sawID">Zaagblad</label>
-                    <InputText class="form-control" id="sawID" @bind-Value="calculatorModel.Saw.ID" />
-                </div>
-                <div class="form-group">
-                    <label for="sawThickness">Zaagsnede</label>
-                    <InputNumber class="form-control" id="sawThickness" @bind-Value="calculatorModel.Saw.Thickness" />
-                </div>
-            </div>
-
-            <div class="col-sm">
-                <h3>Materiaal</h3>
-                <div class="form-group">
-                    <label for="plateID">Materiaal</label>
-                    <InputText class="form-control" id="plateID" @bind-Value="calculatorModel.Plate.ID" />
-                </div>
-                <div class="form-group">
-                    <label for="plateWidth">Thickness</label>
-                    <InputNumber class="form-control" id="plateWidth" @bind-Value="calculatorModel.Plate.Width" />
-                </div>
-                <div class="form-group">
-                    <label for="plateLength">Thickness</label>
-                    <InputNumber class="form-control" id="plateLength" @bind-Value="calculatorModel.Plate.Length" />
-                </div>
-                <div class="form-group">
-                    <label for="plateHeight">Dikte</label>
-                    <InputNumber class="form-control" id="plateHeight" @bind-Value="calculatorModel.Plate.Height" />
-                </div>
-                <div class="form-group">
-                    <label for="plateTrim">Trim</label>
-                    <InputNumber class="form-control" id="plateTrim" @bind-Value="calculatorModel.Plate.Trim" />
-                </div>
-                <div class="form-check-inline">
-                    <label for="plateVeneer" class="pr-1">Fineer</label>
-                    <InputCheckbox class="form-control" id="plateVeneer" @bind-Value="calculatorModel.Plate.Veneer" />
-                </div>
-            </div>
-
-            <div class="col-sm">
-                <h3>Item</h3>
-                <div class="form-group">
-                    <label for="productID">ID</label>
-                    <InputText class="form-control" id="productID" @bind-Value="calculatorModel.Product.ID" />
-                </div>
-                <div class="form-group">
-                    <label for="productWidth">Width</label>
-                    <InputNumber class="form-control" id="productWidth" @bind-Value="calculatorModel.Product.Width" />
-                </div>
-                <div class="form-group">
-                    <label for="productLength">Length</label>
-                    <InputNumber class="form-control" id="productLength" @bind-Value="calculatorModel.Product.Length" />
-                </div>
-                <div class="form-group">
-                    <label for="productHeight">Height</label>
-                    <InputNumber class="form-control" id="productHeight" @bind-Value="calculatorModel.Product.Height" />
-                </div>
-                <div class="form-group">
-                    <label for="productInfo">Info</label>
-                    <InputText class="form-control" id="productInfo" @bind-Value="calculatorModel.Product.Info" />
-                </div>
-            </div>
+    <h4>Zaag</h4>
+    <div class="form-row">
+        <div class="form-group col-auto">
+            <label for="sawID">Zaagblad</label>
+            <InputText class="form-control" id="sawID" @bind-Value="calculatorModel.Saw.ID" placeholder="ID" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="sawThickness">Zaagsnede</label>
+            <InputNumber class="form-control" id="sawThickness" @bind-Value="calculatorModel.Saw.Thickness" placeholder="Dikte" />
         </div>
     </div>
-    
-    <button type="submit">Submit</button>
-
-    <ValidationSummary />
+    <DataAnnotationsValidator />
 </EditForm>
 
+<EditForm Model="@calculatorModel" OnSubmit="@AddPlate">
+    <h4>Materiaal</h4>
+    <div class="form-row">
+        <div class="form-group col-auto">
+            <label for="plateID">Materiaal</label>
+            <InputText class="form-control" id="plateID" @bind-Value="calculatorModel.Plate.ID" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="plateWidth">Thickness</label>
+            <InputNumber class="form-control" id="plateWidth" @bind-Value="calculatorModel.Plate.Width" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="plateLength">Thickness</label>
+            <InputNumber class="form-control" id="plateLength" @bind-Value="calculatorModel.Plate.Length" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="plateHeight">Dikte</label>
+            <InputNumber class="form-control" id="plateHeight" @bind-Value="calculatorModel.Plate.Height" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="plateTrim">Trim</label>
+            <InputNumber class="form-control" id="plateTrim" @bind-Value="calculatorModel.Plate.Trim" />
+        </div>
+        <div class="form-check-inline col-auto">
+            <label for="plateVeneer" class="pr-1">Fineer</label>
+            <InputCheckbox class="form-control" id="plateVeneer" @bind-Value="calculatorModel.Plate.Veneer" />
+        </div>
+        <div class="form-check-inline col-auto">
+            <button class="btn btn-primary" id="plateVeneer">Toevoegen</button>
+        </div>
+    </div>
+    <DataAnnotationsValidator />
+</EditForm>
+
+<EditForm Model="@calculatorModel" OnSubmit="@AddProduct">
+    <h4>Item</h4>
+    <div class="form-row">
+        <div class="form-group col-auto">
+            <label for="productID">ID</label>
+            <InputText class="form-control" id="productID" @bind-Value="calculatorModel.Product.ID" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="productWidth">Width</label>
+            <InputNumber class="form-control" id="productWidth" @bind-Value="calculatorModel.Product.Width" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="productLength">Length</label>
+            <InputNumber class="form-control" id="productLength" @bind-Value="calculatorModel.Product.Length" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="productHeight">Height</label>
+            <InputNumber class="form-control" id="productHeight" @bind-Value="calculatorModel.Product.Height" />
+        </div>
+        <div class="form-group col-auto">
+            <label for="productInfo">Info</label>
+            <InputText class="form-control" id="productInfo" @bind-Value="calculatorModel.Product.Info" />
+        </div>
+        <div class="form-check-inline col-auto">
+            <button class="btn btn-primary" id="plateVeneer">Toevoegen</button>
+        </div>
+    </div>
+    <DataAnnotationsValidator />
+</EditForm> 
+
 <div>
-    @SVG
+    @Details
+@*    @SvgComponent*@
 </div>
 
 @code {
-    private RenderFragment SVG { get; set; }
+    private int PlaneArea { get; set; }
+    private int ProductArea { get; set; }
+    private string Details { get; set; }
+    private List<Plate> Plates { get; set; }
+    private List<Product> Products { get; set; }
+    public RenderFragment SvgComponent { get; set; }
 
     private CalculatorModel calculatorModel = new()
         {
@@ -97,11 +110,36 @@
 
     public void HandleSubmit()
     {
-        CreateSvg();
+        PlaneArea = calculateService.Area(calculatorModel.Plate.Width, calculatorModel.Plate.Length);
+        ProductArea = calculateService.Area(calculatorModel.Product.Width, calculatorModel.Product.Length);
+        bool result = calculateService.CheckIfFits(calculatorModel.Plate, calculatorModel.Product);
+        if (result)
+        {
+            //SVG = @<svg><rectangle></rectangle></svg>;
+        }
+
     }
 
-    public /*RenderFragment*/ void CreateSvg()
+    public void AddPlate()
     {
-        SVG = @<svg></svg>;
+        if (Plates == null) Plates = new List<Plate>();
+        Plates.Add(calculatorModel.Plate);
+        calculatorModel.Plate = new Plate();
+        ShowDetails();
+    }
+
+    public void AddProduct()
+    {
+        if (Products == null) Products = new List<Product>();
+        Products.Add(calculatorModel.Product);
+        calculatorModel.Product = new Product();
+        ShowDetails();
+    }
+
+    private void ShowDetails()
+    {
+        Details = string.Empty;
+        if (Plates != null) Plates.ForEach(c => Details += c.ToString());
+        if (Products != null) Products.ForEach(c => Details += c.ToString());
     }
 }

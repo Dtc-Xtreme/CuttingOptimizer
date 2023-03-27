@@ -9,7 +9,6 @@ namespace CuttingOptimizer.Domain.Models
         {
 
         }
-
         public Plate(string id, int width, int length, int height)
         {
             ID = id;
@@ -19,7 +18,6 @@ namespace CuttingOptimizer.Domain.Models
         }
 
         [Required]
-
         public string ID { get; set; }
 
         [Range(10, 100000)]
@@ -31,11 +29,32 @@ namespace CuttingOptimizer.Domain.Models
         [Range(0, 1000)]
         public int Height { get; set; }
 
+        public bool Veneer { get; set; }
+
         [NotMapped]
         [Range(0, 1000)]
         public int Trim { get; set; }
 
-        public bool Veneer { get; set; }
+        [NotMapped]
+        public List<Product> Products { get; set; }
 
+        public int WidthWithTrim { 
+            get { 
+                return Width - Trim; 
+            } 
+        }
+
+        public int LengthWithTrim
+        {
+            get
+            {
+                return Length - Trim;
+            }
+        }
+
+        public override string ToString()
+        {
+            return "ID:" + ID + " | W:" + Width + " | L:" + Length + "H:" + Height + " | Trim:" + Trim + " | Vineer:" + Veneer;
+        }
     }
 }
