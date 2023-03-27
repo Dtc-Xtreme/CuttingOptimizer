@@ -1,0 +1,107 @@
+﻿@page "/calculator"
+@using CuttingOptimizer.Blazor.Models;
+@using CuttingOptimizer.Domain.Models;
+
+<PageTitle>Calculator</PageTitle>
+
+<h2>Calculator</h2>
+
+<EditForm Model="@calculatorModel" OnSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h3>Zaag</h3>
+                <div class="form-group">
+                    <label for="sawID">Zaagblad</label>
+                    <InputText class="form-control" id="sawID" @bind-Value="calculatorModel.Saw.ID" />
+                </div>
+                <div class="form-group">
+                    <label for="sawThickness">Zaagsnede</label>
+                    <InputNumber class="form-control" id="sawThickness" @bind-Value="calculatorModel.Saw.Thickness" />
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <h3>Materiaal</h3>
+                <div class="form-group">
+                    <label for="plateID">Materiaal</label>
+                    <InputText class="form-control" id="plateID" @bind-Value="calculatorModel.Plate.ID" />
+                </div>
+                <div class="form-group">
+                    <label for="plateWidth">Thickness</label>
+                    <InputNumber class="form-control" id="plateWidth" @bind-Value="calculatorModel.Plate.Width" />
+                </div>
+                <div class="form-group">
+                    <label for="plateLength">Thickness</label>
+                    <InputNumber class="form-control" id="plateLength" @bind-Value="calculatorModel.Plate.Length" />
+                </div>
+                <div class="form-group">
+                    <label for="plateHeight">Dikte</label>
+                    <InputNumber class="form-control" id="plateHeight" @bind-Value="calculatorModel.Plate.Height" />
+                </div>
+                <div class="form-group">
+                    <label for="plateTrim">Trim</label>
+                    <InputNumber class="form-control" id="plateTrim" @bind-Value="calculatorModel.Plate.Trim" />
+                </div>
+                <div class="form-check-inline">
+                    <label for="plateVeneer" class="pr-1">Fineer</label>
+                    <InputCheckbox class="form-control" id="plateVeneer" @bind-Value="calculatorModel.Plate.Veneer" />
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <h3>Item</h3>
+                <div class="form-group">
+                    <label for="productID">ID</label>
+                    <InputText class="form-control" id="productID" @bind-Value="calculatorModel.Product.ID" />
+                </div>
+                <div class="form-group">
+                    <label for="productWidth">Width</label>
+                    <InputNumber class="form-control" id="productWidth" @bind-Value="calculatorModel.Product.Width" />
+                </div>
+                <div class="form-group">
+                    <label for="productLength">Length</label>
+                    <InputNumber class="form-control" id="productLength" @bind-Value="calculatorModel.Product.Length" />
+                </div>
+                <div class="form-group">
+                    <label for="productHeight">Height</label>
+                    <InputNumber class="form-control" id="productHeight" @bind-Value="calculatorModel.Product.Height" />
+                </div>
+                <div class="form-group">
+                    <label for="productInfo">Info</label>
+                    <InputText class="form-control" id="productInfo" @bind-Value="calculatorModel.Product.Info" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit">Submit</button>
+
+    <ValidationSummary />
+</EditForm>
+
+<div>
+    @SVG
+</div>
+
+@code {
+    private RenderFragment SVG { get; set; }
+
+    private CalculatorModel calculatorModel = new()
+        {
+            Saw = new Saw("S1", 5),
+            Plate = new Plate("PL1", 2000, 200, 5),
+            Product = new Product("X1", 1000, 50, 5, "x1")
+    };
+
+    public void HandleSubmit()
+    {
+        CreateSvg();
+    }
+
+    public /*RenderFragment*/ void CreateSvg()
+    {
+        SVG = @<svg></svg>;
+    }
+}

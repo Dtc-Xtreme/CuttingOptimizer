@@ -279,7 +279,7 @@ function createCanvas(plateArray) {
     }
 }
 function placeProductsOnCanvas(plates, products) {
-    const svg = document.getElementsByTagName("svg");
+    let svg = document.getElementsByTagName("svg");
 
     // testing
     plates[0].setProduct(products[0]);
@@ -293,26 +293,26 @@ function placeProductsOnCanvas(plates, products) {
 
         // Product Quantity
         for (let p = 0; p < products[i].quantity; p++) {
-            //let group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            let group = document.createElementNS("http://www.w3.org/2000/svg", "g");
 
-            //let prod = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            //prod.setAttribute("width", products[i].width);
-            //prod.setAttribute("height", products[i].length);
-            //prod.setAttribute("x", 0);
-            //prod.setAttribute("y", 0);
+            let prod = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            prod.setAttribute("width", products[i].width);
+            prod.setAttribute("height", products[i].length);
+            prod.setAttribute("x", 0);
+            prod.setAttribute("y", 0);
 
-            //let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            //text.textContent = products[i].info;
-            //text.setAttribute("x", 20);
-            //text.setAttribute("y", 50);
-            //text.setAttribute("font-family", "Verdana");
-            //text.setAttribute("font-size", 35);
-            //text.setAttribute("fill", "blue");
+            let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.textContent = products[i].info;
+            text.setAttribute("x", 20);
+            text.setAttribute("y", 50);
+            text.setAttribute("font-family", "Verdana");
+            text.setAttribute("font-size", 35);
+            text.setAttribute("fill", "blue");
 
-            //group.append(prod);
-            //group.append(text);
+            group.append(prod);
+            group.append(text);
 
-            //svg[0].appendChild(group);
+            svg[0].appendChild(group);
 
             this.response.innerHTML += "Plate: " + plates[0].getAreaWithTrim() + " mm² | Product: " + products[i].totalArea + " mm² = " + (plates[0].getAreaWithTrim() - products[i].totalArea) + " mm² <br>";
         }

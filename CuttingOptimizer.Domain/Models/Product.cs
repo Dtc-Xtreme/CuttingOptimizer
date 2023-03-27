@@ -14,10 +14,11 @@ namespace CuttingOptimizer.Domain.Models
 
         }
 
-        public Product(string iD, int width, int height, string info)
+        public Product(string iD, int width, int length, int height, string info)
         {
             ID = iD;
             Width = width;
+            Length = length;
             Height = height;
             Info = info;
         }

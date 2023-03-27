@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CuttingOptimizer.Domain
+namespace CuttingOptimizer.Domain.Models
 {
     public class Saw
     {
