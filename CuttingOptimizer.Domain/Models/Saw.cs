@@ -19,7 +19,13 @@ namespace CuttingOptimizer.Domain.Models
         [Required]
         public string ID { get; set; }
 
-        [Range(0,10)]
+        [Required]
+        [Range(0,50)]
         public int Thickness { get; set; }
+
+        public override string ToString()
+        {
+            return "ID: " + ID + " | Thickness: " + Thickness;
+        }
     }
 }
