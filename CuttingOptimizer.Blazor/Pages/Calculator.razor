@@ -3,6 +3,7 @@
 @using CuttingOptimizer.Blazor.Models;
 @using CuttingOptimizer.Blazor.Services;
 @using CuttingOptimizer.Domain.Models;
+@using CuttingOptimizer.Blazor.Components;
 @inject ICalculatorService calculateService;
 @inject IDrawingService drawingService;
 
@@ -88,36 +89,62 @@
     <DataAnnotationsValidator />
 </EditForm> 
 
-<div>
-    @Details
-@*    @SvgComponent*@
-</div>
+<Details Plates=@Plates Products=@Products />
+
+@foreach(Plate plate in @Plates)
+{
+    <Svg Scale=@Scale Plate=plate />
+}
+
+<button class="btn btn-primary" @onclick="HandleSubmit">Calc</button>
 
 @code {
-    private int PlaneArea { get; set; }
+    private int Scale { get; set; }
+    private int PlateArea { get; set; }
     private int ProductArea { get; set; }
-    private string Details { get; set; }
     private List<Plate> Plates { get; set; }
     private List<Product> Products { get; set; }
     public RenderFragment SvgComponent { get; set; }
 
     private CalculatorModel calculatorModel = new()
         {
-            Saw = new Saw("S1", 5),
-            Plate = new Plate("PL1", 2000, 200, 5),
-            Product = new Product("X1", 1000, 50, 5, "x1")
+            Saw = new(),
+            Plate = new(),
+            Product = new ()
     };
+
+    protected override void OnInitialized()
+    {
+        Plates = new List<Plate>
+        {
+            new Plate("PL1", 2000, 200, 5),
+            new Plate("PL2", 1850, 200, 5),
+        };
+
+        Products = new List<Product>
+        {
+            new Product("X1", 1000, 50, 5, "x1")
+        };
+
+        HandleSubmit();
+    }
 
     public void HandleSubmit()
     {
-        PlaneArea = calculateService.Area(calculatorModel.Plate.Width, calculatorModel.Plate.Length);
-        ProductArea = calculateService.Area(calculatorModel.Product.Width, calculatorModel.Product.Length);
-        bool result = calculateService.CheckIfFits(calculatorModel.Plate, calculatorModel.Product);
-        if (result)
-        {
-            //SVG = @<svg><rectangle></rectangle></svg>;
-        }
+        //PlateArea = calculateService.Area(calculatorModel.Plate.Width, calculatorModel.Plate.Length);
+        //ProductArea = calculateService.Area(calculatorModel.Product.Width, calculatorModel.Product.Length);
+        //bool result = calculateService.CheckIfFits(calculatorModel.Plate, calculatorModel.Product);
+        Scale = Plates.Max(c => c.WidthWithTrim) / 100;
 
+        if(Plates.Count == 2 && Products.Count > 0)
+        {
+            if (Plates[0].Products == null) Plates[0].Products = new();
+            Plates[0].Products.Add(Products[0]);
+
+            if (Plates[1].Products == null) Plates[1].Products = new();
+            Plates[1].Products.Add(Products[0]);
+        }
+        string a = "";
     }
 
     public void AddPlate()
@@ -125,7 +152,6 @@
         if (Plates == null) Plates = new List<Plate>();
         Plates.Add(calculatorModel.Plate);
         calculatorModel.Plate = new Plate();
-        ShowDetails();
     }
 
     public void AddProduct()
@@ -133,13 +159,5 @@
         if (Products == null) Products = new List<Product>();
         Products.Add(calculatorModel.Product);
         calculatorModel.Product = new Product();
-        ShowDetails();
-    }
-
-    private void ShowDetails()
-    {
-        Details = string.Empty;
-        if (Plates != null) Plates.ForEach(c => Details += c.ToString());
-        if (Products != null) Products.ForEach(c => Details += c.ToString());
     }
 }

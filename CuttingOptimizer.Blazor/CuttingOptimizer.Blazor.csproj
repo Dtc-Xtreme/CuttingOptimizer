@@ -11,8 +11,4 @@
     <ProjectReference Include="..\CuttingOptimizer.Domain\CuttingOptimizer.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
-
 </Project>

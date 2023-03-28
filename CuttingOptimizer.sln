@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Web.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.WPF", "CuttingOptimizer.WPF\CuttingOptimizer.WPF.csproj", "{F5EAAB8E-50EA-4A14-9F3B-8BF077C6DD15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuttingOptimizer.Blazor", "CuttingOptimizer.Blazor\CuttingOptimizer.Blazor.csproj", "{24553390-1404-46D7-8034-8E3C04DA91B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CuttingOptimizer.Blazor", "CuttingOptimizer.Blazor\CuttingOptimizer.Blazor.csproj", "{24553390-1404-46D7-8034-8E3C04DA91B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{9C88FE13-C27A-4548-8C7A-832D17D53BC5}"
 EndProject

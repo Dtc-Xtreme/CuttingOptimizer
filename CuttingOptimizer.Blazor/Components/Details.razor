@@ -1,0 +1,41 @@
+﻿@using CuttingOptimizer.Domain.Models;
+
+<h3>Details</h3>
+<div class="row">
+    @if (Plates != null && Plates.Count != 0)
+    {
+    <div class="col-auto">
+            <h4>Plates:</h4>
+            @foreach (Plate plate in Plates)
+            {
+                <div>@plate</div>
+            }
+    </div>
+    }
+
+    @if (Products != null && Products.Count != 0)
+    {
+    <div class="col-auto">
+
+            <h4>Products:</h4>
+            @foreach (Product product in Products)
+            {
+                <div>@product</div>
+            }
+       
+    </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Plate> Plates { get; set; }
+    [Parameter]
+    public List<Product> Products { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Plates = new List<Plate>();
+        //Products = new List<Product>();
+    }
+}

@@ -1,0 +1,36 @@
+﻿@using CuttingOptimizer.Domain.Models;
+
+<svg viewBox="0 0 @Plate.WidthWithTrim @Plate.LengthWithTrim" style="width: @Width%">
+    @if(Plate.Products != null && Plate.Products.Count != 0)
+    {
+        @foreach (Product prod in Plate.Products)
+        {
+            <g>
+                <rect width="@prod.Width" height="@prod.Length" x="0" y="0" />
+                <text x="20" y="50" font-family="Verdana" font-size="25" fill="blue">@prod.Info</text>
+            </g>
+        }
+    }
+</svg>
+
+@code {
+    [Parameter]
+    public int Scale { get; set; }
+
+    [Parameter]
+    public Plate Plate { get; set; }
+
+    private int Width { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if(Plate.WidthWithTrim / 100 == Scale)
+        {
+            Width = 100;
+        }
+        else
+        {
+            Width = Plate.WidthWithTrim / Scale;
+        }
+    }
+}
