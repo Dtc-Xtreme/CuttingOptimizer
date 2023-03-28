@@ -1,11 +1,9 @@
 ﻿@page "/calculator"
 @using CuttingOptimizer.AppLogic.Services;
 @using CuttingOptimizer.Blazor.Models;
-@using CuttingOptimizer.Blazor.Services;
 @using CuttingOptimizer.Domain.Models;
 @using CuttingOptimizer.Blazor.Components;
 @inject ICalculatorService calculateService;
-@inject IDrawingService drawingService;
 
 <PageTitle>Calculator</PageTitle>
 
@@ -30,30 +28,30 @@
     <div class="form-row">
         <div class="form-group col-auto">
             <label for="plateID">Materiaal</label>
-            <InputText class="form-control" id="plateID" @bind-Value="calculatorModel.Plate.ID" />
+            <InputText class="form-control" id="plateID" @bind-Value="calculatorModel.Plate.ID" placeholder="ID" />
         </div>
         <div class="form-group col-auto">
-            <label for="plateWidth">Thickness</label>
-            <InputNumber class="form-control" id="plateWidth" @bind-Value="calculatorModel.Plate.Width" />
+            <label for="plateLength">Length</label>
+            <InputNumber class="form-control" id="plateLength" @bind-Value="calculatorModel.Plate.Length" placeholder="Lengte" />
         </div>
         <div class="form-group col-auto">
-            <label for="plateLength">Thickness</label>
-            <InputNumber class="form-control" id="plateLength" @bind-Value="calculatorModel.Plate.Length" />
+            <label for="plateWidth">Width</label>
+            <InputNumber class="form-control" id="plateWidth" @bind-Value="calculatorModel.Plate.Width" placeholder="Breedte" />
         </div>
         <div class="form-group col-auto">
-            <label for="plateHeight">Dikte</label>
-            <InputNumber class="form-control" id="plateHeight" @bind-Value="calculatorModel.Plate.Height" />
+            <label for="plateHeight">Hoogte</label>
+            <InputNumber class="form-control" id="plateHeight" @bind-Value="calculatorModel.Plate.Height" placeholder="Hoogte" />
         </div>
         <div class="form-group col-auto">
             <label for="plateTrim">Trim</label>
-            <InputNumber class="form-control" id="plateTrim" @bind-Value="calculatorModel.Plate.Trim" />
+            <InputNumber class="form-control" id="plateTrim" @bind-Value="calculatorModel.Plate.Trim" placeholder="Trim" />
         </div>
         <div class="form-check-inline col-auto">
             <label for="plateVeneer" class="pr-1">Fineer</label>
-            <InputCheckbox class="form-control" id="plateVeneer" @bind-Value="calculatorModel.Plate.Veneer" />
+            <InputCheckbox class="form-control" id="plateVeneer" @bind-Value="calculatorModel.Plate.Veneer" placeholder="Fineer" />
         </div>
         <div class="form-check-inline col-auto">
-            <button class="btn btn-primary" id="plateVeneer">Toevoegen</button>
+            <button class="btn btn-primary mt-3">Toevoegen</button>
         </div>
     </div>
     <DataAnnotationsValidator />
@@ -64,26 +62,26 @@
     <div class="form-row">
         <div class="form-group col-auto">
             <label for="productID">ID</label>
-            <InputText class="form-control" id="productID" @bind-Value="calculatorModel.Product.ID" />
+            <InputText class="form-control" id="productID" @bind-Value="calculatorModel.Product.ID" placeholder="ID" />
         </div>
         <div class="form-group col-auto">
-            <label for="productWidth">Width</label>
-            <InputNumber class="form-control" id="productWidth" @bind-Value="calculatorModel.Product.Width" />
+            <label for="productLength">Lengte</label>
+            <InputNumber class="form-control" id="productLength" @bind-Value="calculatorModel.Product.Length" placeholder="Lengte" />
         </div>
         <div class="form-group col-auto">
-            <label for="productLength">Length</label>
-            <InputNumber class="form-control" id="productLength" @bind-Value="calculatorModel.Product.Length" />
+            <label for="productWidth">Breedte</label>
+            <InputNumber class="form-control" id="productWidth" @bind-Value="calculatorModel.Product.Width" placeholder="Breedte" />
         </div>
         <div class="form-group col-auto">
-            <label for="productHeight">Height</label>
-            <InputNumber class="form-control" id="productHeight" @bind-Value="calculatorModel.Product.Height" />
+            <label for="productHeight">Hoogte</label>
+            <InputNumber class="form-control" id="productHeight" @bind-Value="calculatorModel.Product.Height" placeholder="Hoogte" />
         </div>
         <div class="form-group col-auto">
             <label for="productInfo">Info</label>
-            <InputText class="form-control" id="productInfo" @bind-Value="calculatorModel.Product.Info" />
+            <InputText class="form-control" id="productInfo" @bind-Value="calculatorModel.Product.Info" placeholder="Info" />
         </div>
         <div class="form-check-inline col-auto">
-            <button class="btn btn-primary" id="plateVeneer">Toevoegen</button>
+            <button class="btn btn-primary mt-3">Toevoegen</button>
         </div>
     </div>
     <DataAnnotationsValidator />
@@ -104,7 +102,6 @@
     private int ProductArea { get; set; }
     private List<Plate> Plates { get; set; }
     private List<Product> Products { get; set; }
-    public RenderFragment SvgComponent { get; set; }
 
     private CalculatorModel calculatorModel = new()
         {
@@ -134,7 +131,7 @@
         //PlateArea = calculateService.Area(calculatorModel.Plate.Width, calculatorModel.Plate.Length);
         //ProductArea = calculateService.Area(calculatorModel.Product.Width, calculatorModel.Product.Length);
         //bool result = calculateService.CheckIfFits(calculatorModel.Plate, calculatorModel.Product);
-        Scale = Plates.Max(c => c.WidthWithTrim) / 100;
+        Scale = Plates.Max(c => c.LengthWithTrim) / 100;
 
         if(Plates.Count == 2 && Products.Count > 0)
         {
@@ -144,7 +141,6 @@
             if (Plates[1].Products == null) Plates[1].Products = new();
             Plates[1].Products.Add(Products[0]);
         }
-        string a = "";
     }
 
     public void AddPlate()

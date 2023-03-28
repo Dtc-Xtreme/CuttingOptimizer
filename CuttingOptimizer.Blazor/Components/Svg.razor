@@ -1,7 +1,8 @@
 ﻿@using CuttingOptimizer.Domain.Models;
 @using System.Globalization;
 
-<svg viewBox="0 0 @Plate.WidthWithTrim @Plate.LengthWithTrim" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%">
+<h3>@Plate.ToString()</h3>
+<svg viewBox="0 0 @Plate.LengthWithTrim @Plate.WidthWithTrim" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%">
     @if(Plate.Products != null && Plate.Products.Count != 0)
     {
         @foreach (Product prod in Plate.Products)
@@ -25,13 +26,13 @@
 
     protected override void OnInitialized()
     {
-        if(Plate.WidthWithTrim / 100 == Scale)
+        if(Plate.LengthWithTrim / 100 == Scale)
         {
             Width = 100;
         }
         else
         {
-            Width = Plate.WidthWithTrim / Scale;
+            Width = Plate.LengthWithTrim / Scale;
         }
     }
 }
