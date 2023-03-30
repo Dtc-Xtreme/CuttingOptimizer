@@ -127,6 +127,13 @@ namespace CuttingOptimizer.AppLogic.Services
             return (double)rest / plate.AreaWithTrim;
         }
 
+        private double CalculateRestHorizontal(Plate plate)
+        {
+            Product? lastProd = plate.Products.MaxBy(c => c.X);
+            int lenght = plate.LengthWithTrim - lastProd.Length;
+            return (double)(lenght * lastProd.Width) / plate.AreaWithTrim;
+        }
+
         public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
         {
             int totalLength = (product.Length * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
