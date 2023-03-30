@@ -7,7 +7,9 @@ namespace CuttingOptimizer.Blazor.Models
     public class CalculatorModel
     {
         public Saw Saw { get; set; }
-        public Plate Plate { get; set; }
-        public Product Product { get; set; }
+
+        public PlateQuantity Plate { get; set; }
+
+        public PlateQuantity Product { get; set; }
     }
 }

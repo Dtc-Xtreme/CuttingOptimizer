@@ -8,8 +8,8 @@
         @foreach (Product prod in Plate.Products)
         {
             <g>
-                <rect width="@prod.Width" height="@prod.Length" x="0" y="0" />
-                <text x="20" y="50" font-family="Verdana" font-size="25" fill="blue">@prod.Info</text>
+                <rect width="@prod.Length" height="@prod.Width" x="@prod.X" y="@prod.Y" />
+                <text x="@prod.X" y="@CalcLabelPosition(prod.Y)" font-family="Verdana" font-size="25" fill="blue">@prod.Info</text>
             </g>
         }
     }
@@ -34,5 +34,10 @@
         {
             Width = Plate.LengthWithTrim / Scale;
         }
+    }
+
+    private double CalcLabelPosition(double pos)
+    {
+        return pos + 20;
     }
 }

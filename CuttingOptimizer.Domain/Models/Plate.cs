@@ -9,34 +9,30 @@ namespace CuttingOptimizer.Domain.Models
         {
 
         }
-        public Plate(string id, int length, int width, int height)
+        public Plate(int quantity, string id, int length, int width, int height, int trim)
         {
+            Quantity = quantity;
             ID = id;
             Width = width;
             Length = length;
             Height = height;
+            Trim = trim;
+            Products = new List<Product>();
         }
 
         [Required]
         public string ID { get; set; }
 
-        [Range(0, 100000)]
+        [Range(10, 100000)]
         public int Length { get; set; }
 
         [Range(10, 100000)]
         public int Width { get; set; }
 
-        [Range(0, 1000)]
+        [Range(1, 1000)]
         public int Height { get; set; }
 
         public bool Veneer { get; set; }
-
-        [NotMapped]
-        [Range(0, 1000)]
-        public int Trim { get; set; }
-
-        [NotMapped]
-        public List<Product> Products { get; set; }
 
         public int WidthWithTrim { 
             get { 
@@ -52,9 +48,25 @@ namespace CuttingOptimizer.Domain.Models
             }
         }
 
+        public int Area
+        {
+            get { return Length * Height; }
+        }
+
+        [NotMapped]
+        [Range(0, 1000)]
+        public int Trim { get; set; }
+
+        [NotMapped]
+        public List<Product> Products { get; set; }
+
+        [NotMapped]
+        [Range(1, 100)]
+        public int Quantity { get; set; }
+
         public override string ToString()
         {
-            return "ID: " + ID + " | L: " + Length + " | W: " + Width + " | H: " + Height + " | Trim: " + Trim + " | Vineer: " + Veneer;
+            return "Quantity: " + Quantity + " | ID: " + ID + " | L: " + Length + " | W: " + Width + " | H: " + Height + " | Trim: " + Trim + " | Vineer: " + Veneer;
         }
     }
 }

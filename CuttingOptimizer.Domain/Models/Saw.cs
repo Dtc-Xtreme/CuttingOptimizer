@@ -20,7 +20,7 @@ namespace CuttingOptimizer.Domain.Models
         public string ID { get; set; }
 
         [Required]
-        [Range(0,50)]
+        [Range(1,50)]
         public int Thickness { get; set; }
 
         public override string ToString()
