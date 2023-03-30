@@ -50,7 +50,12 @@ namespace CuttingOptimizer.Domain.Models
 
         public int Area
         {
-            get { return Length * Height; }
+            get { return Length * Width; }
+        }
+
+        public int AreaWithTrim
+        {
+            get { return LengthWithTrim * WidthWithTrim; }
         }
 
         [NotMapped]

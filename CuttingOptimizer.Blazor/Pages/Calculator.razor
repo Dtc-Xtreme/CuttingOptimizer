@@ -131,7 +131,7 @@
         Plates = new List<Plate>
         {
             new Plate(1, "PL1", 2000, 400, 5, 0),
-            new Plate(1, "PL2", 1000, 200, 5, 0),
+            new Plate(1, "PL2", 2000, 400, 5, 0),
         };
 
         Products = new List<Product>
@@ -167,13 +167,13 @@
 
         foreach(Product prod in Products)
         {
-            if(prod.Quantity == 1)
-            {
-                calculateService.PlaceNext(Saw, Plates, prod);
-            }else if(prod.Quantity > 1)
-            {
+            //if(prod.Quantity == 1)
+            //{
+            //    calculateService.PlaceNext(Saw, Plates, prod);
+            //}else if(prod.Quantity > 1)
+            //{
                 calculateService.PlaceNextInBundle(Saw, Plates, prod);
-            }
+            //}
             
 
         }

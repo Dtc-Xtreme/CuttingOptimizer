@@ -114,6 +114,19 @@ namespace CuttingOptimizer.AppLogic.Services
             return amount;
         }
 
+        private double CalculatetMaxQuantityRestHorizontal(Saw saw, Plate plate, Product product, int quantity)
+        {
+            int length = (product.Length * quantity) + (quantity - 1 + saw.Thickness);
+            int rest = (plate.LengthWithTrim - length) * product.Width;
+            return (double)rest / plate.AreaWithTrim;
+        }
+        private double CalculateMaxQuantityRestVertical(Saw saw, Plate plate, Product product, int quantity)
+        {
+            int width = (product.Width * quantity) + (quantity - 1 + saw.Thickness);
+            int rest = (plate.WidthWithTrim - width) * product.Width;
+            return (double)rest / plate.AreaWithTrim;
+        }
+
         public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
         {
             int totalLength = (product.Length * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
@@ -130,8 +143,10 @@ namespace CuttingOptimizer.AppLogic.Services
             int maxHorizontal = CalculateQuantityHorizontal(saw, plates[0], product);
             int maxVertical = CalculateQuantityVertical(saw, plates[0], product);
 
+            double restHorPercentage = CalculatetMaxQuantityRestHorizontal(saw, plates[0], product, maxHorizontal);
+            double restVertPercentage = CalculateMaxQuantityRestVertical(saw, plates[0], product, maxVertical);
 
-            for(int i = 0; i < product.Quantity; i++)
+            for (int i = 0; i < product.Quantity; i++)
             {
                 Product newProd = new Product(1, "", product.Length, product.Width, product.Height, product.Info);
 
