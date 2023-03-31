@@ -1,4 +1,5 @@
-﻿using CuttingOptimizer.Domain.Models;
+﻿using CuttingOptimizer.AppLogic.Models;
+using CuttingOptimizer.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -244,6 +245,16 @@ namespace CuttingOptimizer.AppLogic.Services
             //    }
             //    plates[0].Products.Add(prod);
             //}
+        }
+
+        public bool PlaceNext(Saw saw, List<Plate> plates, List<Product> products)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
+        {
+            throw new NotImplementedException();
         }
     }
 }

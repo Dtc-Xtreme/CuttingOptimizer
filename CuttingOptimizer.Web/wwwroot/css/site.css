@@ -34,8 +34,8 @@ svg {
 
 rect{
     fill:lightgray;
-    stroke-width:1;
-    stroke:gray;
+/*    stroke-width:1;
+    stroke:gray;*/
 }
 
 h3 {

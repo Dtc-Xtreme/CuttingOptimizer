@@ -1,4 +1,5 @@
 ﻿@page "/calculator"
+@using CuttingOptimizer.AppLogic.Models;
 @using CuttingOptimizer.AppLogic.Services;
 @using CuttingOptimizer.Blazor.Models;
 @using CuttingOptimizer.Domain.Models;
@@ -103,9 +104,11 @@
 
 <Details Saw=@Saw Plates=@Plates Products=@Products />
 
-@foreach(Plate plate in @Plates)
+@foreach(Svg svg in Svgs)
 {
-    <Svg Scale=@Scale Plate=plate />
+@*    <SvgComponent Scale=@Scale Plate=plate />
+*@
+    <SvgNewComponent Scale=@Scale Svg=svg />
 }
 
 <button class="btn btn-primary" @onclick="HandleSubmit">Calc</button>
@@ -119,6 +122,7 @@
     private int ProductArea { get; set; }
     private List<Plate> Plates { get; set; }
     private List<Product> Products { get; set; }
+    private List<Svg> Svgs { get; set; }
 
     protected override void OnInitialized()
     {
@@ -128,16 +132,20 @@
         Product = new Product();
         Product.Quantity = 1;
 
+        Svgs = new List<Svg>();
+
         Plates = new List<Plate>
         {
             new Plate(1, "PL1", 2000, 400, 5, 0),
-            new Plate(1, "PL2", 2000, 400, 5, 0),
+            //new Plate(1, "PL2", 800, 400, 5, 0),
         };
 
         Products = new List<Product>
         {
-            new Product(10, "X1", 900, 45, 5, "x1"),
-            //new Product(1, "X2", 150, 50, 5, "x2")
+            new Product(4, "X1", 1000, 45, 5, "x1"),
+            new Product(1, "X2", 150, 50, 5, "x2"),
+            new Product(1, "X3", 150, 45, 5, "x3"),
+            new Product(1, "X4", 1000, 300, 5, "x4"),
         };
 
         HandleSubmit();
@@ -164,19 +172,19 @@
         Products = Products.OrderByDescending(c => c.Area).ToList();
 
 
-
-        foreach(Product prod in Products)
-        {
-            //if(prod.Quantity == 1)
-            //{
-            //    calculateService.PlaceNext(Saw, Plates, prod);
-            //}else if(prod.Quantity > 1)
-            //{
-                calculateService.PlaceNextInBundle(Saw, Plates, prod);
-            //}
+        Svgs = calculateService.Place(Saw, Plates, Products);
+        //foreach(Product prod in Products)
+        //{
+        //    //if(prod.Quantity == 1)
+        //    //{
+        //    //    calculateService.PlaceNext(Saw, Plates, prod);
+        //    //}else if(prod.Quantity > 1)
+        //    //{
+        //        calculateService.PlaceNextInBundle(Saw, Plates, prod);
+        //    //}
             
 
-        }
+        //}
     }
 
     public void AddPlate()

@@ -1,0 +1,61 @@
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.Domain.Models;
+@using System.Globalization;
+
+<h3>@Svg.Id.ToString()</h3>
+<svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%">
+    @if(Svg.Groups != null && Svg.Groups.Count != 0)
+    {
+        @foreach (Group group in Svg.Groups)
+        {
+            <g>
+                @if (group.Rectangle != null)
+                {
+                    if(group.Id == 0)
+                    {
+                        <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+
+                    }
+                    else
+                    {
+                        <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+
+                    }
+
+@*                    if(group.Rectangle.Label != null)
+                    {
+                        <text x="@group.X" y="@CalcLabelPosition(group.Y)" font-family="Verdana" font-size="25" fill="blue">@group.Rectangle.Id</text>
+
+                    }*@
+                }
+            </g>
+        }
+    }
+</svg>
+
+@code {
+    [Parameter]
+    public double Scale { get; set; }
+
+    [Parameter]
+    public Svg Svg { get; set; }
+
+    private double Width { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Svg.ViewBox.Length / 100 == Scale)
+        {
+            Width = 100;
+        }
+        else
+        {
+            Width = Svg.ViewBox.Width / Scale;
+        }
+    }
+
+    private double CalcLabelPosition(double pos)
+    {
+        return pos + 20;
+    }
+}

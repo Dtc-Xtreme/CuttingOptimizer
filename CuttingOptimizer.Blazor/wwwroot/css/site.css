@@ -75,6 +75,10 @@ rect {
     stroke: gray;*/
 }
 
+.rect-free-space{
+    fill: lightcoral !important;
+}
+
 .rect-rotate {
     transform-origin: center;
     transform: rotate(90deg);
