@@ -72,8 +72,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 //Group? selectedGroup = fitGroups.FirstOrDefault(c => c.Width == (product.Width * product.Quantity) + ((product.Quantity - 1) * saw.Thickness));
 
                 // Exacte hoogte
-                //Group? selectedGroup = fitGroups.FirstOrDefault(c=>c.Width == product.Width || c.Length == product.Length);
-                Group? selectedGroup = fitGroups.Where(c=>c.Length == product.Length).MinBy(c=>c.Width);
+                Group? selectedGroup = fitGroups.FirstOrDefault(c=>c.Width == product.Width || c.Length == product.Length);
 
                 if (selectedGroup == null) selectedGroup = fitGroups.First();
 
@@ -95,7 +94,7 @@ namespace CuttingOptimizer.AppLogic.Services
             // Group right of product
             int groupRightX = groupWithProduct.X + groupWithProduct.Length + 1 + saw.Thickness;
             int groupRightY = groupWithProduct.Y;
-            int groupRightLength = svg.ViewBox.Length - groupWithProduct.X - groupWithProduct.Length;
+            int groupRightLength = svg.ViewBox.Length - groupWithProduct.X - groupWithProduct.Length - saw.Thickness;
             int groupRightWidth = groupWithProduct.Width;
             Group groupRight = new Group(0, new Rectangle(0, groupRightX, groupRightY, groupRightLength, groupRightWidth, new Label("0")), groupRightX, groupRightY, groupRightLength , groupRightWidth);
             groupRight.Svg = group.Svg;
@@ -107,8 +106,8 @@ namespace CuttingOptimizer.AppLogic.Services
                 int groupUnderX = groupWithProduct.X;
                 int groupUnderY = groupWithProduct.Y + groupWithProduct.Width + 1 + saw.Thickness;
                 int groupUnderLength = group.Length;
-                int groupUnderWidth = group.Width - groupRightY /*- groupWithProduct.Width*/;
-                if (groupUnderY + groupUnderWidth < svg.ViewBox.Width) groupUnderWidth -= saw.Thickness;
+                int groupUnderWidth = group.Width - groupRightY - groupWithProduct.Width - saw.Thickness;
+                //if (groupUnderY + groupUnderWidth < svg.ViewBox.Width) groupUnderWidth -= saw.Thickness;
                 Group groupUnder = new Group(0, new Rectangle(0, groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth, new Label("0")), groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth);
                 groupUnder.Svg = group.Svg;
                 newGroups.Add(groupUnder);
