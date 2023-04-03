@@ -3,7 +3,7 @@
 @using System.Globalization;
 
 <h3>@Svg.Id.ToString()</h3>
-<svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%">
+<svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
     @if(Svg.Groups != null && Svg.Groups.Count != 0)
     {
         @foreach (Group group in Svg.Groups)
@@ -44,13 +44,13 @@
 
     protected override void OnInitialized()
     {
-        if (Svg.ViewBox.Length / 100 == Scale)
+        if (Svg.ViewBox.Length / (double)100 == Scale)
         {
             Width = 100;
         }
         else
         {
-            Width = Svg.ViewBox.Width / Scale;
+            Width = Svg.ViewBox.Length / (double)Scale;
         }
     }
 

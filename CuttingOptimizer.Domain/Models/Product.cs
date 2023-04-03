@@ -70,7 +70,7 @@ namespace CuttingOptimizer.Domain.Models
 
         public override string ToString()
         {
-            return "Quantity: " + Quantity + " | Info: " + Info + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " + Area.ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
+            return "Quantity: " + Quantity + " | Info: " + Info + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
         }
     }
 }

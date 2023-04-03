@@ -37,12 +37,15 @@ namespace CuttingOptimizer.AppLogic.Services
                 svg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
             }
 
+            //products = products.OrderByDescending(c=>c.Quantity * c.Area + (saw.Thickness * (c.Quantity-1))).ToList();
+            products = products.OrderByDescending(c=>c.Length).ToList();
+
             foreach (Product product in products)
             {
-                //for (int i = 0; i < product.Quantity; i++)
-                //{
+                for (int i = 0; i < product.Quantity; i++)
+                {
                     SearchFit(svgs, product, saw);
-                //}
+                }
             }
 
             return svgs;
@@ -50,17 +53,14 @@ namespace CuttingOptimizer.AppLogic.Services
 
         private void SearchFit(List<Svg> svgs,Product product, Saw saw)
         {
-            // Welke past
             List<Group> fitGroups = new List<Group>();
 
-            foreach(Svg svg in svgs)
+            foreach (Svg svg in svgs)
             {
-                Group? group = svg.Groups.FirstOrDefault(c=>c.Length >= product.Length && c.Width >= product.Width && c.Id == 0);
-
-                if(group != null) fitGroups.Add(group);
+                fitGroups.AddRange(svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0).ToList());
             }
 
-            fitGroups = fitGroups.OrderByDescending(c=>c.Width).ToList();
+            //fitGroups = fitGroups.OrderByDescending(c=>c.Width).ToList();
 
             if(fitGroups.Count > 0)
             {
@@ -78,8 +78,11 @@ namespace CuttingOptimizer.AppLogic.Services
 
                 Svg selectedSvg = selectedGroup.Svg;
                 List<Group> reworkGroups = CalculateGroupSizes(selectedGroup, product, saw, selectedSvg);
+
                 selectedSvg.Groups.Remove(selectedGroup);
                 selectedSvg.Groups.AddRange(reworkGroups);
+                //CalculateRestGroups(saw, selectedSvg);
+
             }
         }
 
@@ -96,7 +99,7 @@ namespace CuttingOptimizer.AppLogic.Services
             int groupRightY = groupWithProduct.Y;
             int groupRightLength = svg.ViewBox.Length - groupWithProduct.X - groupWithProduct.Length - saw.Thickness;
             int groupRightWidth = groupWithProduct.Width;
-            Group groupRight = new Group(0, new Rectangle(0, groupRightX, groupRightY, groupRightLength, groupRightWidth, new Label("0")), groupRightX, groupRightY, groupRightLength , groupRightWidth);
+            Group groupRight = new Group(0, new Rectangle(0, groupRightX, groupRightY, groupRightLength, groupRightWidth, new Label("0")), groupRightX, groupRightY, groupRightLength, groupRightWidth);
             groupRight.Svg = group.Svg;
             newGroups.Add(groupRight);
 
@@ -106,15 +109,50 @@ namespace CuttingOptimizer.AppLogic.Services
                 int groupUnderX = groupWithProduct.X;
                 int groupUnderY = groupWithProduct.Y + groupWithProduct.Width + 1 + saw.Thickness;
                 int groupUnderLength = group.Length;
-                int groupUnderWidth = group.Width - groupRightY - groupWithProduct.Width - saw.Thickness;
+                int groupUnderWidth = svg.ViewBox.Width - (groupRightY + groupWithProduct.Width) - saw.Thickness;
                 //if (groupUnderY + groupUnderWidth < svg.ViewBox.Width) groupUnderWidth -= saw.Thickness;
                 Group groupUnder = new Group(0, new Rectangle(0, groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth, new Label("0")), groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth);
                 groupUnder.Svg = group.Svg;
                 newGroups.Add(groupUnder);
             }
-
             return newGroups;
         }
+
+        private void CalculateRestGroups(Saw saw, Svg svg)
+        {
+            svg.Groups.RemoveAll(c => c.Id == 0);
+            var horizontalGroup = svg.Groups.GroupBy(c => c.X);
+            
+           
+            foreach( var groupX in horizontalGroup )
+            {
+                Group g = groupX.MaxBy(c => c.X);
+                int X = g.X + g.Length + 1 + saw.Thickness;
+                int Y = g.Y;
+                int length = svg.ViewBox.Length - g.Length - 1 - saw.Thickness;
+                int width = g.Width;
+
+                Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length , width);
+                newGroup.Svg = svg;
+                svg.Groups.Add(newGroup);
+            }
+
+            var verticalGroup = svg.Groups.GroupBy(c => c.Y);
+
+            foreach( var groupY in verticalGroup )
+            {
+                Group g = groupY.MaxBy(c => c.Y);
+                int X = 0;
+                int Y = g.Y + g.Width + 1 + saw.Thickness;
+                int length = g.Length;
+                int width = svg.ViewBox.Width - g.Width - saw.Thickness;
+
+                Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length, width);
+                newGroup.Svg = svg;
+                svg.Groups.Add(newGroup);
+            }
+        }
+
         public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
         {
             throw new NotImplementedException();
@@ -123,6 +161,46 @@ namespace CuttingOptimizer.AppLogic.Services
         public bool PlaceNext(Saw saw, List<Plate> plates, List<Product> products)
         {
             throw new NotImplementedException();
+        }
+
+        private int CalculateQuantityHorizontal(Saw saw, Plate plate, Product product)
+        {
+            bool test = true;
+            int amount = 0;
+            int rest = plate.LengthWithTrim;
+            while (test)
+            {
+                rest -= (saw.Thickness + product.Length);
+                if (rest > 0)
+                {
+                    amount++;
+                }
+                else
+                {
+                    test = false;
+                }
+            }
+            return amount;
+        }
+        private int CalculateQuantityVertical(Saw saw, Plate plate, Product product)
+        {
+            bool test = true;
+            int amount = 0;
+            int rest = plate.WidthWithTrim;
+
+            while (test)
+            {
+                rest -= (saw.Thickness + product.Width);
+                if (rest > 0)
+                {
+                    amount++;
+                }
+                else
+                {
+                    test = false;
+                }
+            }
+            return amount;
         }
     }
 }
