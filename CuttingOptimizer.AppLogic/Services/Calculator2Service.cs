@@ -37,18 +37,28 @@ namespace CuttingOptimizer.AppLogic.Services
                 svg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
             }
 
+            // Sorteer op hoogte en max lengte 
+            SortProducts(products, svgs);
+
             //products = products.OrderByDescending(c=>c.Quantity * c.Area + (saw.Thickness * (c.Quantity-1))).ToList();
-            products = products.OrderByDescending(c=>c.Length).ToList();
+            products = products.OrderByDescending(c=>c.Width).ToList();
 
             foreach (Product product in products)
             {
-                for (int i = 0; i < product.Quantity; i++)
-                {
+                //for (int i = 0; i < product.Quantity; i++)
+                //{
                     SearchFit(svgs, product, saw);
-                }
+                //}
             }
 
             return svgs;
+        }
+
+        private void SortProducts(List<Product> products, List<Svg> svgs)
+        {
+            List<Product> sortedProducts = new List<Product>();
+
+            var a = products.GroupBy(c => c.Width).ToList();
         }
 
         private void SearchFit(List<Svg> svgs,Product product, Saw saw)
@@ -81,7 +91,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
                 selectedSvg.Groups.Remove(selectedGroup);
                 selectedSvg.Groups.AddRange(reworkGroups);
-                //CalculateRestGroups(saw, selectedSvg);
 
             }
         }
@@ -109,7 +118,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 int groupUnderX = groupWithProduct.X;
                 int groupUnderY = groupWithProduct.Y + groupWithProduct.Width + 1 + saw.Thickness;
                 int groupUnderLength = group.Length;
-                int groupUnderWidth = svg.ViewBox.Width - (groupRightY + groupWithProduct.Width) - saw.Thickness;
+                int groupUnderWidth = group.Width - groupWithProduct.Width - saw.Thickness;
                 //if (groupUnderY + groupUnderWidth < svg.ViewBox.Width) groupUnderWidth -= saw.Thickness;
                 Group groupUnder = new Group(0, new Rectangle(0, groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth, new Label("0")), groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth);
                 groupUnder.Svg = group.Svg;
@@ -118,40 +127,40 @@ namespace CuttingOptimizer.AppLogic.Services
             return newGroups;
         }
 
-        private void CalculateRestGroups(Saw saw, Svg svg)
-        {
-            svg.Groups.RemoveAll(c => c.Id == 0);
-            var horizontalGroup = svg.Groups.GroupBy(c => c.X);
+        //private void CalculateRestGroups(Saw saw, Svg svg)
+        //{
+        //    svg.Groups.RemoveAll(c => c.Id == 0);
+        //    var horizontalGroup = svg.Groups.GroupBy(c => c.X);
             
            
-            foreach( var groupX in horizontalGroup )
-            {
-                Group g = groupX.MaxBy(c => c.X);
-                int X = g.X + g.Length + 1 + saw.Thickness;
-                int Y = g.Y;
-                int length = svg.ViewBox.Length - g.Length - 1 - saw.Thickness;
-                int width = g.Width;
+        //    foreach( var groupX in horizontalGroup )
+        //    {
+        //        Group g = groupX.MaxBy(c => c.X);
+        //        int X = g.X + g.Length + 1 + saw.Thickness;
+        //        int Y = g.Y;
+        //        int length = svg.ViewBox.Length - g.Length - 1 - saw.Thickness;
+        //        int width = g.Width;
 
-                Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length , width);
-                newGroup.Svg = svg;
-                svg.Groups.Add(newGroup);
-            }
+        //        Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length , width);
+        //        newGroup.Svg = svg;
+        //        svg.Groups.Add(newGroup);
+        //    }
 
-            var verticalGroup = svg.Groups.GroupBy(c => c.Y);
+        //    var verticalGroup = svg.Groups.GroupBy(c => c.Y);
 
-            foreach( var groupY in verticalGroup )
-            {
-                Group g = groupY.MaxBy(c => c.Y);
-                int X = 0;
-                int Y = g.Y + g.Width + 1 + saw.Thickness;
-                int length = g.Length;
-                int width = svg.ViewBox.Width - g.Width - saw.Thickness;
+        //    foreach( var groupY in verticalGroup )
+        //    {
+        //        Group g = groupY.MaxBy(c => c.Y);
+        //        int X = 0;
+        //        int Y = g.Y + g.Width + 1 + saw.Thickness;
+        //        int length = g.Length;
+        //        int width = svg.ViewBox.Width - g.Width - saw.Thickness;
 
-                Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length, width);
-                newGroup.Svg = svg;
-                svg.Groups.Add(newGroup);
-            }
-        }
+        //        Group newGroup = new Group(0, new Rectangle(0, X, Y, length, width, new Label("0")), X, Y, length, width);
+        //        newGroup.Svg = svg;
+        //        svg.Groups.Add(newGroup);
+        //    }
+        //}
 
         public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
         {
