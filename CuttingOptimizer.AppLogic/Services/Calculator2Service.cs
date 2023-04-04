@@ -46,11 +46,14 @@ namespace CuttingOptimizer.AppLogic.Services
 
             foreach (Product product in products)
             {
-                for (int i = 0; i < product.Quantity; i++)
-                {
+                //for (int i = 0; i < product.Quantity; i++)
+                //{
                     SearchFit(svgs, product, saw);
-                }
+                //}
             }
+
+            // while loop door products list en verwijder wat gedaan is of reduceer de quantiteit van een product.
+            // 
 
             return svgs;
         }
@@ -66,17 +69,17 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             List<Group> fitGroups = new List<Group>();
 
-            //if(product.Quantity == 1)
-            //{
+            if (product.Quantity == 1)
+            {
                 foreach (Svg svg in svgs)
                 {
                     fitGroups.AddRange(
                         svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0));
                 }
-            //}else if(product.Quantity > 1)
-            //{
-            //    fitGroups.Add(svgs[0].Groups[0]);
-            //}
+        }else if(product.Quantity > 1)
+            {
+                fitGroups.Add(svgs.First(c=>c.Id == 0).Groups[0]);
+            }
 
 
             if(fitGroups.Count > 0)
@@ -106,7 +109,7 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             List<Group> newGroups = new List<Group>();
 
-            if (product.Quantity == 1 || true)
+            if (product.Quantity == 1)
             {
                 // Group with product
                 Group groupWithProduct = new Group(1, new Rectangle(0, group.X, group.Y, product.Length, product.Width, new Label(product.Info)), group.X, group.Y, product.Length, product.Width);
@@ -162,14 +165,16 @@ namespace CuttingOptimizer.AppLogic.Services
                         x = group.X + lastCreated.X + lastCreated.Length;
                         y = group.Y + lastCreated.Y;
 
-                        if (i > 0) x += saw.Thickness;
+                        if (i > 0) x += saw.Thickness+1;
 
                         lastCreated = new Group(1, new Rectangle(1, x, y, length, width, new Label("1")), x, y, length, width);
+                        lastCreated.Svg = svg;
+
                         newGroups.Add(lastCreated);
                     }
 
                     CaclulateGroupRight(saw, group, lastCreated, svg, newGroups);
-                    CalculateGroupUnder(saw, group, lastCreated, svg, newGroups);
+                    CalculateGroupUnder(saw, group, lastCreated, svg, newGroups, product);
 
                     //}else if (product.Quantity % maxHorizontal == 0) {
                     //    // even aantal over meerdere lijnen
@@ -189,10 +194,12 @@ namespace CuttingOptimizer.AppLogic.Services
                         if (i > 0) y += saw.Thickness;
 
                         lastCreated = new Group(1, new Rectangle(1, x, y, length, width, new Label("1")), x, y, length, width);
+                        lastCreated.Svg = svg;
+
                         newGroups.Add(lastCreated);
                     }
                     CaclulateGroupRight(saw, group, lastCreated, svg, newGroups);
-                    CalculateGroupUnder(saw, group, lastCreated, svg, newGroups);
+                    CalculateGroupUnder(saw, group, lastCreated, svg, newGroups, product);
 
                 }
             }
@@ -213,12 +220,12 @@ namespace CuttingOptimizer.AppLogic.Services
             newGroups.Add(lastCreated);
         }
 
-        private void CalculateGroupUnder(Saw saw, Group group, Group lastCreated, Svg svg, List<Group> newGroups)
+        private void CalculateGroupUnder(Saw saw, Group group, Group lastCreated, Svg svg, List<Group> newGroups, Product product)
         {
             int length = group.Length;
-            int width = group.Width - lastCreated.Width;
+            int width = group.Width - (lastCreated.Y + lastCreated.Width) - saw.Thickness - 1;
             int x = group.X;
-            int y = lastCreated.Y + lastCreated.Width + saw.Thickness - 1;
+            int y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
 
             lastCreated = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
             lastCreated.Svg = svg;
