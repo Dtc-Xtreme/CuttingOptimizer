@@ -3,6 +3,8 @@ using CuttingOptimizer.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,248 +15,287 @@ namespace CuttingOptimizer.AppLogic.Services
     {
         public int Area(int width, int length)
         {
-            return width * length;
-        }
-
-        //public bool CheckIfFits(Plate plate, Product product)
-        //{
-        //    bool wr = false;
-        //    bool lr = false;
-
-        //    if(plate.Products == null || plate.Products.Count == 0)
-        //    {
-        //        wr = plate.WidthWithTrim > product.Width;
-        //        lr = plate.LengthWithTrim > product.Length;
-        //        if(wr && lr)
-        //        {
-        //            plate.Products = new List<Product>();
-        //            plate.Products.Add(product);
-        //        }
-        //    }
-
-        //    return wr && lr;
-        //}
-
-        private bool DoesProductFitOnPlate(Saw saw, Plate plate, Product product)
-        {
-            return (plate.Length - saw.Thickness - product.Length) > 0 && (plate.Width - saw.Thickness - product.Width) > 0;
-        }
-
-        public bool PlaceNext(Saw saw, List<Plate> plates, Product product)
-        {
-            // Check if fits on plate
-            bool horizontalFit = DoesProductFitOnPlate(saw, plates[0], product);
-
-
-
-            // Find Product that is placed most to the right
-            var lastItemHorizontal = plates[0].Products.MaxBy(x => x.X);
-
-            if(lastItemHorizontal != null)
-            {
-                // Check if total width is smaller then plate width with trim
-                bool check = (lastItemHorizontal.X + saw.Thickness + product.Length) < plates[0].LengthWithTrim;
-                if(check)
-                {
-                    product.X = lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness;
-                    product.Y = 0;
-                    plates[0].Products.Add(product);
-                }
-            }
-            else
-            {
-                // Er zijn geen items
-                product.X = 0;
-                product.Y = 0;
-                plates[0].Products.Add(product);
-
-                // Nog checken of het op de Y as kan
-                return true;
-            }
-            // checken of de x y nummer in een van de plate.products zit van d
-            return false;
-        }
-
-        private int CalculateQuantityHorizontal(Saw saw, Plate plate, Product product)
-        {
-            bool test = true;
-            int amount = 0;
-            int rest = plate.LengthWithTrim;
-            while (test)
-            {
-                rest -= (saw.Thickness + product.Length);
-                if (rest > 0)
-                {
-                    amount++;
-                }
-                else
-                {
-                    test = false;
-                }
-            }
-            return amount;
-        }
-        private int CalculateQuantityVertical(Saw saw, Plate plate, Product product)
-        {
-            bool test = true;
-            int amount = 0;
-            int rest = plate.WidthWithTrim;
-
-            while (test)
-            {
-                rest -= (saw.Thickness + product.Width);
-                if (rest > 0)
-                {
-                    amount++;
-                }
-                else
-                {
-                    test = false;
-                }
-            }
-            return amount;
-        }
-
-        private double CalculatetMaxQuantityRestHorizontal(Saw saw, Plate plate, Product product, int quantity)
-        {
-            int length = (product.Length * quantity) + (quantity - 1 + saw.Thickness);
-            int rest = (plate.LengthWithTrim - length) * product.Width;
-            return (double)rest / plate.AreaWithTrim;
-        }
-        private double CalculateMaxQuantityRestVertical(Saw saw, Plate plate, Product product, int quantity)
-        {
-            int width = (product.Width * quantity) + (quantity - 1 + saw.Thickness);
-            int rest = (plate.WidthWithTrim - width) * product.Width;
-            return (double)rest / plate.AreaWithTrim;
-        }
-
-        private double CalculateRestHorizontal(Plate plate)
-        {
-            Product? lastProd = plate.Products.MaxBy(c => c.X);
-            int lenght = plate.LengthWithTrim - lastProd.Length;
-            return (double)(lenght * lastProd.Width) / plate.AreaWithTrim;
-        }
-
-        public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
-        {
-            int totalLength = (product.Length * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
-            int totalWidth = (product.Width * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
-
-            // past het langs elkaar?
-            bool horizontal = plates[0].LengthWithTrim > totalLength;
-            bool vertical = plates[0].WidthWithTrim > totalWidth;
-
-            // als er overschot is dan moet je de zaagblad breedte bereken voor elke snede
-            int lCount= plates[0].LengthWithTrim % product.Length;
-            int wCount= plates[0].WidthWithTrim % product.Width;
-
-            int maxHorizontal = CalculateQuantityHorizontal(saw, plates[0], product);
-            int maxVertical = CalculateQuantityVertical(saw, plates[0], product);
-
-            double restHorPercentage = CalculatetMaxQuantityRestHorizontal(saw, plates[0], product, maxHorizontal);
-            double restVertPercentage = CalculateMaxQuantityRestVertical(saw, plates[0], product, maxVertical);
-
-            for (int i = 0; i < product.Quantity; i++)
-            {
-                Product newProd = new Product(1, "", product.Length, product.Width, product.Height, product.Info);
-
-                
-            }
-
-            //for (int i = 0; i < product.Quantity; i++)
-            //{
-            //    Product prod = new Product(1, "", product.Length, product.Width, product.Height, product.Info);
-            //    if (plates[0].Products.Count == 0)
-            //    {
-            //        prod.X = 0;
-            //        prod.Y = 0;
-            //    }
-            //    else
-            //    {
-            //        Product? lastItemVertical = plates[0].Products.MaxBy(x => x.Y);
-            //        if ((lastItemVertical.Y + lastItemVertical.Width + saw.Thickness + prod.Width) < plates[0].WidthWithTrim)
-            //        {
-            //            // kan er nog een onder?
-            //            prod.X = 0;
-            //            prod.Y = lastItemVertical.Y + lastItemVertical.Width + saw.Thickness;
-            //        }
-            //        else
-            //        {
-            //            // kan er nog een langs
-            //            Product? lastItemHorizontal = plates[0].Products.MaxBy(x => x.X);
-            //            if ((lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness + prod.Length) < plates[0].LengthWithTrim)
-            //            {
-            //                if (!plates[0].Products.Any(c => c.X == lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness))
-            //                {
-            //                    prod.X = lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness;
-            //                    prod.Y = 0;
-            //                }
-            //                else
-            //                {
-            //                    prod.X = lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness;
-            //                    prod.Y = lastItemHorizontal.Y + lastItemHorizontal.Width;
-            //                }
-
-            //            }
-            //        }
-
-            //    }
-
-            //    plates[0].Products.Add(prod);
-
-            //}
-            return false;
-        }
-
-        public void Step1()
-        {
-            //// Vertical
-            //for (int i = 0; i < maxVertical; i++)
-            //{
-            //    Product prod = new Product(1, "", product.Length, product.Width, product.Height, product.Info);
-            //    if (i == 0)
-            //    {
-            //        prod.X = 0;
-            //        prod.Y = 0;
-            //    }
-            //    else
-            //    {
-            //        Product? lastItemVertical = plates[0].Products.MaxBy(x => x.Y);
-
-            //        prod.X = 0;
-            //        prod.Y = lastItemVertical.Y + lastItemVertical.Width + saw.Thickness;
-            //    }
-            //    plates[0].Products.Add(prod);
-            //}
-
-            //// Horizontal
-            //for(int i = 0; i < maxHorizontal; i++)
-            //{
-            //    Product prod = new Product(1, "", product.Length, product.Width, product.Height, product.Info);
-            //    if(i == 0)
-            //    {
-            //        prod.X = 0;
-            //        prod.Y = 0;
-            //    }
-            //    else
-            //    {
-            //        Product? lastItemHorizontal = plates[0].Products.MaxBy(x => x.X);
-
-            //        prod.X = lastItemHorizontal.X + lastItemHorizontal.Length + saw.Thickness;
-            //        prod.Y = 0;
-            //    }
-            //    plates[0].Products.Add(prod);
-            //}
-        }
-
-        public bool PlaceNext(Saw saw, List<Plate> plates, List<Product> products)
-        {
             throw new NotImplementedException();
         }
 
         public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
         {
-            throw new NotImplementedException();
+            // Creeer svgs and sorting
+            List<Svg> svgs = Init(plates);
+
+            // Keep looping throug products till it's empty
+            // Remove when added or reduce the quantity of places groups/rectangles
+            while (products.Count > 0)
+            {
+                List<Group> groups = SearchFits(svgs, products[0], saw);
+
+                if (products[0].Quantity > 1)
+                {
+                    CalculateProductQuantityManyWithRest(groups, saw, products);
+
+                    
+                }else if (products[0].Quantity == 1)
+                {
+                    CalculateProductQuantityOneWithRest(groups, saw, products);
+                    
+                }
+            }
+
+            return svgs;
+        }
+
+        private List<Svg> Init(List<Plate> plates)
+        {
+            List<Svg> svgs = new List<Svg>();
+
+            foreach (Plate plate in plates)
+            {
+                svgs.Add(new Svg(0, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
+            }
+
+            foreach (Svg svg in svgs)
+            {
+                svg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
+            }
+
+            return svgs;
+        }
+        private List<Group> SearchFits(List<Svg> svgs, Product product, Saw saw)
+        {
+            List<Group> fitGroups = new List<Group>();
+
+            foreach (Svg svg in svgs)
+            {
+                fitGroups.AddRange(
+                    svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0));
+            }
+
+            return fitGroups;
+        }
+        private Dictionary<Group, RestResult> CalculateGroupPosibilities(Saw saw, Product product, List<Svg> svgs)
+        {
+            Dictionary<Group, RestResult> results = new Dictionary<Group, RestResult>();
+
+
+
+            foreach (Svg svg in svgs) { 
+                foreach(Group group in svg.Groups)
+                {
+                    //RestResult rest = new RestResult {
+                    //    HorizontalQuantity = CalculateQuantityHorizontal(saw, group, product),
+                    //    HorizontalRest = 0,
+                    //    VerticalQuantity = CalculateQuantityVertical(saw, group, product),
+                    //    VerticalRest =  0
+                    //};
+
+                    //results.Add(group, rest); 
+                }
+            }
+
+            return results;
+        }
+        private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
+        {
+            bool test = true;
+            int amount = 0;
+            int rest = group.Length;
+            while (test)
+            {
+                if(amount == 0)
+                {
+                    rest -= product.Length;
+                }
+                else
+                {
+                    rest -= (saw.Thickness + product.Length);
+
+                }
+
+                if (rest > 0)
+                {
+                    amount++;
+                }
+                else
+                {
+                    test = false;
+                }
+            }
+            return amount;
+        }
+        private int CalculateQuantityVertical(Saw saw, Group group, Product product)
+        {
+            bool test = true;
+            int amount = 0;
+            int rest = group.Width;
+
+
+            while (test)
+            {
+                if(amount == 0)
+                {
+                    rest -= product.Width;
+                }
+                else
+                {
+                    rest -= (saw.Thickness + product.Width);
+                }
+
+                if (rest > 0)
+                {
+                    amount++;
+                }
+                else
+                {
+                    test = false;
+                }
+            }
+            return amount;
+        }
+        private void CalculateProductQuantityOneWithRest(List<Group> groups, Saw saw, List<Product> products)
+        {
+            List<Group> newGroups = new List<Group>();
+            Group selectedGroup = groups[0];
+            Product selectedProduct = products[0];
+
+            // Group with product
+            Group groupWithProduct = new Group(1, new Rectangle(0, selectedGroup.X, selectedGroup.Y, selectedProduct.Length, selectedProduct.Width, new Label(selectedProduct.Info)), selectedGroup.X, selectedGroup.Y, selectedProduct.Length, selectedProduct.Width);
+            groupWithProduct.Svg = selectedGroup.Svg;
+            newGroups.Add(groupWithProduct);
+
+            //CaclulateGroupRight(saw, selectedGroup, groupWithProduct, newGroups);
+
+            // Group right of product
+            int groupRightX = groupWithProduct.X + groupWithProduct.Length + 1 + saw.Thickness;
+            int groupRightY = groupWithProduct.Y;
+            int groupRightLength = selectedGroup.Svg.ViewBox.Length - groupWithProduct.X - groupWithProduct.Length - saw.Thickness;
+            int groupRightWidth = groupWithProduct.Width;
+            Group groupRight = new Group(0, new Rectangle(0, groupRightX, groupRightY, groupRightLength, groupRightWidth, new Label("0")), groupRightX, groupRightY, groupRightLength, groupRightWidth);
+            groupRight.Svg = selectedGroup.Svg;
+            newGroups.Add(groupRight);
+
+            if (groupWithProduct.Width != selectedGroup.Width)
+            {
+                //CalculateGroupUnder(saw,selectedGroup, groupWithProduct, newGroups, selectedProduct);
+
+                // Group under product
+                int groupUnderX = groupWithProduct.X;
+                int groupUnderY = groupWithProduct.Y + groupWithProduct.Width + 1 + saw.Thickness;
+                int groupUnderLength = selectedGroup.Length;
+                int groupUnderWidth = selectedGroup.Width - groupWithProduct.Width - saw.Thickness;
+                //if (groupUnderY + groupUnderWidth < svg.ViewBox.Width) groupUnderWidth -= saw.Thickness;
+                Group groupUnder = new Group(0, new Rectangle(0, groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth, new Label("0")), groupUnderX, groupUnderY, groupUnderLength, groupUnderWidth);
+                groupUnder.Svg = selectedGroup.Svg;
+                newGroups.Add(groupUnder);
+            }
+
+            selectedGroup.Svg.Groups.AddRange(newGroups);
+            selectedGroup.Svg.Groups.Remove(selectedGroup);
+            products.Remove(products[0]);
+
+        }
+        private void CalculateProductQuantityManyWithRest(List<Group> groups, Saw saw, List<Product> products)
+        {
+            List<Group> newGroups = new List<Group>();
+            Group selectedGroup = groups[0];
+            Product selectedProduct = products[0];
+
+            // Groeperingen maken voor products met 2 of meer quantity
+            int maxHorizontal = CalculateQuantityHorizontal(saw, selectedGroup, selectedProduct);
+            int maxVertical = CalculateQuantityVertical(saw, selectedGroup, selectedProduct);
+
+            int length = 0;
+            int width = 0;
+            int x = 0;
+            int y = 0;
+
+            Group lastCreated = new();
+
+            //if (maxHorizontal >= selectedProduct.Quantity)
+            //{
+            //    // alles kan op een lijn.
+            //    for (int i = 0; i < selectedProduct.Quantity; i++)
+            //    {
+            //        length = selectedProduct.Length;
+            //        width = selectedProduct.Width;
+            //        x = selectedGroup.X + lastCreated.X + lastCreated.Length;
+            //        y = selectedGroup.Y;
+
+            //        if (i > 0) x += saw.Thickness + 1;
+
+            //        lastCreated = new Group(1, new Rectangle(1, x, y, length, width, new Label("1")), x, y, length, width);
+            //        lastCreated.Svg = selectedGroup.Svg;
+
+            //        newGroups.Add(lastCreated);
+            //    }
+
+            //    CaclulateGroupRight(saw, selectedGroup, lastCreated, newGroups);
+            //    CalculateGroupUnder(saw, selectedGroup, lastCreated, newGroups, selectedProduct);
+
+            //    //}else if (product.Quantity % maxHorizontal == 0) {
+            //    //    // even aantal over meerdere lijnen
+
+            //}
+            //else
+            if (maxVertical >= selectedProduct.Quantity)
+            {
+                // passen niet allemaal horizontaal dus verticale proberen
+
+                for (int i = 0; i < selectedProduct.Quantity; i++)
+                {
+                    length = selectedProduct.Length;
+                    width = selectedProduct.Width;
+                    x = selectedGroup.X;
+                    y = selectedGroup.Y + lastCreated.Y + lastCreated.Width;
+
+                    if (i > 0) y += saw.Thickness + 1;
+
+                    lastCreated = new Group(1, new Rectangle(1, x, y, length, width, new Label("1")), x, y, length, width);
+                    lastCreated.Svg = selectedGroup.Svg;
+
+                    newGroups.Add(lastCreated);
+                }
+                CaclulateGroupRight(saw, selectedGroup, lastCreated, newGroups);
+                CalculateGroupUnder(saw, selectedGroup, lastCreated, newGroups, selectedProduct);
+            }
+
+            selectedGroup.Svg.Groups.AddRange(newGroups);
+            selectedGroup.Svg.Groups.Remove(selectedGroup);
+            products.Remove(selectedProduct);
+        }
+        private void CaclulateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
+        {
+            bool horizontalRun = newGroups.GroupBy(c=>c.Y).Count() == 1;
+            int length = 0;
+            if(horizontalRun)
+            {
+                length = group.Length - (lastCreated.Length * newGroups.Count) - ((saw.Thickness + 1) * newGroups.Count);
+            }
+            else
+            {
+                length = group.Length - lastCreated.Length - saw.Thickness - 1;
+            }
+
+            int width = lastCreated.Y + lastCreated.Width;
+            int x = lastCreated.X + lastCreated.Length + 1 + saw.Thickness;
+            int y = group.Y;
+
+            lastCreated = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
+            lastCreated.Svg = group.Svg; ;
+            newGroups.Add(lastCreated);
+        }
+        private void CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups, Product product)
+        {
+            if(lastCreated.Y + lastCreated.Width != group.Width)
+            {
+                int length = group.Length;
+                int width = group.Width - (lastCreated.Y + lastCreated.Width + saw.Thickness + 1);
+                int x = group.X;
+                int y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
+
+                lastCreated = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
+                lastCreated.Svg = group.Svg;
+                newGroups.Add(lastCreated);
+            }
         }
     }
 }

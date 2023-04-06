@@ -20,6 +20,18 @@ namespace CuttingOptimizer.Domain.Models
             Products = new List<Product>();
         }
 
+        public Plate(int quantity, string id, int length, int width, int height, int trim, int priority)
+        {
+            Quantity = quantity;
+            ID = id;
+            Width = width;
+            Length = length;
+            Height = height;
+            Trim = trim;
+            Priority = priority;
+            Products = new List<Product>();
+        }
+
         [Required]
         public string ID { get; set; }
 
@@ -69,9 +81,13 @@ namespace CuttingOptimizer.Domain.Models
         [Range(1, 100)]
         public int Quantity { get; set; }
 
+        [NotMapped]
+        [Range(0, 10)]
+        public int Priority { get; set; }       // Higher the Priority the more important it is
+        
         public override string ToString()
         {
-            return "Quantity: " + Quantity + " | ID: " + ID + " | L: " + Length + " | W: " + Width + " | H: " + Height + " | Trim: " + Trim + " | Vineer: " + Veneer;
+            return "Quantity: " + Quantity + " | ID: " + ID + " | L: " + Length + " | W: " + Width + " | H: " + Height + " | Trim: " + Trim + " | Vineer: " + Veneer + " | Priority: " + Priority;
         }
     }
 }

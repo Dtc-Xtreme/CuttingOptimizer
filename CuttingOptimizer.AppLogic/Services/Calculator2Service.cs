@@ -28,7 +28,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             foreach (Plate plate in plates)
             {
-                svgs.Add(new Svg(0, new ViewBox(0,0, plate.LengthWithTrim, plate.WidthWithTrim)));
+                svgs.Add(new Svg(0, new ViewBox(0,0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
             }
 
             // Creeer Eerste group per svg
@@ -266,16 +266,6 @@ namespace CuttingOptimizer.AppLogic.Services
         //        svg.Groups.Add(newGroup);
         //    }
         //}
-
-        public bool PlaceNextInBundle(Saw saw, List<Plate> plates, Product product)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool PlaceNext(Saw saw, List<Plate> plates, List<Product> products)
-        {
-            throw new NotImplementedException();
-        }
 
         private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
         {

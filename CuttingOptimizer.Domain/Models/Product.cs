@@ -47,7 +47,7 @@ namespace CuttingOptimizer.Domain.Models
         {
             get
             {
-                return Width * Length;
+                return (Width * Length) * Quantity;
             }
         }
 

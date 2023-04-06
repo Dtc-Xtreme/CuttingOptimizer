@@ -136,18 +136,22 @@
 
         Plates = new List<Plate>
         {
-            new Plate(1, "PL1", 2006, 400, 0, 0),
-            //new Plate(1, "PL2", 800, 400, 5, 0),
+            new Plate(1, "PL1", 2006, 400, 0, 0, 1),
+            //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
+            //new Plate(1, "PL2", 800, 400, 5, 0, 0),
         };
 
         Products = new List<Product>
         {
-            new Product(4, "X1", 900, 40, 5, "x1"),
-            //new Product(2, "X1", 900, 40, 5, "x1"),
+            new Product(8, "X1", 800, 40, 5, "x1"),
+            new Product(8, "X1", 800, 40, 5, "x1"),
+            //new Product(4, "X1", 800, 40, 5, "x1"),
+            //new Product(1, "X1", 900, 80, 5, "x1"),
+            //new Product(8, "X1", 200, 20, 5, "x1"),
             //new Product(1, "X1", 200, 20, 5, "x1"),
             //new Product(10, "X2", 40, 150, 5, "x2"),
             //new Product(15, "X2", 150, 40, 5, "x2"),
-            //new Product(6, "X3", 120, 80, 5, "x3"),
+            //new Product(2, "X3", 120, 80, 5, "x3"),
             //new Product(2, "X4", 1000, 200, 5, "x4"),
             //new Product(1, "X4", 240, 300, 5, "x4"),
         };
@@ -172,11 +176,11 @@
         Scale = Plates.Max(c => c.LengthWithTrim) / (double)100;
 
         // Sort Product on area biggest to smallest
-        Plates = Plates.OrderByDescending(c => c.Area).ToList();
-        Products = Products.OrderByDescending(c => c.Area).ToList();
+        Plates = Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
+        Products = Products.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
 
 
-        Svgs = calculateService.Place(Saw, Plates, Products);
+        Svgs = calculateService.Place(Saw, Plates, Products.ToList());
     }
 
     public void AddPlate()
