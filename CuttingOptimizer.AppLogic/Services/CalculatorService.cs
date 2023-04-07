@@ -13,11 +13,6 @@ namespace CuttingOptimizer.AppLogic.Services
 {
     public class CalculatorService : ICalculatorService
     {
-        public int Area(int width, int length)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
         {
             // Creeer svgs and sorting
@@ -196,13 +191,6 @@ namespace CuttingOptimizer.AppLogic.Services
             int maxHorizontal = CalculateQuantityHorizontal(saw, selectedGroup, selectedProduct);
             int maxVertical = CalculateQuantityVertical(saw, selectedGroup, selectedProduct);
 
-            int length = 0;
-            int width = 0;
-            int x = 0;
-            int y = 0;
-
-            Group lastCreated = new();
-
             #region
             //if (maxHorizontal >= selectedProduct.Quantity)
             //{
@@ -247,6 +235,13 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 runs = products[0].Quantity - rest;
             }
+
+            // Create new groups/products
+            Group lastCreated = new();
+            int length = 0;
+            int width = 0;
+            int x = 0;
+            int y = 0;
 
             for (int i = 0; i < runs; i++)
             {

@@ -143,10 +143,10 @@
 
         Products = new List<Product>
         {
-            new Product(1, "X1", 800, 40, 5, "x1"),
             //new Product(1, "X1", 800, 40, 5, "x1"),
             //new Product(1, "X1", 800, 40, 5, "x1"),
-            //new Product(6, "X1", 800, 40, 5, "x1"),
+            //new Product(1, "X1", 800, 40, 5, "x1"),
+            new Product(6, "X1", 800, 40, 5, "x1"),
             //new Product(2, "X1", 800, 40, 5, "x1"),
             //new Product(2, "X1", 800, 40, 5, "x1"),
             //new Product(2, "X1", 350, 40, 5, "x1"),
@@ -180,6 +180,8 @@
 
         // Find the biggest plate to represent as 100% width
         Scale = Plates.Max(c => c.LengthWithTrim) / (double)100;
+
+        // Merge Products with same sizes
 
         // Sort Product on area biggest to smallest
         Plates = Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
