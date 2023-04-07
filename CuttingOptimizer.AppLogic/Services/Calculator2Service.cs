@@ -112,7 +112,7 @@ namespace CuttingOptimizer.AppLogic.Services
             if (product.Quantity == 1)
             {
                 // Group with product
-                Group groupWithProduct = new Group(1, new Rectangle(0, group.X, group.Y, product.Length, product.Width, new Label(product.Info)), group.X, group.Y, product.Length, product.Width);
+                Group groupWithProduct = new Group(1, new Rectangle(0, group.X, group.Y, product.Length, product.Width, new Label(product.ID)), group.X, group.Y, product.Length, product.Width);
                 groupWithProduct.Svg = group.Svg;
                 newGroups.Add(groupWithProduct);
 
@@ -305,6 +305,11 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
             }
             return amount;
+        }
+
+        public List<Product> CombineProductsWithSameDimentions(List<Product> products)
+        {
+            throw new NotImplementedException();
         }
     }
 }

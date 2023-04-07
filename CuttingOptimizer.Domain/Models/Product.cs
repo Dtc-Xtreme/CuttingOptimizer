@@ -16,14 +16,13 @@ namespace CuttingOptimizer.Domain.Models
 
         }
 
-        public Product(int quantity, string iD, int length, int width,  int height, string info)
+        public Product(int quantity, string id, int length, int width,  int height/*, string info*/)
         {
             Quantity = quantity;
-            ID = iD;
+            ID = id;
             Width = width;
             Length = length;
             Height = height;
-            Info = info;
         }
 
         [Required]
@@ -40,8 +39,6 @@ namespace CuttingOptimizer.Domain.Models
 
         public int X { get; set; }
         public int Y { get; set; }
-
-        public string Info { get; set; }
 
         public double Area
         {
@@ -70,7 +67,7 @@ namespace CuttingOptimizer.Domain.Models
 
         public override string ToString()
         {
-            return "Quantity: " + Quantity + " | Info: " + Info + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
+            return "Quantity: " + Quantity + " | ID: " + ID + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
         }
     }
 }

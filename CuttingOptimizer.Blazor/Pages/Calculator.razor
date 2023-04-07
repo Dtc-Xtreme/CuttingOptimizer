@@ -92,10 +92,10 @@
             <label for="productHeight">Hoogte</label>
             <InputNumber class="form-control" id="productHeight" @bind-Value="Product.Height" placeholder="Hoogte" />
         </div>
-        <div class="form-group col-auto">
+@*        <div class="form-group col-auto">
             <label for="productInfo">Info</label>
             <InputText class="form-control" id="productInfo" @bind-Value="Product.Info" placeholder="Info" />
-        </div>
+        </div>*@
         <div class="form-check-inline col-auto">
             <button class="btn btn-primary mt-3">Toevoegen</button>
         </div>
@@ -143,23 +143,14 @@
 
         Products = new List<Product>
         {
-            //new Product(1, "X1", 800, 40, 5, "x1"),
-            //new Product(1, "X1", 800, 40, 5, "x1"),
-            //new Product(1, "X1", 800, 40, 5, "x1"),
-            new Product(6, "X1", 800, 40, 5, "x1"),
-            //new Product(2, "X1", 800, 40, 5, "x1"),
-            //new Product(2, "X1", 800, 40, 5, "x1"),
-            //new Product(2, "X1", 350, 40, 5, "x1"),
-            //new Product(2, "X1", 800, 40, 5, "x1"),
-            //new Product(2, "X1", 300, 40, 5, "x1"),
-            //new Product(1, "X1", 300, 40, 5, "x1"),
-            //new Product(2, "X1", 200, 20, 5, "x1"),
-            //new Product(1, "X1", 200, 20, 5, "x1"),
-            //new Product(5, "X2", 40, 150, 5, "x2"),
-            //new Product(15, "X2", 150, 40, 5, "x2"),
-            //new Product(2, "X3", 120, 80, 5, "x3"),
-            //new Product(2, "X4", 1000, 200, 5, "x4"),
-            //new Product(1, "X4", 240, 300, 5, "x4"),
+            //new Product(1, "X1", 800, 40, 5),
+            //new Product(2, "X1", 200, 40, 5),
+            //new Product(1, "X1", 600, 20, 5),
+            new Product(3, "X2", 400, 100, 5),
+            //new Product(4, "X3", 40, 150, 5),
+            //new Product(1, "X3", 40, 150, 5),
+            //new Product(2, "X4", 40, 150, 5),
+
         };
 
         HandleSubmit();
@@ -182,6 +173,7 @@
         Scale = Plates.Max(c => c.LengthWithTrim) / (double)100;
 
         // Merge Products with same sizes
+        //Products = calculateService.CombineProductsWithSameDimentions(Products);
 
         // Sort Product on area biggest to smallest
         Plates = Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
