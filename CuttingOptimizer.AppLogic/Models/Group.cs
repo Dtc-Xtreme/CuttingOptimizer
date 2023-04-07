@@ -37,5 +37,14 @@ namespace CuttingOptimizer.AppLogic.Models
         public int Length { get; set; }
         public int Width { get; set; }
         public Svg Svg { get; set; }
+        public int Area
+        {
+            get { return Length * Width; }
+        }
+
+        public override string ToString()
+        {
+            return "L: " + Length + " | W: " + Width + " | Area: " + Area + " | ID: " + Id;
+        }
     }
 }
