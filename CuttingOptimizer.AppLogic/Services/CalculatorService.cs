@@ -29,16 +29,14 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 List<Group> groups = SearchFits(svgs, products[0], saw);
 
-                if (products[0].Quantity > 1)
-                {
+                //if (products[0].Quantity > 1)
+                //{
                     CalculateProductQuantityManyWithRest(groups, saw, products);
 
-                    
-                }else if (products[0].Quantity == 1)
-                {
-                    CalculateProductQuantityOneWithRest(groups, saw, products);
-                    
-                }
+                //}else if (products[0].Quantity == 1)
+                //{
+                //    CalculateProductQuantityOneWithRest(groups, saw, products);
+                //}
             }
 
             return svgs;
@@ -60,14 +58,29 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return svgs;
         }
+        private Svg AddSvg(Svg svg)
+        {
+            Svg newSvg = new Svg(0, new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), svg.Priority);
+            newSvg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
+
+            return svg;
+        }
         private List<Group> SearchFits(List<Svg> svgs, Product product, Saw saw)
         {
             List<Group> fitGroups = new List<Group>();
 
-            foreach (Svg svg in svgs)
+            while(fitGroups.Count == 0)
             {
-                fitGroups.AddRange(
-                    svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0));
+                foreach (Svg svg in svgs)
+                {
+                    fitGroups.AddRange(
+                        svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0));
+                }
+
+                if (fitGroups.Count == 0)
+                {
+                    svgs.Add(svgs.MaxBy(c => c.Priority));
+                }
             }
 
             return fitGroups;
@@ -196,8 +209,9 @@ namespace CuttingOptimizer.AppLogic.Services
         private void CalculateProductQuantityManyWithRest(List<Group> groups, Saw saw, List<Product> products)
         {
             List<Group> newGroups = new List<Group>();
-            Group selectedGroup = groups[0];
+            Group selectedGroup = groups.First();
             Product selectedProduct = products[0];
+
 
             // Groeperingen maken voor products met 2 of meer quantity
             int maxHorizontal = CalculateQuantityHorizontal(saw, selectedGroup, selectedProduct);
@@ -210,6 +224,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             Group lastCreated = new();
 
+            #region
             //if (maxHorizontal >= selectedProduct.Quantity)
             //{
             //    // alles kan op een lijn.
@@ -236,6 +251,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             //}
             //else
+            #endregion
             if (maxVertical >= selectedProduct.Quantity)
             {
                 // passen niet allemaal horizontaal dus verticale proberen
