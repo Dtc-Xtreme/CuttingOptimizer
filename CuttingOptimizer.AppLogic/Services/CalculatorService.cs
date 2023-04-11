@@ -73,7 +73,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
             }
 
-            return fitGroups;
+            return fitGroups.OrderBy(c => c.Area).ToList();
         }
         private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
         {
@@ -167,7 +167,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             int vert = selectedProduct.Quantity / maxHorizontal;
             int rest = selectedProduct.Quantity % maxHorizontal;
-            int runs = 1;
+            int runs = 3;
 
             #region
             //if (maxHorizontal >= selectedProduct.Quantity)
@@ -248,7 +248,7 @@ namespace CuttingOptimizer.AppLogic.Services
             selectedGroup.Svg.Groups.AddRange(newGroups);
             selectedGroup.Svg.Groups.Remove(selectedGroup);
             selectedProduct.Quantity -= runs;
-            if(selectedProduct.Quantity == 0) products.Remove(selectedProduct);
+            if(selectedProduct.Quantity <= 0) products.Remove(selectedProduct);
         }
         private Group CaclulateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
         {
