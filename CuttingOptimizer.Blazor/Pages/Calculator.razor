@@ -122,7 +122,7 @@
 
     protected override void OnInitialized()
     {
-        Saw = new Saw("SX1", 10);
+        Saw = new Saw("SX1", 2);
         Plate = new Plate();
         Plate.Quantity = 1;
         Product = new Product();
@@ -139,11 +139,14 @@
 
         Products = new List<Product>
         {
-            //new Product(1, "X1", 800, 40, 5),
-            new Product(5, "X1", 200, 40, 5),
-            new Product(5, "X2", 200, 40, 5),
-            //new Product(1, "X1", 600, 20, 5),
-            //new Product(1, "X2", 300, 100, 5),
+            new Product(1, "X1", 800, 40, 5),
+            new Product(1, "X2", 800, 40, 5),
+            new Product(1, "X3", 800, 40, 5),
+            new Product(27, "K1", 200, 40, 5),
+            new Product(9, "K2", 200, 40, 5),
+            //new Product(18, "X2", 200, 40, 5),
+            //new Product(1, "X1", 600, 30, 5),
+            new Product(2, "X2", 300, 150, 5),
             //new Product(4, "X3", 40, 150, 5),
             //new Product(1, "X3", 40, 150, 5),
             //new Product(2, "X4", 40, 150, 5),
@@ -168,6 +171,9 @@
 
         // Find the biggest plate to represent as 100% width
         Scale = Plates.Max(c => c.LengthWithTrim) / (double)100;
+
+        // Sort Products from biggest area to smallest
+        Products = Products.OrderByDescending(c => c.Area).ToList();
 
         // Create copy of products because ref will change the data
         List<Product> productList = new();

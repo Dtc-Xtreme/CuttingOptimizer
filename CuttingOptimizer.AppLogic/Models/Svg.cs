@@ -8,20 +8,28 @@ namespace CuttingOptimizer.AppLogic.Models
 {
     public class Svg
     {
-        public Svg() { }
+        public Svg() { 
+            ViewBox = new ViewBox();
+        }
 
-        public Svg(int id, ViewBox viewBox, int priority)
+        public Svg(string id, ViewBox viewBox, int priority)
         {
-            Id = id;
+            ID = id;
             ViewBox = viewBox;
             Priority = priority;
             Groups = new List<Group>();
         }
 
-        public int Id { get; set; }
+        public string ID { get; set; }
         public ViewBox ViewBox { get;set; }
         public List<Group> Groups { get; set; }
         public int Priority { get; set; }
+        public int Area
+        {
+            get { 
+                return ViewBox.Length * ViewBox.Width; 
+            }
+        }
 
         public void AddGroup(Group group)
         {

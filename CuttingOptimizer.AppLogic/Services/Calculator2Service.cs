@@ -28,7 +28,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             foreach (Plate plate in plates)
             {
-                svgs.Add(new Svg(0, new ViewBox(0,0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
+                svgs.Add(new Svg(plate.ID, new ViewBox(0,0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
             }
 
             // Creeer Eerste group per svg
@@ -78,7 +78,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
         }else if(product.Quantity > 1)
             {
-                fitGroups.Add(svgs.First(c=>c.Id == 0).Groups[0]);
+                fitGroups.Add(svgs.First(c=>c.ID == "0").Groups[0]);
             }
 
 
