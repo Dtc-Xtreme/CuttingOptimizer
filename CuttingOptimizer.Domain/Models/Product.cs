@@ -69,5 +69,10 @@ namespace CuttingOptimizer.Domain.Models
         {
             return "Quantity: " + Quantity + " | ID: " + ID + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
         }
+
+        public Product ShallowCopy()
+        {
+            return (Product)this.MemberwiseClone();
+        }
     }
 }

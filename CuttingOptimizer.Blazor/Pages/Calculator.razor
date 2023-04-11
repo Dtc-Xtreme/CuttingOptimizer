@@ -140,9 +140,10 @@
         Products = new List<Product>
         {
             //new Product(1, "X1", 800, 40, 5),
-            //new Product(2, "X1", 200, 40, 5),
+            new Product(5, "X1", 200, 40, 5),
+            new Product(5, "X2", 200, 40, 5),
             //new Product(1, "X1", 600, 20, 5),
-            new Product(3, "X2", 300, 100, 5),
+            //new Product(1, "X2", 300, 100, 5),
             //new Product(4, "X3", 40, 150, 5),
             //new Product(1, "X3", 40, 150, 5),
             //new Product(2, "X4", 40, 150, 5),
@@ -163,20 +164,27 @@
     public void HandleSubmit()
     {
         // Clear products out of the plates
-        Reset();
+        //Reset();
 
         // Find the biggest plate to represent as 100% width
         Scale = Plates.Max(c => c.LengthWithTrim) / (double)100;
 
+        // Create copy of products because ref will change the data
+        List<Product> productList = new();
+
+        foreach(Product prod in Products)
+        {
+            productList.Add(prod.ShallowCopy());
+        }
+
         // Merge Products with same sizes
-        //Products = calculateService.CombineProductsWithSameDimentions(Products);
+        productList = calculateService.CombineProductsWithSameDimentions(productList);
 
         // Sort Product on area biggest to smallest
         Plates = Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
-        Products = Products.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
+        productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
 
-
-        Svgs = calculateService.Place(Saw, Plates, Products.ToList());
+        Svgs = calculateService.Place(Saw, Plates, productList.ToList());
     }
 
     public void AddPlate()
