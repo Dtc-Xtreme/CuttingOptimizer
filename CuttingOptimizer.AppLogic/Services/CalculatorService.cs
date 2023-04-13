@@ -90,22 +90,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 {
 
                     // als het past
-                    if(selectedProduct.Quantity/maxHorizontal < maxVertical)
-                    {
-                        CalculateGroupBlock(selectedProduct, saw, selectedGroup, (selectedProduct.Quantity / maxHorizontal), maxHorizontal);
-                    }
-                    else
-                    {
-                        // het neemt de kleinste en kijkt als het er min 1x inpast. hier kan je ook een andere group kiezen waar er een grotere block in kan als er meerdere groups mogelijkzijn.
-                        if(groups.Count == 1)
-                        {
-                            CalculateGroupBlock(selectedProduct, saw, selectedGroup, maxVertical, maxHorizontal);
-                        }
-                        else
-                        {
-
-                        }
-                    }
+                    CalculateGroupBlock(selectedProduct, saw, selectedGroup, (selectedProduct.Quantity/maxHorizontal), maxHorizontal);
                     // als het groter is dan 1 plate moet de rest opgesplits worden
 
                 }
