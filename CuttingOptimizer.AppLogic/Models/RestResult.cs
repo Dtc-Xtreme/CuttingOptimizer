@@ -9,8 +9,14 @@ namespace CuttingOptimizer.AppLogic.Models
     public class RestResult
     {
         public int HorizontalQuantity { get; set; }
-        public int HorizontalRest { get; set; }
+        public int Rest { get; set; }
         public int VerticalQuantity { get; set; }
-        public int VerticalRest { get; set; }
+        public int Vert { get; set; }
+        public bool Fit { get; set; }
+
+        public override string ToString()
+        {
+            return "HorQ: " + HorizontalQuantity + " | VertQ: " + VerticalQuantity + " | Rest: " + Rest + " | Vert: " + Vert + " | Fit: " + Fit; 
+        }
     }
 }

@@ -75,32 +75,35 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             else if (selectedProduct.Quantity > 1)
             {
-                selectedGroup = groups.First();
-                // Max Horizontal/Vertical
-                int maxHorizontal = CalculateQuantityHorizontal(saw, selectedGroup, selectedProduct);
-                int maxVertical = CalculateQuantityVertical(saw, selectedGroup, selectedProduct);
+                var results = CalculateDiffrentPossibilitiesForGroups(groups, selectedProduct, saw);
+                // Find the smalles where they fill all
+                var result = results.First();
+                //var result = results.FirstOrDefault(c => c.Value.Fit == true);
+                //if(result.Key == null) result = results.First();
 
-                int vert = selectedProduct.Quantity / maxHorizontal;
-                int rest = selectedProduct.Quantity % maxHorizontal;
-                int runs = selectedProduct.Quantity / vert;
-                //if (vert == 1) runs = vert;
-
-
-                if (rest == 0)
+                if (result.Value.Rest == 0)
                 {
 
                     // als het past
-                    CalculateGroupBlock(selectedProduct, saw, selectedGroup, (selectedProduct.Quantity/maxHorizontal), maxHorizontal);
+                    if (selectedProduct.Quantity / result.Value.HorizontalQuantity < result.Value.VerticalQuantity)
+                    {
+                        CalculateGroupBlock(selectedProduct, saw, result.Key, (selectedProduct.Quantity / result.Value.HorizontalQuantity), result.Value.HorizontalQuantity);
+                    }
+                    else
+                    {
+                        // het neemt de kleinste en kijkt als het er min 1x inpast. hier kan je ook een andere group kiezen waar er een grotere block in kan als er meerdere groups mogelijkzijn.
+                        CalculateGroupBlock(selectedProduct, saw, result.Key, result.Value.VerticalQuantity, result.Value.HorizontalQuantity);
+                    }
                     // als het groter is dan 1 plate moet de rest opgesplits worden
 
                 }
-                else if (rest != 0 && selectedProduct.Quantity > maxHorizontal)
+                else if (result.Value.Rest != 0 && selectedProduct.Quantity > result.Value.HorizontalQuantity)
                 {
-                    CalculateGroupBlock(selectedProduct, saw, selectedGroup, vert, maxHorizontal);
+                    CalculateGroupBlock(selectedProduct, saw, result.Key, result.Value.Vert, result.Value.HorizontalQuantity);
                 }
-                else if (selectedProduct.Quantity == maxHorizontal)
+                else if (selectedProduct.Quantity == result.Value.HorizontalQuantity)
                 {
-                    CalculateGroupHorizontal(selectedProduct, saw, selectedGroup, maxHorizontal);
+                    CalculateGroupHorizontal(selectedProduct, saw, result.Key, result.Value.HorizontalQuantity);
                 }
                 else
                 {
@@ -114,9 +117,32 @@ namespace CuttingOptimizer.AppLogic.Services
             }
         }
 
-        private void CalculateDiffrentPossibilitiesForGroups(List<Group> groups, Product product)
+        private Dictionary<Group, RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, Product product, Saw saw)
         {
+            Dictionary<Group, RestResult> results = new Dictionary<Group, RestResult>();
 
+            foreach(Group group in groups)
+            {
+                int maxHorizontal = CalculateQuantityHorizontal(saw, group, product);
+                int maxVertical = CalculateQuantityVertical(saw, group, product);
+
+                int vert = product.Quantity / maxHorizontal;
+                int rest = product.Quantity % maxHorizontal;
+                int restWidth = 0;
+                int restHeight = 0;
+                bool fit = maxHorizontal * maxVertical >= product.Quantity;
+
+                results.Add(group, new RestResult
+                {
+                    HorizontalQuantity = maxHorizontal,
+                    VerticalQuantity = maxVertical,
+                    Rest = rest,
+                    Vert = vert,
+                    Fit = fit
+                });
+            }
+
+            return results;
         }
 
         private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
@@ -284,7 +310,7 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         private Group? CalculateGroupUnder(Saw saw, Group group, Group right, Group lastCreated)
         {
-            if(lastCreated.Y + lastCreated.Width != group.Width)
+            if(lastCreated.Y + lastCreated.Width != group.Width /*&& group.Width != right.Width*/)
             {
                 int length = group.Length;
                 int width = group.Width - right.Width - saw.Thickness - 1;
