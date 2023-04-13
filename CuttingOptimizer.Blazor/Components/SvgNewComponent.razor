@@ -2,7 +2,7 @@
 @using CuttingOptimizer.Domain.Models;
 @using System.Globalization;
 
-<h3>@Svg.ID (@AreaPercentage)</h3>
+<h3>@Svg.ID (Rest: @AreaPercentage.ToString("P", CultureInfo.InvariantCulture))</h3>
 <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
     @if(Svg.Groups != null && Svg.Groups.Count != 0)
     {
@@ -64,7 +64,7 @@
     {
         get
         {
-            return (double)Svg.Area / Svg.Groups.Sum(c => c.Area);
+            return Svg.Groups.Where(c => c.Id == 0).Sum(c => c.Area) / (double)Svg.Area;
         }
     }
 }
