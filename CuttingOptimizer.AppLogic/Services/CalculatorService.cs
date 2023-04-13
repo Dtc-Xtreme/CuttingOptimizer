@@ -129,6 +129,11 @@ namespace CuttingOptimizer.AppLogic.Services
             }
         }
 
+        private void CalculateDiffrentPossibilitiesForGroups(List<Group> groups, Product product)
+        {
+
+        }
+
         private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
         {
             bool test = true;
