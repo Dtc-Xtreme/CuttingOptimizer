@@ -24,11 +24,11 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 products = products.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
 
-                ChooseCalculation(svgs, saw, products);
+                ChooseCalculation(ref svgs, saw, products);
                 RemoveProductsWithQuantityZero(products);
             }
 
-            return svgs;
+            return svgs.OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -47,55 +47,64 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return svgs;
         }
-        private Svg AddSvg(Svg svg)
+        private List<Svg> AddSvg(List<Svg> svgs, Svg svg)
         {
-            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), svg.Priority);
+            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 2);
             newSvg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
 
-            return svg;
+            svgs.Add(newSvg);
+
+            return svgs;
         }
         private void RemoveProductsWithQuantityZero(List<Product> products)
         {
             products.RemoveAll(c => c.Quantity <= 0);
         }
 
-        private void ChooseCalculation(List<Svg> svgs, Saw saw, List<Product> products)
+        private void ChooseCalculation(ref List<Svg> svgs, Saw saw, List<Product> products)
         {
-            List<Group> groups = SearchFits(svgs, products[0], saw);
             Group selectedGroup;
             Product selectedProduct = products[0];
+            List<Group> groups = SearchFits(ref svgs, selectedProduct, saw);
 
             if (selectedProduct.Quantity == 1)
             {
                 // Sort smalles to biggest and select first
-                selectedGroup = groups.OrderBy(c => c.Length).ThenBy(c => c.Width).First();
+                selectedGroup = groups.First();
                 CalculateGroupsVertical(selectedProduct, saw, selectedGroup, 1);
             }
             else if (selectedProduct.Quantity > 1)
             {
-                selectedGroup = groups.OrderBy(c => c.Length).ThenBy(c => c.Width).First();
+                selectedGroup = groups.First();
                 // Max Horizontal/Vertical
                 int maxHorizontal = CalculateQuantityHorizontal(saw, selectedGroup, selectedProduct);
                 int maxVertical = CalculateQuantityVertical(saw, selectedGroup, selectedProduct);
 
                 int vert = selectedProduct.Quantity / maxHorizontal;
                 int rest = selectedProduct.Quantity % maxHorizontal;
-                //int runs = selectedProduct.Quantity / vert;
+                int runs = selectedProduct.Quantity / vert;
                 //if (vert == 1) runs = vert;
 
-                // Search groups
-                var a = groups.FindAll(c => MaxHorizontalFit(c, selectedProduct, saw));
-                var b = groups.FindAll(c => MaxVerticalFit(c, selectedProduct, saw));
-
-                //selectedGroup = a.First();
-                //CalculateGroupsVertical(selectedProduct, saw, selectedGroup, 1);
-                //CalculateGroupsVertical(selectedProduct, saw, selectedGroup, maxVertical);
 
                 if (rest == 0)
                 {
+
                     // als het past
-                    CalculateGroupBlock(selectedProduct, saw, selectedGroup, (selectedProduct.Quantity/maxHorizontal), maxHorizontal);
+                    if(selectedProduct.Quantity/maxHorizontal < maxVertical)
+                    {
+                        CalculateGroupBlock(selectedProduct, saw, selectedGroup, (selectedProduct.Quantity / maxHorizontal), maxHorizontal);
+                    }
+                    else
+                    {
+                        // het neemt de kleinste en kijkt als het er min 1x inpast. hier kan je ook een andere group kiezen waar er een grotere block in kan als er meerdere groups mogelijkzijn.
+                        CalculateGroupBlock(selectedProduct, saw, selectedGroup, maxVertical, maxHorizontal);
+                    }
                     // als het groter is dan 1 plate moet de rest opgesplits worden
+
+                }
+                else if (rest != 0 && selectedProduct.Quantity > maxHorizontal)
+                {
+                    CalculateGroupBlock(selectedProduct, saw, selectedGroup, vert, maxHorizontal);
                 }
                 else if (selectedProduct.Quantity == maxHorizontal)
                 {
@@ -103,10 +112,10 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
                 else
                 {
-                    for(int i = 0; i < selectedProduct.Quantity; i++)
+                    while(selectedProduct.Quantity != 0)
                     {
-                        groups = SearchFits(svgs, products[0], saw);
-                        selectedGroup = groups.OrderBy(c => c.Length).ThenBy(c => c.Width).First();
+                        groups = SearchFits(ref svgs, selectedProduct, saw);
+                        selectedGroup = groups.First();
                         CalculateGroupsVertical(selectedProduct, saw, selectedGroup, 1);
                     }
                 }
@@ -130,7 +139,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
                 }
 
-                if (rest > 0)
+                if (rest >= 0)
                 {
                     amount++;
                 }
@@ -159,7 +168,7 @@ namespace CuttingOptimizer.AppLogic.Services
                     rest -= (saw.Thickness + product.Width);
                 }
 
-                if (rest > 0)
+                if (rest >= 0)
                 {
                     amount++;
                 }
@@ -171,12 +180,14 @@ namespace CuttingOptimizer.AppLogic.Services
             return amount;
         }
 
-        private List<Group> SearchFits(List<Svg> svgs, Product product, Saw saw)
+        private List<Group> SearchFits(ref List<Svg> svgs, Product product, Saw saw)
         {
             List<Group> fitGroups = new List<Group>();
 
             while (fitGroups.Count == 0)
             {
+                svgs = svgs.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
+
                 foreach (Svg svg in svgs)
                 {
                     fitGroups.AddRange(
@@ -186,11 +197,11 @@ namespace CuttingOptimizer.AppLogic.Services
                 // Add new Svg when there's no space left.
                 if (fitGroups.Count == 0)
                 {
-                    svgs.Add(svgs.MaxBy(c => c.Priority));
+                    AddSvg(svgs, svgs.MinBy(c => c.Priority));
                 }
             }
 
-            return fitGroups.OrderBy(c => c.Area).ToList();
+            return fitGroups.OrderBy(c => c.Length).ThenBy(c => c.Width).ToList();
         }
         private bool MaxHorizontalFit(Group group, Product product, Saw saw)
         {
@@ -241,7 +252,7 @@ namespace CuttingOptimizer.AppLogic.Services
             }
 
             Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups);
-            Group? under = CalculateGroupUnder(saw, group, right, lastCreated, selectedProduct);
+            Group? under = CalculateGroupUnder(saw, group, right, lastCreated);
 
             if(right != null) newGroups.Add(right);
             if (under != null) newGroups.Add(under);
@@ -274,12 +285,12 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return null;
         }
-        private Group? CalculateGroupUnder(Saw saw, Group group, Group right, Group lastCreated, Product product)
+        private Group? CalculateGroupUnder(Saw saw, Group group, Group right, Group lastCreated)
         {
             if(lastCreated.Y + lastCreated.Width != group.Width)
             {
                 int length = group.Length;
-                int width = group.Width - right.Width - saw.Thickness;
+                int width = group.Width - right.Width - saw.Thickness - 1;
                 int x = group.X;
                 int y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
 
