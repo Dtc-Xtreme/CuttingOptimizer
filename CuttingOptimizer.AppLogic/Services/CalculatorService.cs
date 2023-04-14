@@ -37,7 +37,10 @@ namespace CuttingOptimizer.AppLogic.Services
 
             foreach (Plate plate in plates)
             {
-                svgs.Add(new Svg(plate.ID, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
+                for(int x = 0; x < plate.Quantity; x++)
+                {
+                    svgs.Add(new Svg(plate.ID, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
+                }
             }
 
             foreach (Svg svg in svgs)

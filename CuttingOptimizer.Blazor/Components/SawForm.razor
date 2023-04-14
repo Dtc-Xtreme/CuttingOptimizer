@@ -1,0 +1,31 @@
+﻿@using CuttingOptimizer.Domain.Models;
+<EditForm Model="@Saw" class="m-2">
+    <DataAnnotationsValidator />
+    <div class="row title-bar">
+        <div class="form-group col-auto">
+            <h3>Zaag</h3>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group w-100 col-lg-1 col-xs-12">
+            <label for="sawID">Zaagblad</label>
+            <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" />
+        </div>
+        <div class="form-group w-100 col-lg-1 col-xs-12">
+            <label for="sawThickness">Zaagsnede</label>
+            <InputNumber class="form-control" id="sawThickness" @bind-Value="Saw.Thickness" placeholder="Dikte" />
+        </div>
+    </div>
+    <ValidationSummary />
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public Saw Saw { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Saw = new Saw();
+    }
+}

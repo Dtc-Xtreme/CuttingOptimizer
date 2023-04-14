@@ -9,110 +9,25 @@
 <PageTitle>Calculator</PageTitle>
 
 <h2>Calculator</h2>
-<EditForm Model="@Saw" OnValidSubmit="@HandleSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
 
-    <h4>Zaag</h4>
-    <div class="form-row">
-        <div class="form-group col-auto">
-            <label for="sawID">Zaagblad</label>
-            <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="sawThickness">Zaagsnede</label>
-            <InputNumber class="form-control" id="sawThickness" @bind-Value="Saw.Thickness" placeholder="Dikte" />
-        </div>
-    </div>
-</EditForm>
+<SawForm Saw="@Saw" />
 
-<EditForm Model="@Plate" OnValidSubmit="@AddPlate">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<PlateForm Plates="@Plates" />
 
-    <h4>Materiaal</h4>
-    <div class="form-row">
-        <div class="form-group col-auto">
-            <label for="plateQuantity">Aantal</label>
-            <InputNumber class="form-control" id="plateQuantity" @bind-Value="Plate.Quantity" placeholder="#" min="1" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateID">Materiaal</label>
-            <InputText class="form-control" id="plateID" @bind-Value="Plate.ID" placeholder="ID" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateLength">Length</label>
-            <InputNumber class="form-control" id="plateLength" @bind-Value="Plate.Length" placeholder="Lengte" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateWidth">Width</label>
-            <InputNumber class="form-control" id="plateWidth" @bind-Value="Plate.Width" placeholder="Breedte" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateHeight">Hoogte</label>
-            <InputNumber class="form-control" id="plateHeight" @bind-Value="Plate.Height" placeholder="Hoogte" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateTrim">Trim</label>
-            <InputNumber class="form-control" id="plateTrim" @bind-Value="Plate.Trim" placeholder="Trim" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="plateVeneer" class="pr-1">Fineer</label>
-            <InputCheckbox class="form-control checkbox-big" id="plateVeneer" @bind-Value="Plate.Veneer" placeholder="Fineer" />
-        </div>
-        <div class="form-check-inline col-auto">
-            <button class="btn btn-primary mt-3">Toevoegen</button>
-        </div>
-    </div>
-</EditForm>
-
-<EditForm Model="@Product" OnValidSubmit="@AddProduct">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <h4>Item</h4>
-    <div class="form-row">
-        <div class="form-group col-auto">
-            <label for="productQuantity">Aantal</label>
-            <InputNumber class="form-control" id="productQuantity" @bind-Value="Product.Quantity" placeholder="#" min="1" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="productID">ID</label>
-            <InputText class="form-control" id="productID" @bind-Value="Product.ID" placeholder="ID" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="productLength">Lengte</label>
-            <InputNumber class="form-control" id="productLength" @bind-Value="Product.Length" placeholder="Lengte" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="productWidth">Breedte</label>
-            <InputNumber class="form-control" id="productWidth" @bind-Value="Product.Width" placeholder="Breedte" />
-        </div>
-        <div class="form-group col-auto">
-            <label for="productHeight">Hoogte</label>
-            <InputNumber class="form-control" id="productHeight" @bind-Value="Product.Height" placeholder="Hoogte" />
-        </div>
-        <div class="form-check-inline col-auto">
-            <button class="btn btn-primary mt-3">Toevoegen</button>
-        </div>
-    </div>
-</EditForm> 
-
-<Details Saw=@Saw Plates=@Plates Products=@Products />
+<ProductForm Products="@Products" />
 
 @foreach(Svg svg in Svgs)
 {
-@*    <SvgComponent Scale=@Scale Plate=plate />
-*@
-    <SvgNewComponent Scale=@Scale Svg=svg />
+    <SvgComponent Scale=@Scale Svg=svg />
 }
 
 <button class="btn btn-primary" @onclick="HandleSubmit">Calc</button>
 
+<Details Saw=@Saw Plates=@Plates Products=@Products />
+
+
 @code {
     private Saw Saw { get; set; }
-    private Plate Plate { get; set; }
-    private Product Product { get; set; }
     private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
@@ -123,16 +38,12 @@
     protected override void OnInitialized()
     {
         Saw = new Saw("SX1", 2);
-        Plate = new Plate();
-        Plate.Quantity = 1;
-        Product = new Product();
-        Product.Quantity = 1;
 
         Svgs = new List<Svg>();
 
         Plates = new List<Plate>
         {
-            new Plate(1, "PL1", 2006, 400, 0, 0, 1),
+            new Plate(2, "PL1", 2006, 400, 0, 0, 1),
             //new Plate(2, "PL1", 2006, 400, 0, 0, 1),
             //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
             //new Plate(1, "PL2", 800, 400, 5, 0, 0),
@@ -195,21 +106,5 @@
         productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
 
         Svgs = calculateService.Place(Saw, Plates, productList.ToList());
-    }
-
-    public void AddPlate()
-    {
-        if (Plates == null) Plates = new List<Plate>();
-        Plates.Add(Plate);
-        Plate = new Plate();
-    }
-
-    public void AddProduct()
-    {
-        if (Products == null) Products = new List<Product>();
-        Products.Add(Product);
-        Product = new Product();
-        // Sort Product on area biggest to smallest
-        Products = Products.OrderByDescending(c => c.Area).ToList();
     }
 }

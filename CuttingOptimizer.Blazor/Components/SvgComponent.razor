@@ -1,43 +1,71 @@
-﻿@using CuttingOptimizer.Domain.Models;
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.Domain.Models;
 @using System.Globalization;
 
-<h3>@Plate.ToString()</h3>
-<svg viewBox="0 0 @Plate.LengthWithTrim @Plate.WidthWithTrim" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%">
-    @if(Plate.Products != null && Plate.Products.Count != 0)
-    {
-        @foreach (Product prod in Plate.Products)
+@if(Svg.Groups != null && Svg.Groups.Exists(c=>c.Id == 1))
+{
+<h3>@Svg.ID (Rest: @AreaPercentage.ToString("P", CultureInfo.InvariantCulture))</h3>
+<svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
+
+        @foreach (Group group in Svg.Groups)
         {
             <g>
-                <rect width="@prod.Length" height="@prod.Width" x="@prod.X" y="@prod.Y" />
-                <text x="@prod.X" y="@CalcLabelPosition(prod.Y)" font-family="Verdana" font-size="25" fill="blue">@prod.ID</text>
+                @if (group.Rectangle != null)
+                {
+                    if(group.Id == 0)
+                    {
+                        <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                    }
+                    else
+                    {
+                        <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                    }
+
+                    if(group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
+                    {
+                        <text>
+                            <text x="@(group.X + Pos)" y="@(group.Y + Pos + 10)" font-family="Verdana" font-size="14" fill="blue">@group.Rectangle.Label</text>
+                        </text>
+                    }
+                }
             </g>
         }
-    }
-</svg>
 
+</svg>
+}
 @code {
     [Parameter]
     public double Scale { get; set; }
 
     [Parameter]
-    public Plate Plate { get; set; }
+    public Svg Svg { get; set; }
 
     private double Width { get; set; }
 
+    private int Pos
+    {
+        get { 
+            return 10; 
+        }
+    }
+
     protected override void OnInitialized()
     {
-        if(Plate.LengthWithTrim / 100 == Scale)
+        if (Svg.ViewBox.Length / (double)100 == Scale)
         {
             Width = 100;
         }
         else
         {
-            Width = Plate.LengthWithTrim / Scale;
+            Width = Svg.ViewBox.Length / (double)Scale;
         }
     }
 
-    private double CalcLabelPosition(double pos)
+    private double AreaPercentage
     {
-        return pos + 20;
+        get
+        {
+            return Svg.Groups.Where(c => c.Id == 0).Sum(c => c.Area) / (double)Svg.Area;
+        }
     }
 }

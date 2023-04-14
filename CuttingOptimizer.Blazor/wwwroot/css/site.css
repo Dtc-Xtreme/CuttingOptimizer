@@ -89,3 +89,11 @@ rect {
     height: 1.5em;
     margin-top: 0.3em;
 }
+
+.title-bar{
+    height: 2.5em;
+}
+
+.btn-circle{
+    border-radius: 20px !important;
+}
