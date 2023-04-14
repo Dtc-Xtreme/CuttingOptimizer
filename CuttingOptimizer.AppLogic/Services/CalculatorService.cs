@@ -275,7 +275,7 @@ namespace CuttingOptimizer.AppLogic.Services
             }
 
             Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups);
-            Group? under = CalculateGroupUnder(saw, group, right, lastCreated);
+            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups);
 
             if(right != null) newGroups.Add(right);
             if (under != null) newGroups.Add(under);
@@ -308,18 +308,17 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return null;
         }
-        private Group? CalculateGroupUnder(Saw saw, Group group, Group right, Group lastCreated)
+        private Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
         {
-            if(lastCreated.Y + lastCreated.Width != group.Width /*&& group.Width != right.Width*/)
+            if (lastCreated.Y + lastCreated.Width != group.Width /*&& group.Width != right.Width*/)
             {
                 int length = group.Length;
-                int width = group.Width - right.Width - saw.Thickness - 1;
+                int width = group.Width - (lastCreated.Width * newGroups.Count) - (saw.Thickness * newGroups.Count) - (newGroups.Count * 1);
                 int x = group.X;
                 int y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
 
                 Group underGroup = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
                 underGroup.Svg = group.Svg;
-                //newGroups.Add(underGroup);
                 return underGroup;
             }
             return null;
