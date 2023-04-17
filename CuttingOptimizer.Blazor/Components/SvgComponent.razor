@@ -2,36 +2,43 @@
 @using CuttingOptimizer.Domain.Models;
 @using System.Globalization;
 
-@if(Svg.Groups != null && Svg.Groups.Exists(c=>c.Id == 1))
+@if(Svg.Groups != null && Svg.Groups.Exists(c=>c.ID == 1))
 {
-<h3>@Svg.ID (Rest: @AreaPercentage.ToString("P", CultureInfo.InvariantCulture))</h3>
-<svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
+    <div class="mt-5">
+        <div>
+            <PrintDetail Saw=@Saw AreaLossPercentage=@AreaLossPercentage Svg=@Svg/>
+        </div>
 
-        @foreach (Group group in Svg.Groups)
-        {
-            <g>
-                @if (group.Rectangle != null)
-                {
-                    if(group.Id == 0)
-                    {
-                        <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
-                    }
-                    else
-                    {
-                        <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
-                    }
+        <div>
+@*            <h3>@Svg.ID (Rest: @AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture))</h3>
+*@            <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
 
-                    if(group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
+                    @foreach (Group group in Svg.Groups)
                     {
-                        <text>
-                            <text x="@(group.X + Pos)" y="@(group.Y + Pos + 10)" font-family="Verdana" font-size="14" fill="blue">@group.Rectangle.Label</text>
-                        </text>
-                    }
-                }
-            </g>
-        }
+                        <g>
+                            @if (group.Rectangle != null)
+                            {
+                                if(group.ID == 0)
+                                {
+                                    <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                                }
+                                else
+                                {
+                                    <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                                }
 
-</svg>
+                                if(group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
+                                {
+                                    <text>
+                                        <text x="@(group.X + Pos)" y="@(group.Y + Pos + 10)" font-family="Verdana" font-size="14" fill="blue">@group.Rectangle.Label</text>
+                                    </text>
+                                }
+                            }
+                        </g>
+                    }
+            </svg>
+        </div>
+    </div>
 }
 @code {
     [Parameter]
@@ -39,6 +46,12 @@
 
     [Parameter]
     public Svg Svg { get; set; }
+
+    [Parameter]
+    public Saw Saw { get; set; }
+
+    [Parameter]
+    public List<Product> Products { get; set; }
 
     private double Width { get; set; }
 
@@ -61,11 +74,11 @@
         }
     }
 
-    private double AreaPercentage
+    private double AreaLossPercentage
     {
         get
         {
-            return Svg.Groups.Where(c => c.Id == 0).Sum(c => c.Area) / (double)Svg.Area;
+            return Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
         }
     }
 }

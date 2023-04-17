@@ -16,6 +16,14 @@ namespace CuttingOptimizer.Domain.Models
 
         }
 
+        public Product(int quantity, Product product)
+        {
+            Quantity = quantity;
+            ID = product.ID;
+            Width   = product.Width;
+            Length = product.Length;
+            Height  = product.Height;
+        }
         public Product(int quantity, string id, int length, int width,  int height/*, string info*/)
         {
             Quantity = quantity;
@@ -36,9 +44,6 @@ namespace CuttingOptimizer.Domain.Models
 
         [Range(1, 50)]
         public int Height { get; set; }
-
-        public int X { get; set; }
-        public int Y { get; set; }
 
         public double Area
         {
@@ -67,7 +72,7 @@ namespace CuttingOptimizer.Domain.Models
 
         public override string ToString()
         {
-            return "Quantity: " + Quantity + " | ID: " + ID + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture) + " | X: " + X + " | Y: " + Y;
+            return "Quantity: " + Quantity + " | ID: " + ID + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture);
         }
 
         public Product ShallowCopy()

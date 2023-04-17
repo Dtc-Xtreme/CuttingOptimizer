@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CuttingOptimizer.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,13 @@ namespace CuttingOptimizer.AppLogic.Models
             ViewBox = new ViewBox();
         }
 
-        public Svg(string id, ViewBox viewBox, int priority)
+        public Svg(string id, ViewBox viewBox, int priority, Plate pl)
         {
             ID = id;
             ViewBox = viewBox;
             Priority = priority;
             Groups = new List<Group>();
+            Plate = pl;
         }
 
         public string ID { get; set; }
@@ -30,6 +32,7 @@ namespace CuttingOptimizer.AppLogic.Models
                 return ViewBox.Length * ViewBox.Width; 
             }
         }
+        public Plate Plate { get; set; }
 
         public void AddGroup(Group group)
         {

@@ -39,7 +39,7 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 for(int x = 0; x < plate.Quantity; x++)
                 {
-                    svgs.Add(new Svg(plate.ID, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority));
+                    svgs.Add(new Svg(plate.ID, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority, new Plate(1, plate)));
                 }
             }
 
@@ -52,7 +52,7 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         private List<Svg> AddSvg(List<Svg> svgs, Svg svg)
         {
-            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 2);
+            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 2, new Plate(1, svg.Plate));
             newSvg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
 
             svgs.Add(newSvg);
@@ -217,7 +217,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 foreach (Svg svg in svgs)
                 {
                     fitGroups.AddRange(
-                        svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.Id == 0));
+                        svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.ID == 0));
                 }
 
                 // Add new Svg when there's no space left.
@@ -270,7 +270,7 @@ namespace CuttingOptimizer.AppLogic.Services
                     y -= group.Y;
                 }
 
-                lastCreated = new Group(1, new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID)), x, y, length, width);
+                lastCreated = new Group(new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID)), x, y, length, width, new Product(1,selectedProduct));
                 lastCreated.Svg = group.Svg;
 
                 newGroups.Add(lastCreated);
@@ -305,7 +305,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 int x = lastCreated.X + lastCreated.Length + 1 + saw.Thickness;
                 int y = group.Y;
 
-                Group rightGroup = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
+                Group rightGroup = new Group(new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
                 rightGroup.Svg = group.Svg;
                 return rightGroup;
             }
@@ -320,7 +320,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 int x = group.X;
                 int y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
 
-                Group underGroup = new Group(0, new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
+                Group underGroup = new Group(new Rectangle(0, x, y, length, width, new Label("0")), x, y, length, width);
                 underGroup.Svg = group.Svg;
                 return underGroup;
             }

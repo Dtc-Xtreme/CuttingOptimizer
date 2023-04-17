@@ -8,23 +8,22 @@
 
 <PageTitle>Calculator</PageTitle>
 
-<h2>Calculator</h2>
+<div class="container-fluid">
+    <h2 class="no-print">Calculator</h2>
 
-<SawForm Saw="@Saw" />
+    <SawForm Saw=@Saw />
 
-<PlateForm Plates="@Plates" />
+    <PlateForm Plates=@Plates />
 
-<ProductForm Products="@Products" />
+    <ProductForm Products=@Products />
 
-@foreach(Svg svg in Svgs)
-{
-    <SvgComponent Scale=@Scale Svg=svg />
-}
+    <button class="btn btn-primary no-print" @onclick="HandleSubmit">Calc</button>
 
-<button class="btn btn-primary" @onclick="HandleSubmit">Calc</button>
-
-<Details Saw=@Saw Plates=@Plates Products=@Products />
-
+    @foreach (Svg svg in Svgs)
+    {
+        <SvgComponent Scale=@Scale Svg=svg Products=@Products Saw=@Saw />
+    }
+</div>
 
 @code {
     private Saw Saw { get; set; }

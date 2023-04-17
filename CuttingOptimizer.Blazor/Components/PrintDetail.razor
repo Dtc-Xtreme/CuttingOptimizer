@@ -1,0 +1,97 @@
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.Domain.Models;
+@using System.Globalization;
+<div class="container-fluid">
+@*    <h3 class="row">Detail</h3>
+*@    <div class="row mb-3">
+        <h4 class="title-border col-12">Materiaal: @Svg.Plate.ID</h4>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Lengte: </label>
+            <span>@Svg.Plate.Length mm</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Breedte: </label>
+            <span>@Svg.Plate.Width mm</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Dikte: </label>
+            <span>@Svg.Plate.Height mm</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Trim: </label>
+            <span>@Svg.Plate.Trim mm</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Quantiteit: </label>
+            <span>@Svg.Plate.Quantity</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Veneer: </label>
+
+            @if (Svg.Plate.Veneer)
+            {
+                <span> ja</span>
+            }
+            else
+            {
+                <span> nee</span>
+            }
+        </div>
+    </div>
+    <div class="row mb-3">
+        <h4 class="col-12 title-border">Te zagen</h4>
+        @{
+            var groupByProduct = Svg.Groups.Where(c => c.ID != 0).GroupBy(c => c.Product.ID);
+        }
+        <div class="col-3">
+            <label class="font-weight-bold">Quantiteit</label>
+            @foreach (var group in groupByProduct)
+            {
+                <div>@group.Count()</div>
+            }
+        </div>
+        <div class="col-3">
+            <label class="font-weight-bold">Lengte</label>
+            @foreach (var group in groupByProduct)
+            {
+                <div>@group.First().Length mm</div>
+            }
+        </div>
+        <div class="col-3">
+            <label class="font-weight-bold">Breedte</label>
+            @foreach (var group in groupByProduct)
+            {
+                <div>@group.First().Width mm</div>
+            }
+        </div>
+        <div class="col-3">
+            <label class="font-weight-bold">Info</label>
+            @foreach (var group in groupByProduct)
+            {
+                <div>@group.Key</div>
+            }
+        </div>
+    </div>
+    <div class="row mb-3">
+        <h4 class="col-12 title-border">Parameters</h4>
+        <div class="col-6 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Zaagsnede: </label>
+            <span>@Saw.Thickness mm</span>
+        </div>
+        <div class="col-6 p-1">
+            <label><b>Verlies:</b></label>
+            <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Saw Saw { get; set; }
+
+    [Parameter]
+    public double AreaLossPercentage { get; set; }
+
+    [Parameter]
+    public Svg Svg { get; set; }
+}
