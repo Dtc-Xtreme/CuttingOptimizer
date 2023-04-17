@@ -4,7 +4,7 @@
 
 @if(Svg.Groups != null && Svg.Groups.Exists(c=>c.ID == 1))
 {
-    <div class="mt-5">
+    <div class="mt-5 print-page-brake-after">
         <div>
             <PrintDetail Saw=@Saw AreaLossPercentage=@AreaLossPercentage Svg=@Svg/>
         </div>

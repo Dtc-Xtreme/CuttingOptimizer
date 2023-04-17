@@ -71,8 +71,6 @@ svg {
 
 rect {
     fill: lightgray;
-/*    stroke-width: 1;
-    stroke: gray;*/
 }
 
 .rect-free-space{
@@ -106,5 +104,9 @@ rect {
 @media print {
     .no-print{
         display: none !important;
+    }
+
+    .print-page-brake-after {
+        page-break-before: always;
     }
 }

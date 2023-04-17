@@ -1,6 +1,4 @@
 ﻿@using CuttingOptimizer.Domain.Models;
-<EditForm Model="@Saw" class="m-2 no-print">
-    <DataAnnotationsValidator />
     <div class="row title-bar">
         <div class="form-group col-auto">
             <h3>Zaag</h3>
@@ -16,9 +14,6 @@
             <InputNumber class="form-control" id="sawThickness" @bind-Value="Saw.Thickness" placeholder="Dikte" />
         </div>
     </div>
-    <ValidationSummary />
-</EditForm>
-
 
 @code {
     [Parameter]

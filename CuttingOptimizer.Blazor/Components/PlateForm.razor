@@ -1,9 +1,8 @@
 ﻿@using CuttingOptimizer.Domain.Models;
-<EditForm Model="@Plates" class="m-2 no-print">
-    <DataAnnotationsValidator />
+
     <div class="form-row title-bar">
         <div class="form-group col-auto">
-            <h3>Materiaal</h3>
+            <h3>Materialen</h3>
         </div>
         <div class="form-group ml-2">
             <button type="button" class="btn btn-primary" @onclick="AddPlate">+</button>
@@ -16,16 +15,16 @@
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateQuantity">Aantal</label>
+                    <label for="plateID">Materiaal</label>
                 }
-                <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="#" min="1" />
+                <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateID">Materiaal</label>
+                    <label for="plateQuantity">Aantal</label>
                 }
-                <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" />
+                <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="#" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
@@ -44,7 +43,7 @@
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateHeight">Hoogte</label>
+                    <label for="plateHeight">Dikte</label>
                 }
                 <InputNumber class="form-control" id="plateHeight" @bind-Value="plate.Height" placeholder="Hoogte" />
             </div>
@@ -71,9 +70,6 @@
             </div>
         </div>
     }
-    <ValidationSummary />
-</EditForm>
-
 
 @code {
     [Parameter]
