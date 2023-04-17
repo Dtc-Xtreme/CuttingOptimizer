@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="no-print">
         <h2 class="no-print">Calculator</h2>
-        <EditForm EditContext="@EC" OnValidSubmit="@HandleSubmit">
+        <EditForm Model="@CalculatorFormModel" OnValidSubmit="@HandleSubmit">
             <DataAnnotationsValidator />
             <SawForm Saw=@CalculatorFormModel.Saw />
             <PlateForm Plates=@CalculatorFormModel.Plates />
@@ -32,7 +32,6 @@
 
 @code {
     private CalculatorFormModel CalculatorFormModel = new();
-    private EditContext EC;
     private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
@@ -41,38 +40,38 @@
 
     protected override void OnInitialized()
     {
-        EC = new EditContext(CalculatorFormModel);
+        //EC = new EditContext(CalculatorFormModel);
         Svgs = new();
-        //CalculatorFormModel.Saw = new Saw("SX1", 2);
+        CalculatorFormModel.Saw = new Saw("SX1", 2);
 
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(2, "PL1", 2006, 400, 0, 0, 1),
-        //    //new Plate(2, "PL1", 2006, 400, 0, 0, 1),
-        //    //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
-        //    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
-        //};
+        CalculatorFormModel.Plates = new List<Plate>
+        {
+            new Plate(2, "PL1", 2006, 400, 0, 0, 1),
+            //new Plate(2, "PL1", 2006, 400, 0, 0, 1),
+            //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
+            //new Plate(1, "PL2", 800, 400, 5, 0, 0),
+        };
 
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    #region VB1
-        //    new Product(10, "Y1", 170, 40, 5),
-        //    new Product(2, "X2", 800, 40, 5),
-        //    new Product(4, "X3", 800, 40, 5),
-        //    new Product(30, "K1", 200, 40, 5),
-        //    new Product(60, "K2", 200, 40, 5),
-        //    new Product(4, "P3", 150, 40, 5),
-        //    #endregion
+        CalculatorFormModel.Products = new List<Product>
+        {
+            #region VB1
+            new Product(10, "Y1", 170, 40, 5),
+            new Product(2, "X2", 800, 40, 5),
+            new Product(4, "X3", 800, 40, 5),
+            new Product(30, "K1", 200, 40, 5),
+            new Product(60, "K2", 200, 40, 5),
+            new Product(4, "P3", 150, 40, 5),
+            #endregion
 
-        //    #region VB2
-        //    //new Product(10, "Y1", 170, 50, 5),
-        //    //new Product(2, "X2", 300, 80, 5),
-        //    //new Product(3, "X3", 800, 40, 5),
-        //    //new Product(18, "K1", 200, 30, 5),
-        //    #endregion
-        //};
+            #region VB2
+            //new Product(10, "Y1", 170, 50, 5),
+            //new Product(2, "X2", 300, 80, 5),
+            //new Product(3, "X3", 800, 40, 5),
+            //new Product(18, "K1", 200, 30, 5),
+            #endregion
+        };
 
-        //HandleSubmit();
+        HandleSubmit();
     }
 
     private void Reset()
@@ -86,7 +85,7 @@
     public void HandleSubmit()
     {
 
-        bool check = false;
+        bool check = true;
         // Check if a product is bigger than plate
         //int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
         //int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
