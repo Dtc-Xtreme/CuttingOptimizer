@@ -101,6 +101,12 @@ rect {
     padding: 0.2em;
 }
 
+.form-control-checkbox{
+    display: block;
+    width: 100%;
+    line-height:1.5;
+}
+
 @media print {
     .no-print{
         display: none !important;

@@ -27,9 +27,8 @@ namespace CuttingOptimizer.Domain.Models
             Length = length;
             Height = height;
             Trim = trim;
-            Products = new List<Product>();
+            //Products = new List<Product>();
         }
-
         public Plate(int quantity, string id, int length, int width, int height, int trim, int priority)
         {
             Quantity = quantity;
@@ -39,7 +38,7 @@ namespace CuttingOptimizer.Domain.Models
             Height = height;
             Trim = trim;
             Priority = priority;
-            Products = new List<Product>();
+            //Products = new List<Product>();
         }
 
         [Required]
@@ -58,6 +57,8 @@ namespace CuttingOptimizer.Domain.Models
         public int Height { get; set; }
 
         public bool Veneer { get; set; }
+
+        public bool Base { get; set; }
 
         public int WidthWithTrim { 
             get { 
@@ -88,8 +89,8 @@ namespace CuttingOptimizer.Domain.Models
         [Range(0, 1000)]
         public int Trim { get; set; }
 
-        [NotMapped]
-        public List<Product> Products { get; set; }
+        //[NotMapped]
+        //public List<Product> Products { get; set; }
 
         [NotMapped]
         [Range(1, 100)]
