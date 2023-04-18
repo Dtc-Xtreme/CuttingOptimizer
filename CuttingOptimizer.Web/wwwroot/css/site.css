@@ -16,3 +16,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.input-validation-error {
+    border: 1px solid;
+    border-color: red;
+}
+
+.input-small{
+    width: 5.1rem !important;
+}
+
+svg {
+    display: block;
+    background-color: white;
+    border: 1px solid black;
+}
+
+rect{
+    fill:lightgray;
+/*    stroke-width:1;
+    stroke:gray;*/
+}
+
+h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}

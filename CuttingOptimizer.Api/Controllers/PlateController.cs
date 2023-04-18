@@ -1,4 +1,4 @@
-﻿using CuttingOptimizer.Domain;
+﻿using CuttingOptimizer.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

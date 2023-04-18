@@ -1,0 +1,132 @@
+﻿@using CuttingOptimizer.Domain.Models;
+
+    <div class="form-row title-bar">
+        <div class="form-group col-auto">
+            <h3>Materialen</h3>
+        </div>
+        <div class="form-group ml-2">
+            <button type="button" class="btn btn-primary" @onclick="AddPlate">+</button>
+        </div>
+    </div>
+
+    @foreach(Plate plate in Plates)
+    {
+        <div class="form-row">
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateID">Materiaal</label>
+                }
+            <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, plate)" />
+                <datalist id="plateList">
+                    @foreach (Plate pl in SearchPlates)
+                    {
+                    <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
+                    }
+                </datalist>
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateQuantity">Aantal</label>
+                }
+                <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="#" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateLength">Lengte</label>
+                }
+                <InputNumber class="form-control" id="plateLength" @bind-Value="plate.Length" placeholder="Lengte" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateWidth">Breedte</label>
+                }
+                <InputNumber class="form-control" id="plateWidth" @bind-Value="plate.Width" placeholder="Breedte" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateHeight">Dikte</label>
+                }
+                <InputNumber class="form-control" id="plateHeight" @bind-Value="plate.Height" placeholder="Hoogte" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateTrim">Trim</label>
+                }
+                <InputNumber class="form-control" id="plateTrim" @bind-Value="plate.Trim" placeholder="Trim" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12">
+                @if (plate == Plates[0])
+                {
+                <label for="platePriority">Prio</label>
+                }
+                <InputNumber class="form-control" id="platePriority" @bind-Value="plate.Priority" placeholder="Prio" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+                @if (plate == Plates[0])
+                {
+                    <label for="plateVeneer" class="pr-1">Fineer</label>
+                }
+            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+                @if (plate == Plates[0])
+                {
+                <label for="plateBase" class="pr-1">Basis</label>
+                }
+            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" @bind-Value="plate.Base" placeholder="Basis" />
+            </div>
+            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+                @if (plate == Plates[0])
+                {
+                    <label>Verwijder</label>
+                }
+                <button type="button" class="form-control btn btn-danger" @onclick="() => RemovePlate(plate)">X</button>
+            </div>
+        </div>
+    }
+
+@code {
+    [Parameter]
+    public List<Plate> Plates { get; set; }
+
+    private List<Plate> SearchPlates = new List<Plate>{
+            new Plate("PL255", 2000, 500, 5),
+            new Plate("PL215", 2000, 100, 5),
+            new Plate("PL155", 1000, 500, 5)
+        };
+
+    protected override void OnInitialized()
+    {
+        if (Plates.Count() == 0) Plates.Add(new Plate());
+    }
+
+    private void AddPlate()
+    {
+        Plates.Add(new Plate());
+    }
+
+    private void RemovePlate(Plate plate)
+    {
+        if (Plates.Count() > 1) Plates.Remove(plate);
+    }
+
+    private void SearchOrSelect(string value, Plate selectedPlate)
+    {
+        Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == value.ToLower());
+        if (plateResult != null)
+        {
+            Plates[0] = new Plate(plateResult);
+            StateHasChanged();
+        }
+        //else
+        //{
+        //    // change SearchPlates with api call 
+        //}
+    }
+}

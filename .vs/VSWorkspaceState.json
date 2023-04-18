@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CuttingOptimizer"
+    "\\CuttingOptimizer.Web",
+    "\\CuttingOptimizer.Web\\wwwroot",
+    "\\CuttingOptimizer.Web\\wwwroot\\js"
   ],
-  "SelectedNode": "\\CuttingOptimizer\\CuttingOptimizer.sln",
   "PreviewInSolutionExplorer": false
 }

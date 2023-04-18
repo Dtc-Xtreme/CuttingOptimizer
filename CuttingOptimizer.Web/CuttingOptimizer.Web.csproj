@@ -18,7 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CuttingOptimizer.AppLogic\CuttingOptimizer.AppLogic.csproj" />
     <ProjectReference Include="..\CuttingOptimizer.Domain\CuttingOptimizer.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\" />
+    <Folder Include="wwwroot\bootstrap\" />
   </ItemGroup>
 
 </Project>
