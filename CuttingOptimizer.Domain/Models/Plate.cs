@@ -16,6 +16,11 @@ namespace CuttingOptimizer.Domain.Models
             Width = plate.Width;
             Height = plate.Height;
         }
+        public Plate(bool basePlate)
+        {
+            Quantity = 1;
+            Base = basePlate;
+        }
         public Plate(string id, int length, int width, int height)
         {
             ID = id;
@@ -41,7 +46,6 @@ namespace CuttingOptimizer.Domain.Models
             Length = length;
             Height = height;
             Trim = trim;
-            //Products = new List<Product>();
         }
         public Plate(int quantity, string id, int length, int width, int height, int trim, int priority)
         {
@@ -52,7 +56,6 @@ namespace CuttingOptimizer.Domain.Models
             Height = height;
             Trim = trim;
             Priority = priority;
-            //Products = new List<Product>();
         }
 
         [Required]
@@ -102,9 +105,6 @@ namespace CuttingOptimizer.Domain.Models
         [Required]
         [Range(0, 1000)]
         public int Trim { get; set; }
-
-        //[NotMapped]
-        //public List<Product> Products { get; set; }
 
         [NotMapped]
         [Range(1, 100)]

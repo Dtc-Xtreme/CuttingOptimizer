@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    @foreach(Plate plate in Plates)
+    @foreach (Plate plate in Plates)
     {
         <div class="form-row">
             <div class="form-group w-100 col-lg-1 col-xs-12">
@@ -17,11 +17,11 @@
                 {
                     <label for="plateID">Materiaal</label>
                 }
-            <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, plate)" />
+                <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, Plates.IndexOf(plate))" />
                 <datalist id="plateList">
                     @foreach (Plate pl in SearchPlates)
                     {
-                    <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
+                        <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
                     }
                 </datalist>
             </div>
@@ -63,7 +63,7 @@
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                <label for="platePriority">Prio</label>
+                    <label for="platePriority">Prio</label>
                 }
                 <InputNumber class="form-control" id="platePriority" @bind-Value="plate.Priority" placeholder="Prio" />
             </div>
@@ -72,14 +72,14 @@
                 {
                     <label for="plateVeneer" class="pr-1">Fineer</label>
                 }
-            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
+                <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
                 {
-                <label for="plateBase" class="pr-1">Basis</label>
+                    <label for="plateBase" class="pr-1" >Basis</label>
                 }
-            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" @bind-Value="plate.Base" placeholder="Basis" />
+            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="Test" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
@@ -103,12 +103,12 @@
 
     protected override void OnInitialized()
     {
-        if (Plates.Count() == 0) Plates.Add(new Plate());
+        if (Plates.Count() == 0) Plates.Add(new Plate(true));
     }
 
     private void AddPlate()
     {
-        Plates.Add(new Plate());
+        Plates.Add(new Plate(false));
     }
 
     private void RemovePlate(Plate plate)
@@ -116,17 +116,26 @@
         if (Plates.Count() > 1) Plates.Remove(plate);
     }
 
-    private void SearchOrSelect(string value, Plate selectedPlate)
+    private void SearchOrSelect(string value, int position)
     {
-        Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == value.ToLower());
+        Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == Plates[position].ID.ToLower());
         if (plateResult != null)
         {
-            Plates[0] = new Plate(plateResult);
+            bool b = Plates[position].Base;
+            Plates[position] = new Plate(plateResult);
+            Plates[position].Quantity = 1;
+            Plates[position].Base = b;
             StateHasChanged();
+
         }
         //else
         //{
         //    // change SearchPlates with api call 
         //}
+    }
+
+    private void Test()
+    {
+        Plates.Single(c => c.Base == true).Base = false;
     }
 }
