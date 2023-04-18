@@ -6,20 +6,3 @@
 <PageTitle>Home</PageTitle>
 
 <h1>Welkom</h1>
-@*
-<EditForm Model="@PlateQuantity" OnValidSubmit="@Add">
-    <DataAnnotationsValidator/>
-        <InputNumber @bind-Value="@PlateQuantity.Quantity"/>
-    <button type="submit">Submit</button>
-    <ValidationSummary />
-</EditForm>
-
-@code{
-    public List<Test> Tests { get; set; } = new PlateQuantity(0, new Plate());
-
-
-    public void Add()
-    {
-        
-    }
-}*@

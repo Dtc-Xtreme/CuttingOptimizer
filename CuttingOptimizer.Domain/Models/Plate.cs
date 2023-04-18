@@ -45,12 +45,15 @@ namespace CuttingOptimizer.Domain.Models
         [Required]
         public string ID { get; set; }
 
+        [Required]
         [Range(10, 100000)]
         public int Length { get; set; }
 
+        [Required]
         [Range(10, 100000)]
         public int Width { get; set; }
 
+        [Required]
         [Range(1, 1000)]
         public int Height { get; set; }
 
@@ -81,6 +84,7 @@ namespace CuttingOptimizer.Domain.Models
         }
 
         [NotMapped]
+        [Required]
         [Range(0, 1000)]
         public int Trim { get; set; }
 
@@ -92,6 +96,7 @@ namespace CuttingOptimizer.Domain.Models
         public int Quantity { get; set; }
 
         [NotMapped]
+        [Required]
         [Range(0, 10)]
         public int Priority { get; set; }       // Higher the Priority the more important it is
         

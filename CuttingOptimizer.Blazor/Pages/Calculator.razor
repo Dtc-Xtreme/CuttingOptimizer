@@ -12,13 +12,14 @@
     <div class="no-print">
         <h2 class="no-print">Calculator</h2>
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="@HandleSubmit">
-            <DataAnnotationsValidator />
+            <ObjectGraphDataAnnotationsValidator />
+
             <SawForm Saw=@CalculatorFormModel.Saw />
             <PlateForm Plates=@CalculatorFormModel.Plates />
             <ProductForm Products=@CalculatorFormModel.Products />
-            <button type="submit" class="btn btn-primary">Uitrekenen</button>
-            <button type="reset" class="btn btn-warning">Reset</button>
             <ValidationSummary />
+            <button type="submit" class="btn btn-primary">Uitrekenen</button>
+            <button type="reset" class="btn btn-warning" @onclick="Reset">Reset</button>
         </EditForm>
     </div>
     
@@ -31,7 +32,7 @@
 </div>
 
 @code {
-    private CalculatorFormModel CalculatorFormModel = new();
+    private CalculatorFormModel CalculatorFormModel { get; set; }
     private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
@@ -40,46 +41,43 @@
 
     protected override void OnInitialized()
     {
-        //EC = new EditContext(CalculatorFormModel);
+        CalculatorFormModel = new();
         Svgs = new();
-        CalculatorFormModel.Saw = new Saw("SX1", 2);
+        //CalculatorFormModel.Saw = new Saw("SX1", 2);
 
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(2, "PL1", 2006, 400, 0, 0, 1),
-            //new Plate(2, "PL1", 2006, 400, 0, 0, 1),
-            //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
-            //new Plate(1, "PL2", 800, 400, 5, 0, 0),
-        };
+        //CalculatorFormModel.Plates = new List<Plate>
+        //{
+        //    new Plate(2, "PL1", 2006, 400, 0, 0, 1),
+        //    //new Plate(2, "PL1", 2006, 400, 0, 0, 1),
+        //    //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
+        //    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
+        //};
 
-        CalculatorFormModel.Products = new List<Product>
-        {
-            #region VB1
-            new Product(10, "Y1", 170, 40, 5),
-            new Product(2, "X2", 800, 40, 5),
-            new Product(4, "X3", 800, 40, 5),
-            new Product(30, "K1", 200, 40, 5),
-            new Product(60, "K2", 200, 40, 5),
-            new Product(4, "P3", 150, 40, 5),
-            #endregion
+        //CalculatorFormModel.Products = new List<Product>
+        //{
+        //    #region VB1
+        //    new Product(10, "Y1", 170, 40, 5),
+        //    new Product(2, "X2", 800, 40, 5),
+        //    new Product(4, "X3", 800, 40, 5),
+        //    new Product(30, "K1", 200, 40, 5),
+        //    new Product(60, "K2", 200, 40, 5),
+        //    new Product(4, "P3", 150, 40, 5),
+        //    #endregion
 
-            #region VB2
-            //new Product(10, "Y1", 170, 50, 5),
-            //new Product(2, "X2", 300, 80, 5),
-            //new Product(3, "X3", 800, 40, 5),
-            //new Product(18, "K1", 200, 30, 5),
-            #endregion
-        };
+        //    #region VB2
+        //    //new Product(10, "Y1", 170, 50, 5),
+        //    //new Product(2, "X2", 300, 80, 5),
+        //    //new Product(3, "X3", 800, 40, 5),
+        //    //new Product(18, "K1", 200, 30, 5),
+        //    #endregion
+        //};
 
-        HandleSubmit();
+        //HandleSubmit();
     }
 
     private void Reset()
     {
-        foreach (Plate plate in CalculatorFormModel.Plates)
-        {
-            plate.Products = new();
-        }
+        CalculatorFormModel = new();
     }
 
     public void HandleSubmit()
