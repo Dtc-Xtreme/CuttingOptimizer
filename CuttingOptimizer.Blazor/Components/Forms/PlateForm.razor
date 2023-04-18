@@ -17,7 +17,13 @@
                 {
                     <label for="plateID">Materiaal</label>
                 }
-                <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" />
+            <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, plate)" />
+                <datalist id="plateList">
+                    @foreach (Plate pl in SearchPlates)
+                    {
+                    <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
+                    }
+                </datalist>
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
@@ -29,14 +35,14 @@
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateLength">Length</label>
+                    <label for="plateLength">Lengte</label>
                 }
                 <InputNumber class="form-control" id="plateLength" @bind-Value="plate.Length" placeholder="Lengte" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateWidth">Width</label>
+                    <label for="plateWidth">Breedte</label>
                 }
                 <InputNumber class="form-control" id="plateWidth" @bind-Value="plate.Width" placeholder="Breedte" />
             </div>
@@ -89,6 +95,12 @@
     [Parameter]
     public List<Plate> Plates { get; set; }
 
+    private List<Plate> SearchPlates = new List<Plate>{
+            new Plate("PL255", 2000, 500, 5),
+            new Plate("PL215", 2000, 100, 5),
+            new Plate("PL155", 1000, 500, 5)
+        };
+
     protected override void OnInitialized()
     {
         if (Plates.Count() == 0) Plates.Add(new Plate());
@@ -102,5 +114,19 @@
     private void RemovePlate(Plate plate)
     {
         if (Plates.Count() > 1) Plates.Remove(plate);
+    }
+
+    private void SearchOrSelect(string value, Plate selectedPlate)
+    {
+        Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == value.ToLower());
+        if (plateResult != null)
+        {
+            Plates[0] = new Plate(plateResult);
+            StateHasChanged();
+        }
+        //else
+        //{
+        //    // change SearchPlates with api call 
+        //}
     }
 }

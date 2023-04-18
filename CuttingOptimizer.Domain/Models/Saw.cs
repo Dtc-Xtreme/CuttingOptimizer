@@ -11,6 +11,12 @@ namespace CuttingOptimizer.Domain.Models
     {
         public Saw() { }
 
+        public Saw(Saw saw)
+        {
+            ID = saw.ID;
+            Thickness = saw.Thickness;
+        }
+
         public Saw(string id, int thickness) {
             ID = id;
             Thickness = thickness;

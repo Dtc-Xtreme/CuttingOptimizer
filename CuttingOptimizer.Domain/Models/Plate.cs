@@ -9,6 +9,20 @@ namespace CuttingOptimizer.Domain.Models
         {
 
         }
+        public Plate(Plate plate)
+        {
+            ID = plate.ID;
+            Length = plate.Length;
+            Width = plate.Width;
+            Height = plate.Height;
+        }
+        public Plate(string id, int length, int width, int height)
+        {
+            ID = id;
+            Length = length;
+            Width = width;
+            Height = height;
+        }
         public Plate(int quantity, Plate plate)
         {
             Quantity = quantity;
