@@ -16,6 +16,11 @@ namespace CuttingOptimizer.Domain.Models
 
         }
 
+        public Product(int quantity)
+        {
+            Quantity = quantity;
+        }
+
         public Product(int quantity, Product product)
         {
             Quantity = quantity;

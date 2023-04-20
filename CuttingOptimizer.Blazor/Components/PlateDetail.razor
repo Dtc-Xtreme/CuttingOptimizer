@@ -1,9 +1,12 @@
 ﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.AppLogic.Services;
 @using CuttingOptimizer.Domain.Models;
 @using System.Globalization;
+
+@inject ICalculatorService calculateService;
+
 <div class="container-fluid">
-@*    <h3 class="row">Detail</h3>
-*@    <div class="row mb-3">
+    <div class="row mb-3">
         <h4 class="title-border col-12">Materiaal: @Svg.Plate.ID</h4>
         <div class="col-3 pl-3 pr-3 pt-0">
             <label class="font-weight-bold">Lengte: </label>
@@ -78,9 +81,13 @@
             <label class="font-weight-bold">Zaagsnede: </label>
             <span>@Saw.Thickness mm</span>
         </div>
-        <div class="col-6 p-1">
+        <div class="col-6 pl-3 pr-3 pt-0">
             <label><b>Verlies:</b></label>
             <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
+        </div>
+        <div class="col-6 pl-3 pr-3 pt-0">
+            <label><b>Snijlijnen:</b></label>
+            <span>@CutLines</span>
         </div>
     </div>
 </div>
@@ -90,8 +97,21 @@
     public Saw Saw { get; set; }
 
     [Parameter]
-    public double AreaLossPercentage { get; set; }
-
-    [Parameter]
     public Svg Svg { get; set; }
+
+    private double AreaLossPercentage
+    {
+        get
+        {
+            return Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
+        }
+    }
+
+    private int CutLines
+    {
+        get
+        {
+            return calculateService.CalculateCutLines(Svg);
+        }
+    }
 }

@@ -61,7 +61,7 @@
 
     protected override void OnInitialized()
     {
-        if(Products.Count() == 0) Products.Add(new Product());
+        if(Products.Count() == 0) Products.Add(new Product(1));
     }
 
     private void AddProduct()

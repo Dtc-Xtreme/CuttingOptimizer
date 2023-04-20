@@ -223,7 +223,8 @@ namespace CuttingOptimizer.AppLogic.Services
                 // Add new Svg when there's no space left.
                 if (fitGroups.Count == 0)
                 {
-                    AddSvg(svgs, svgs.MinBy(c => c.Priority));
+                    AddSvg(svgs, svgs.Single(c=>c.Plate.Base == true));
+                    //AddSvg(svgs, svgs.MinBy(c => c.Priority));
                 }
             }
 
@@ -327,6 +328,14 @@ namespace CuttingOptimizer.AppLogic.Services
             return null;
         }
 
+        public int CalculateCutLines(Svg svg)
+        {
+            int x = svg.Groups.GroupBy(c=>c.X).Count();
+            int y = svg.Groups.GroupBy(c => c.Y).Count();
+
+            return x + y - 2;
+        }
+
         public List<Product> CombineProductsWithSameDimentions(List<Product> products) {
 
             List<Product> newProductList = new List<Product>();
@@ -341,5 +350,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return newProductList;
         }
+
     }
 }

@@ -1,5 +1,22 @@
-﻿<h3>Overview</h3>
+﻿@using CuttingOptimizer.AppLogic.Models;
+<div class="container-fluid">
+    <div class="row mt-5 mb-3">
+        <h4 class="col-12 title-border">Overzicht</h4>
+        <div class="col-3">
+            @*            <label class="font-weight-bold">Quantiteit</label>
+            @{
+                var groupByPlate = Svgs.Where(c => c.Groups.Count() != 0).GroupBy(c => c.Plate.ID);
+            }
+            @foreach (var group in groupByPlate)
+            {
+                <div class="col-1">@group.Count()</div>
+                <div class="col-3">@group.Key</div>
+            }*@
+        </div>
+    </div>
+</div>
 
 @code {
-
+    [Parameter]
+    public List<Svg> Svgs { get; set; } = new List<Svg>();
 }
