@@ -53,11 +53,13 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        //CalculatorFormModel.Saw = new Saw("SX1", 2);
+        //CalculatorFormModel.Saw = new Saw("SX2", 3);
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
-        //    new Plate(2, "PL1", 2006, 400, 5, 0, 1),
+        //    new Plate(2, "PL1", 2000, 400, 5, 0, 0, true),
+        //    //new Plate(2, "PL1", 1000, 500, 5, 0, 1, true),
+
         //    //new Plate(2, "PL1", 2006, 400, 5, 0, 1),
         //    //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
         //    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
@@ -71,7 +73,7 @@
         //    new Product(4, "X3", 800, 40, 5),
         //    new Product(30, "K1", 200, 40, 5),
         //    new Product(60, "K2", 200, 40, 5),
-        //    new Product(4, "P3", 150, 40, 5),
+        //    new Product(4, "P3", 150, 40, 5)
         //    #endregion
 
         //    #region VB2
@@ -79,6 +81,11 @@
         //    //new Product(2, "X2", 300, 80, 5),
         //    //new Product(3, "X3", 800, 40, 5),
         //    //new Product(18, "K1", 200, 30, 5),
+        //    #endregion
+
+        //    #region VB3
+        //    //new Product(1, "Pl215", 999, 40, 5),
+        //    //new Product(1, "Pl215", 999, 40, 5)
         //    #endregion
         //};
 
@@ -93,7 +100,6 @@
 
     public void HandleSubmit()
     {
-
         //bool check = true;
         // Check if a product is bigger than plate
         int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;

@@ -129,7 +129,9 @@ namespace CuttingOptimizer.AppLogic.Services
                 int maxHorizontal = CalculateQuantityHorizontal(saw, group, product);
                 int maxVertical = CalculateQuantityVertical(saw, group, product);
 
-                int vert = product.Quantity / maxHorizontal;
+                var a = (group.Width / (product.Width + saw.Thickness + 1));
+                int vert = a;
+                //int vert = product.Quantity / maxHorizontal;
                 int rest = product.Quantity % maxHorizontal;
                 int restWidth = 0;
                 int restHeight = 0;
@@ -223,7 +225,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 // Add new Svg when there's no space left.
                 if (fitGroups.Count == 0)
                 {
-                    AddSvg(svgs, svgs.Single(c=>c.Plate.Base == true));
+                    AddSvg(svgs, svgs.First(c=>c.Plate.Base == true));
                     //AddSvg(svgs, svgs.MinBy(c => c.Priority));
                 }
             }
@@ -298,7 +300,8 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         private Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
         {
-            if(lastCreated.X + lastCreated.Length != group.Width)
+            //if (lastCreated.X + lastCreated.Length < group.Length)
+            if (lastCreated.Length <= group.Length)
             {
                 int length = group.Length - lastCreated.Length - saw.Thickness - 1;
 

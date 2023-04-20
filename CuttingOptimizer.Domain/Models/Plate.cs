@@ -15,6 +15,7 @@ namespace CuttingOptimizer.Domain.Models
             Length = plate.Length;
             Width = plate.Width;
             Height = plate.Height;
+            Base = plate.Base;
         }
         public Plate(bool basePlate)
         {
@@ -37,6 +38,7 @@ namespace CuttingOptimizer.Domain.Models
             Height = plate.Height;
             Veneer = plate.Veneer;
             Trim = plate.Trim;
+            Base = plate.Base;
         }
         public Plate(int quantity, string id, int length, int width, int height, int trim)
         {
@@ -56,6 +58,17 @@ namespace CuttingOptimizer.Domain.Models
             Height = height;
             Trim = trim;
             Priority = priority;
+        }
+        public Plate(int quantity, string id, int length, int width, int height, int trim, int priority, bool basePlate)
+        {
+            Quantity = quantity;
+            ID = id;
+            Width = width;
+            Length = length;
+            Height = height;
+            Trim = trim;
+            Priority = priority;
+            Base = basePlate;
         }
 
         [Required]
