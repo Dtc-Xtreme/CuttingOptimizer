@@ -79,7 +79,7 @@
                 {
                     <label for="plateBase" class="pr-1" >Basis</label>
                 }
-            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="Test" />
+            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="CheckBase" />
             </div>
             <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
@@ -113,7 +113,10 @@
 
     private void RemovePlate(Plate plate)
     {
-        if (Plates.Count() > 1) Plates.Remove(plate);
+
+        if (Plates.Count() > 1){
+            Plates.Remove(plate);
+        }
     }
 
     private void SearchOrSelect(string value, int position)
@@ -134,7 +137,7 @@
         //}
     }
 
-    private void Test()
+    private void CheckBase()
     {
         Plates.Single(c => c.Base == true).Base = false;
     }
