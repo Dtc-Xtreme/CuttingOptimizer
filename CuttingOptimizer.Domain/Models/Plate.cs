@@ -16,6 +16,11 @@ namespace CuttingOptimizer.Domain.Models
             Width = plate.Width;
             Height = plate.Height;
             Base = plate.Base;
+            Quantity = plate.Quantity;
+            Priority = plate.Priority;
+            Base = plate.Base;
+            Veneer = plate.Veneer;
+            Trim = plate.Trim;
         }
         public Plate(bool basePlate)
         {
