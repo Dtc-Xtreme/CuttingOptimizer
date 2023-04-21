@@ -53,7 +53,18 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        //CalculatorFormModel.Saw = new Saw("SX2", 3);
+        CalculatorFormModel.Saw = new Saw("SX2", 3);
+
+        CalculatorFormModel.Plates = new List<Plate>
+        {
+            new Plate(1, "PL1", 2000, 400, 5, 0, 0, true),
+        };
+
+        CalculatorFormModel.Products = new List<Product>
+        {
+            //new Product(1, "Y1", 100, 100, 5),
+            new Product(324, "X2", 50, 40, 5),
+        };
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
@@ -89,8 +100,8 @@
         //    #endregion
         //};
 
-        //HandleSubmit();
-    }
+        HandleSubmit();
+        }
 
     private void Reset()
     {

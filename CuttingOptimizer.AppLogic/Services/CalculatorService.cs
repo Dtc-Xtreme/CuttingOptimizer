@@ -24,9 +24,10 @@ namespace CuttingOptimizer.AppLogic.Services
             // Remove when added or reduce the quantity of places groups/rectangles
             while (products.Count > 0)
             {
-                products = products.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
+                products = products.OrderByDescending(c => c.Quantity*c.Area).ToList();
 
                 ChooseCalculation(ref svgs, saw, products);
+                //ChooseNewCalculation(ref svgs, saw, products);
                 RemoveProductsWithQuantityZero(products);
             }
 
@@ -120,6 +121,33 @@ namespace CuttingOptimizer.AppLogic.Services
                     }
                 }
             }
+        }
+        private void ChooseNewCalculation(ref List<Svg> svgs, Saw saw, List<Product> products)
+        {
+            Group selectedGroup;
+            Product selectedProduct = products[0];
+            List<Group> groups = SearchFits(ref svgs, selectedProduct, saw);
+
+            if(selectedProduct.Quantity > 1){
+                var results = CalculateDiffrentPossibilitiesForGroups(groups, selectedProduct, saw);
+                var selectedResult = results.First();
+                CalculateGroupBlock(selectedProduct, saw, selectedResult.Key, selectedResult.Value.VerticalQuantity, selectedResult.Value.HorizontalQuantity);
+            }
+
+            //Gesorteerd van grootste area (area*qty) naar kleinste
+            //Totale height grootste eerste!! ten zij er een volle optimale lijn is
+            //Blokken maken van max width 1 of meerdere lijnen. overschot terug sturen
+            //
+        }
+
+
+        private bool VerticalTest(Group group, Saw saw, Product product, int quantity)
+        {
+            int length = product.Length * quantity + (saw.Thickness * (quantity-1));
+            bool lengthCheck = group.Length >= length;
+            bool widthCheck = group.Width >= product.Width;
+            return lengthCheck && widthCheck;
+
         }
 
         private Dictionary<Group, RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, Product product, Saw saw)
