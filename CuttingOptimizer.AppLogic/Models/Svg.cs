@@ -9,7 +9,8 @@ namespace CuttingOptimizer.AppLogic.Models
 {
     public class Svg
     {
-        public Svg() { 
+        public Svg() {
+            Groups = new List<Group>();
             ViewBox = new ViewBox();
         }
 

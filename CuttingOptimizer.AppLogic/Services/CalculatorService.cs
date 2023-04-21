@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("CuttingOptimizer.AppLogic.Tests")]
 namespace CuttingOptimizer.AppLogic.Services
 {
     public class CalculatorService : ICalculatorService
@@ -251,7 +253,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 selectedGroup = CalculateGroupsVertical(selectedProduct, saw, selectedGroup, 1);
             }
         }
-        private Group CalculateGroupsVertical(Product selectedProduct, Saw saw, Group group, int quantity) {
+        internal Group? CalculateGroupsVertical(Product selectedProduct, Saw saw, Group group, int quantity) {
             List<Group> newGroups = new List<Group>();
             Group lastCreated = new Group();
 
@@ -291,17 +293,17 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return right;
         }
-        private void CalculateGroupBlock(Product selectedProduct, Saw saw, Group group, int vert, int hor)
+        internal void CalculateGroupBlock(Product selectedProduct, Saw saw, Group group, int vert, int hor)
         {
             Group selectedGroup = group;
             for(int i = 0; i < hor && selectedProduct.Quantity > 0; i++) {
                 selectedGroup = CalculateGroupsVertical(selectedProduct, saw, selectedGroup, vert);
             }
         }
-        private Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
+        internal Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
         {
             //if (lastCreated.X + lastCreated.Length < group.Length)
-            if (lastCreated.Length <= group.Length)
+            if (lastCreated.Length < group.Length)
             {
                 int length = group.Length - lastCreated.Length - saw.Thickness - 1;
 
@@ -315,7 +317,7 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return null;
         }
-        private Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
+        internal Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups)
         {
             if (lastCreated.Y + lastCreated.Width != group.Width /*&& group.Width != right.Width*/)
             {

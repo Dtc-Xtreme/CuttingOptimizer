@@ -21,4 +21,8 @@
     <ProjectReference Include="..\CuttingOptimizer.AppLogic\CuttingOptimizer.AppLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
