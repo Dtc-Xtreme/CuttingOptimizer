@@ -252,9 +252,28 @@ namespace CuttingOptimizer.AppLogic.Services
                         svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.ID == 0));
                 }
 
+                if(fitGroups.Count == 0 && !svgs.Any(c=>c.Plate.Veneer)){
+                    int t = product.Length;
+                    product.Length = product.Width;
+                    product.Width = t;
+
+                    foreach (Svg svg in svgs)
+                    {
+                        fitGroups.AddRange(
+                            svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.ID == 0));
+                    }
+                }
+
                 // Add new Svg when there's no space left.
                 if (fitGroups.Count == 0)
                 {
+                    if(!svgs.Any(c => c.Plate.Veneer))
+                    {
+                        int t = product.Length;
+                        product.Length = product.Width;
+                        product.Width = t;
+                    }
+
                     AddSvg(svgs, svgs.First(c=>c.Plate.Base == true));
                     //AddSvg(svgs, svgs.MinBy(c => c.Priority));
                 }
