@@ -24,7 +24,7 @@ namespace CuttingOptimizer.AppLogic.Services
             // Remove when added or reduce the quantity of places groups/rectangles
             while (products.Count > 0)
             {
-                products = products.OrderByDescending(c => c.Quantity*c.Area).ToList();
+                products = products.OrderByDescending(c => c.Quantity * c.Area).ToList();
 
                 ChooseCalculation(ref svgs, saw, products);
                 //ChooseNewCalculation(ref svgs, saw, products);
@@ -242,6 +242,8 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             List<Group> fitGroups = new List<Group>();
 
+            if (product.Length < product.Width) RotateProduct(product);
+
             while (fitGroups.Count == 0)
             {
                 svgs = svgs.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
@@ -252,10 +254,9 @@ namespace CuttingOptimizer.AppLogic.Services
                         svg.Groups.Where(c => c.Length >= product.Length && c.Width >= product.Width && c.ID == 0));
                 }
 
-                if(fitGroups.Count == 0 && !svgs.Any(c=>c.Plate.Veneer)){
-                    int t = product.Length;
-                    product.Length = product.Width;
-                    product.Width = t;
+                if (fitGroups.Count == 0 && !svgs.Any(c => c.Plate.Veneer))
+                {
+                    RotateProduct(product);
 
                     foreach (Svg svg in svgs)
                     {
@@ -267,15 +268,12 @@ namespace CuttingOptimizer.AppLogic.Services
                 // Add new Svg when there's no space left.
                 if (fitGroups.Count == 0)
                 {
-                    if(!svgs.Any(c => c.Plate.Veneer))
+                    if (!svgs.Any(c => c.Plate.Veneer))
                     {
-                        int t = product.Length;
-                        product.Length = product.Width;
-                        product.Width = t;
+                        RotateProduct(product);
                     }
 
-                    AddSvg(svgs, svgs.First(c=>c.Plate.Base == true));
-                    //AddSvg(svgs, svgs.MinBy(c => c.Priority));
+                    AddSvg(svgs, svgs.First(c => c.Plate.Base == true));
                 }
             }
 
@@ -290,6 +288,12 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             int width = (product.Width * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
             return group.Width >= width && group.Length >= product.Length;
+        }
+        private void RotateProduct(Product product)
+        {
+            int t = product.Length;
+            product.Length = product.Width;
+            product.Width = t;
         }
 
         private void CalculateGroupHorizontal(Product selectedProduct, Saw saw, Group group, int quantity)
