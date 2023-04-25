@@ -1,7 +1,7 @@
 ﻿@using CuttingOptimizer.Domain.Models;
     <div class="form-row title-bar">
         <div class="form-group col-auto">
-            <h3>Materialen</h3>
+            <h4>Materialen</h4>
         </div>
         <div class="form-group ml-2">
             <button type="button" class="btn btn-primary" @onclick="AddPlate">+</button>
@@ -76,7 +76,7 @@
             <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateBase" class="pr-1" >Basis</label>
+                    <label for="plateBase" class="pr-1" >Standaard</label>
                 }
             <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="() => CheckBase(plate)" />
             </div>
@@ -102,12 +102,29 @@
 
     protected override void OnInitialized()
     {
-        if (Plates.Count() == 0) Plates.Add(new Plate(true));
+        if (Plates.Count() == 0)
+        {
+            Plate plate = new Plate
+                {
+                    ID = "PLX0",
+                    Base = false,
+                    Quantity = 1,
+                    Priority = 1                    
+                };
+            Plates.Add(plate);
+        }
     }
 
     private void AddPlate()
     {
-        Plates.Add(new Plate(false));
+        Plate plate = new Plate
+            {
+                ID = "PLX0",
+                Base = false,
+                Quantity = 1,
+                Priority = 1
+            };
+        Plates.Add(plate);
     }
 
     private void RemovePlate(Plate plate)

@@ -42,7 +42,16 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 for(int x = 0; x < plate.Quantity; x++)
                 {
-                    svgs.Add(new Svg(plate.ID, new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim), plate.Priority, new Plate(1, plate)));
+                    if (plate.Priority != 0) {
+                        Svg svg = new Svg
+                        {
+                            ID = plate.ID,
+                            ViewBox = new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim),
+                            Priority = plate.Priority,
+                            Plate = new Plate(1, plate)
+                        };
+                        svgs.Add(svg);
+                    }
                 }
             }
 

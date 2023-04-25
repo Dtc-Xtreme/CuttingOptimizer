@@ -1,7 +1,7 @@
 ﻿@using CuttingOptimizer.Domain.Models;
     <div class="row title-bar">
         <div class="form-group col-auto">
-            <h3>Zaag</h3>
+            <h4>Zaag</h4>
         </div>
     </div>
     <div class="form-row">
@@ -33,7 +33,14 @@
 
     protected override void OnInitialized()
     {
-        if(Saw == null) Saw = new Saw();
+        if(Saw == null)
+        {
+            Saw saw = new Saw
+            {
+                ID = "SX0",
+                Thickness = 5
+            };
+        };
     }
 
     private void SearchOrSelect(string value)

@@ -8,11 +8,11 @@
 
 @inject ICalculatorService calculateService;
 
-<PageTitle>Calculator</PageTitle>
+<PageTitle>Platen Optimalisatie</PageTitle>
 
 <div class="container-fluid">
     <div class="no-print">
-        <h1 class="no-print">Calculator</h1>
+        <h3 class="no-print">Platen Optimalisatie</h3>
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="@HandleSubmit">
             <ObjectGraphDataAnnotationsValidator />
 
@@ -35,8 +35,18 @@
     </div>
 
     <div>
-            <Overview Svgs=@Svgs />
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw />
     </div>
+    }
+
+    @if(Errors != null && Errors.Count() > 0)
+    {
+        foreach(string error in Errors)
+        {
+            <div>
+                @error
+            </div>
+        }
     }
 </div>
 
@@ -45,6 +55,7 @@
     private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
+    private List<string> Errors { get; set; } = new List<string>();
 
     private List<Svg> Svgs { get; set; }
 
@@ -53,18 +64,18 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        //CalculatorFormModel.Saw = new Saw("SX2", 3);
+        CalculatorFormModel.Saw = new Saw("SX3", 5);
 
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 500, 5, 0, 0, true),
-        //};
+        CalculatorFormModel.Plates = new List<Plate>
+        {
+            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
+        };
 
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    new Product(40, "Y1", 100, 50, 5),
-        //    new Product(20, "X2", 600, 30, 5),
-        //};
+        CalculatorFormModel.Products = new List<Product>
+        {
+            new Product(40, "Y1", 100, 50, 5),
+            new Product(20, "X2", 600, 30, 5),
+        };
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
@@ -101,7 +112,7 @@
         //};
 
         //HandleSubmit();
-        }
+    }
 
     private void Reset()
     {
@@ -111,13 +122,8 @@
 
     public void HandleSubmit()
     {
-        //bool check = true;
-        // Check if a product is bigger than plate
-        int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
-        int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
-        bool check = CalculatorFormModel.Products.Any(c => c.Length <= biggestLength && c.Width <= biggestWidth);
-
-        if (check)
+        Errors.Clear();
+        if (ProductCheck() && PlateCheck())
         {
             //// Check and set Base Plate
             //if (CalculatorFormModel.Plates.Any(c => c.Base == true))
@@ -147,5 +153,28 @@
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
         }
+    }
+
+    private bool PlateCheck()
+    {
+        bool result = CalculatorFormModel.Plates.Any(c => c.Priority != 0);
+        if (!result)
+        {
+            Errors.Add("Min 1 materiaal met PRIO 1 nodig!");
+        }
+        return result;
+    }
+
+    private bool ProductCheck()
+    {
+        int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
+        int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
+        bool result = CalculatorFormModel.Products.Any(c => c.Length <= biggestLength && c.Width <= biggestWidth);
+
+        if (!result)
+        {
+            Errors.Add("Er is een item die grooter is dan de grootste plaat!");
+        }
+        return result;
     }
 }

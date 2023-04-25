@@ -25,11 +25,11 @@
             <span>@Svg.Plate.Trim mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Quantiteit: </label>
+            <label class="font-weight-bold">Aantal: </label>
             <span>@Svg.Plate.Quantity</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Veneer: </label>
+            <label class="font-weight-bold">Fineer: </label>
 
             @if (Svg.Plate.Veneer)
             {
@@ -68,7 +68,7 @@
             }
         </div>
         <div class="col-3">
-            <label class="font-weight-bold">Info</label>
+            <label class="font-weight-bold">Item</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Key</div>
