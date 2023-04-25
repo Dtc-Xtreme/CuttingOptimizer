@@ -192,7 +192,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
                 else
                 {
-                    rest -= (saw.Thickness + product.Length);
+                    rest -= (saw.Thickness + product.Length + 1);
 
                 }
 
@@ -222,7 +222,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
                 else
                 {
-                    rest -= (saw.Thickness + product.Width);
+                    rest -= (saw.Thickness + product.Width + 1);
                 }
 
                 if (rest >= 0)
