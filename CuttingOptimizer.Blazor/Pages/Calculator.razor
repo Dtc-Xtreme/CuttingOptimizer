@@ -156,8 +156,6 @@
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(Saw, CalculatorFormModel.Plates, productList.ToList());
-
-            bool test =Svgs[0].Equals(Svgs[1]);
         }
     }
 
