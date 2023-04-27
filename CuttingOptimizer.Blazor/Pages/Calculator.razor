@@ -14,8 +14,8 @@
 <PageTitle>Platen Optimalisatie</PageTitle>
 
 <div class="container-fluid">
-    <div class="no-print">
-        <h3 class="no-print">Platen Optimalisatie</h3>
+    <h3 class="no-print">Platen Optimalisatie</h3>
+    <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
             <PlateForm Plates=@CalculatorFormModel.Plates />
@@ -31,6 +31,7 @@
     <div>
         @foreach (Svg svg in Svgs)
         {
+           
             <SvgComponent Scale=@Scale Svg=svg Products=@CalculatorFormModel.Products Saw=@Saw />
         }
     </div>
@@ -43,7 +44,7 @@
     @if(Errors != null && Errors.Count() > 0)
     {
         <div class="bg-danger text-white m-5 p-3">
-            <h4>Fouten</h4>
+            <h5>Fouten</h5>
             @foreach(string error in Errors)
             {
             <div>
@@ -79,7 +80,7 @@
 
         CalculatorFormModel.Products = new List<Product>
         {
-            new Product(18, "Y1", 900, 50, 5),
+            new Product(50, "Y1", 900, 50, 5),
             //new Product(20, "X2", 600, 30, 5),
         };
 
@@ -155,6 +156,8 @@
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(Saw, CalculatorFormModel.Plates, productList.ToList());
+
+            bool test =Svgs[0].Equals(Svgs[1]);
         }
     }
 

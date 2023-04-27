@@ -9,22 +9,25 @@
 
 <div class="container-fluid">
     <div>
-        <h3>Instellingen</h3>
+        <h2>Instellingen</h2>
         <EditForm Model="@Saw" OnValidSubmit="@HandleSubmit">
             <DataAnnotationsValidator/>
-            <SawForm Saw=@Saw />
+            <div class="mt-3">
+                <SawForm Saw=@Saw />
 
-            <div class="row title-bar">
-                <div class="form-group col-auto">
-                    <h4>Materiaal</h4>
+                <div class="row title-bar">
+                    <div class="form-group col-auto">
+                        <h4>Materiaal</h4>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-check w-100 col">
+                        <InputCheckbox id="veneerBool" @bind-Value="Veneer" />
+                        <label class="form-check-label" for="veneerBool">Fineer</label>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-check w-100 col">
-                    <InputCheckbox id="veneerBool" @bind-Value="Veneer" />
-                    <label class="form-check-label" for="veneerBool">Fineer</label>
-                </div>
-            </div>
+
             <ValidationSummary />
             <button type="submit" class="btn btn-primary mt-3">Opslaan</button>
         </EditForm>
