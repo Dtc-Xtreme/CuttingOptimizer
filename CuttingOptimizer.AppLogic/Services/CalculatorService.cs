@@ -64,7 +64,7 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         private List<Svg> AddSvg(List<Svg> svgs, Svg svg)
         {
-            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 2, new Plate(1, svg.Plate));
+            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 99, svg.Plate);
             newSvg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
 
             svgs.Add(newSvg);
@@ -334,7 +334,7 @@ namespace CuttingOptimizer.AppLogic.Services
                     y -= group.Y;
                 }
 
-                lastCreated = new Group(new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID)), x, y, length, width, new Product(1,selectedProduct));
+                lastCreated = new Group(new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID)), x, y, length, width, selectedProduct);
                 lastCreated.Svg = group.Svg;
 
                 newGroups.Add(lastCreated);
