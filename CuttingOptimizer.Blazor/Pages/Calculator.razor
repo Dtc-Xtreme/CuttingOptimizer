@@ -5,18 +5,19 @@
 @using CuttingOptimizer.Blazor.Components.Forms
 @using CuttingOptimizer.Blazor.Models;
 @using CuttingOptimizer.Domain.Models;
+@using Blazored.LocalStorage;
+@using System.Text.Json;
 
 @inject ICalculatorService calculateService;
+@inject ILocalStorageService localStorage;
 
 <PageTitle>Platen Optimalisatie</PageTitle>
 
 <div class="container-fluid">
     <div class="no-print">
         <h3 class="no-print">Platen Optimalisatie</h3>
-        <EditForm Model="@CalculatorFormModel" OnValidSubmit="@HandleSubmit">
+        <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-
-            <SawForm Saw=@CalculatorFormModel.Saw />
             <PlateForm Plates=@CalculatorFormModel.Plates />
             <ProductForm Products=@CalculatorFormModel.Products />
             <ValidationSummary />
@@ -25,33 +26,38 @@
         </EditForm>
     </div>
 
-    @if (Svgs.Count() != 0)
+    @if (Svgs != null && Svgs.Count() != 0 && Errors.Count() == 0)
     {
     <div>
         @foreach (Svg svg in Svgs)
         {
-            <SvgComponent Scale=@Scale Svg=svg Products=@CalculatorFormModel.Products Saw=@CalculatorFormModel.Saw />
+            <SvgComponent Scale=@Scale Svg=svg Products=@CalculatorFormModel.Products Saw=@Saw />
         }
     </div>
 
     <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw />
+            <Overview Svgs=@Svgs Saw=@Saw />
     </div>
     }
 
     @if(Errors != null && Errors.Count() > 0)
     {
-        foreach(string error in Errors)
-        {
+        <div class="bg-danger text-white m-5 p-3">
+            <h4>Fouten</h4>
+            @foreach(string error in Errors)
+            {
             <div>
                 @error
             </div>
-        }
+            }
+        </div>
     }
 </div>
 
 @code {
     private CalculatorFormModel CalculatorFormModel { get; set; }
+    private Saw Saw { get; set; }
+    private bool Veneer { get; set; }
     private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
@@ -64,7 +70,7 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        CalculatorFormModel.Saw = new Saw("SX3", 5);
+        Saw = new Saw("SX3", 5);
 
         CalculatorFormModel.Plates = new List<Plate>
         {
@@ -73,8 +79,8 @@
 
         CalculatorFormModel.Products = new List<Product>
         {
-            new Product(40, "Y1", 100, 50, 5),
-            new Product(20, "X2", 600, 30, 5),
+            new Product(18, "Y1", 900, 50, 5),
+            //new Product(20, "X2", 600, 30, 5),
         };
 
         //CalculatorFormModel.Plates = new List<Plate>
@@ -123,13 +129,10 @@
     public void HandleSubmit()
     {
         Errors.Clear();
-        if (ProductCheck() && PlateCheck())
+        if (Check())
         {
-            //// Check and set Base Plate
-            //if (CalculatorFormModel.Plates.Any(c => c.Base == true))
-            //{
-            //    CalculatorFormModel.Plates.First().Base = true;
-            //}
+            // Use LocalStorage Veneer setting
+            CalculatorFormModel.Plates.ForEach(c => c.Veneer = Veneer);
 
             // Find the biggest plate to represent as 100% width
             Scale = CalculatorFormModel.Plates.Max(c => c.LengthWithTrim) / (double)100;
@@ -151,10 +154,19 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+            Svgs = calculateService.Place(Saw, CalculatorFormModel.Plates, productList.ToList());
         }
     }
 
+
+
+    private bool Check()
+    {
+        bool prod = ProductCheck();
+        bool saw = SawCheck();
+        bool plate = PlateCheck();
+        return prod && saw && plate;
+    }
     private bool PlateCheck()
     {
         bool result = CalculatorFormModel.Plates.Any(c => c.Priority != 0);
@@ -164,7 +176,6 @@
         }
         return result;
     }
-
     private bool ProductCheck()
     {
         int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
@@ -176,5 +187,47 @@
             Errors.Add("Er is een item die grooter is dan de grootste plaat!");
         }
         return result;
+    }
+    private bool SawCheck()
+    {
+        bool result = Saw != null;
+        if (!result)
+        {
+            Errors.Add("Er is geen zaagblad ingesteld!");
+        }
+        return result;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //return base.OnAfterRenderAsync(firstRender);
+            if (await localStorage.ContainKeyAsync("currentSaw"))
+            {
+                Saw = await localStorage.GetItemAsync<Saw>("currentSaw");
+            }
+            else
+            {
+                Saw x = new Saw
+                    {
+                        ID = "SX0",
+                        Thickness = 5
+                    };
+                await localStorage.SetItemAsync("currentSaw", x);
+            }
+
+            if (await localStorage.ContainKeyAsync("currentVeneer"))
+            {
+                        Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");            
+            }
+            else
+            {
+                await localStorage.SetItemAsync("currentVeneer", false);
+            }
+
+            StateHasChanged();
+        }
+
     }
 }

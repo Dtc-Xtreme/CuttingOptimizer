@@ -66,13 +66,13 @@
                 }
                 <InputNumber class="form-control" id="platePriority" @bind-Value="plate.Priority" placeholder="Prio" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+@*            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
                 {
                     <label for="plateVeneer" class="pr-1">Fineer</label>
                 }
                 <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
-            </div>
+            </div>*@
             <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
                 @if (plate == Plates[0])
                 {
@@ -95,9 +95,20 @@
     public List<Plate> Plates { get; set; }
 
     private List<Plate> SearchPlates = new List<Plate>{
-            new Plate("PL255", 2000, 500, 5),
-            new Plate("PL215", 2000, 100, 5),
-            new Plate("PL155", 1000, 500, 5)
+            new Plate{
+                ID = "PL255",
+                Length = 2000, 
+                Width = 500,
+                Height = 5,
+                Priority = 1
+            },
+            new Plate{
+                ID = "PL155",
+                Length = 1000,
+                Width = 500,
+                Height = 5,
+                Priority = 1
+            }
         };
 
     protected override void OnInitialized()
@@ -107,9 +118,9 @@
             Plate plate = new Plate
                 {
                     ID = "PLX0",
-                    Base = false,
+                    Base = true,
                     Quantity = 1,
-                    Priority = 1                    
+                    Priority = 1,                
                 };
             Plates.Add(plate);
         }

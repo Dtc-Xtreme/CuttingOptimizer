@@ -28,7 +28,7 @@
             <label class="font-weight-bold">Aantal: </label>
             <span>@Svg.Plate.Quantity</span>
         </div>
-        <div class="col-3 pl-3 pr-3 pt-0">
+@*        <div class="col-3 pl-3 pr-3 pt-0">
             <label class="font-weight-bold">Fineer: </label>
 
             @if (Svg.Plate.Veneer)
@@ -39,7 +39,7 @@
             {
                 <span> nee</span>
             }
-        </div>
+        </div>*@
     </div>
     <div class="row mb-3">
         <h4 class="col-12 title-border">Te zagen</h4>
@@ -51,6 +51,13 @@
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Count()</div>
+            }
+        </div>
+        <div class="col-3">
+            <label class="font-weight-bold">Item</label>
+            @foreach (var group in groupByProduct)
+            {
+                <div>@group.Key</div>
             }
         </div>
         <div class="col-3">
@@ -67,20 +74,13 @@
                 <div>@group.First().Width mm</div>
             }
         </div>
-        <div class="col-3">
-            <label class="font-weight-bold">Item</label>
-            @foreach (var group in groupByProduct)
-            {
-                <div>@group.Key</div>
-            }
-        </div>
     </div>
     <div class="row mb-3">
         <h4 class="col-12 title-border">Parameters</h4>
-        <div class="col-6 pl-3 pr-3 pt-0">
+@*        <div class="col-6 pl-3 pr-3 pt-0">
             <label class="font-weight-bold">Zaagsnede: </label>
             <span>@Saw.Thickness mm</span>
-        </div>
+        </div>*@
         <div class="col-6 pl-3 pr-3 pt-0">
             <label><b>Verlies:</b></label>
             <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
