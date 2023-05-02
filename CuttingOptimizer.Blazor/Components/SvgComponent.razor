@@ -6,7 +6,7 @@
 {
     <div class="mt-5 print-page-brake-after">
         <div>
-            <PlateDetail Saw=@Saw Svg=@Svg/>
+            <PlateDetail Saw=@Saw Svg=@Svg Count="@Count"/>
         </div>
 
         <div>
@@ -51,7 +51,7 @@
     public Saw Saw { get; set; }
 
     [Parameter]
-    public List<Product> Products { get; set; }
+    public int Count { get; set; }
 
     private double Width { get; set; }
 

@@ -9,7 +9,8 @@ namespace CuttingOptimizer.AppLogic.Models
 {
     public class Svg
     {
-        public Svg() {
+        public Svg()
+        {
             Groups = new List<Group>();
             ViewBox = new ViewBox();
         }
@@ -24,21 +25,33 @@ namespace CuttingOptimizer.AppLogic.Models
         }
 
         public string ID { get; set; }
-        public ViewBox ViewBox { get;set; }
+        public ViewBox ViewBox { get; set; }
         public List<Group> Groups { get; set; }
         public int Priority { get; set; }
         public int Area
         {
-            get { 
-                return ViewBox.Length * ViewBox.Width; 
+            get
+            {
+                return ViewBox.Length * ViewBox.Width;
             }
         }
         public Plate Plate { get; set; }
 
         public void AddGroup(Group group)
         {
-            group.Svg = this;
+            if (group.Product != null) Hash += group.Product.GetHashCode();
             Groups.Add(group);
         }
+
+        public void AddGroups(List<Group> groups)
+        {
+            foreach (Group group in groups)
+            {
+                if (group.Product != null) Hash += group.Product.GetHashCode();
+            }
+            Groups.AddRange(groups);
+        }
+
+        public string Hash { get; set; }
     }
 }

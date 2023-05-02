@@ -26,7 +26,7 @@
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
             <label class="font-weight-bold">Aantal: </label>
-            <span>@Svg.Plate.Quantity</span>
+            <span>@Count</span>
         </div>
 @*        <div class="col-3 pl-3 pr-3 pt-0">
             <label class="font-weight-bold">Fineer: </label>
@@ -98,6 +98,9 @@
 
     [Parameter]
     public Svg Svg { get; set; }
+
+    [Parameter]
+    public int Count { get; set; }
 
     private double AreaLossPercentage
     {

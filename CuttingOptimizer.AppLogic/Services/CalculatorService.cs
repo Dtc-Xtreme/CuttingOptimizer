@@ -57,7 +57,16 @@ namespace CuttingOptimizer.AppLogic.Services
 
             foreach (Svg svg in svgs)
             {
-                svg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
+                Group newGroup = new Group
+                {
+                    ID = 0,
+                    X = 0,
+                    Y = 0,
+                    Length = svg.ViewBox.Length,
+                    Width = svg.ViewBox.Width,
+                    Svg = svg
+                };
+                svg.AddGroup(newGroup);
             }
 
             return svgs;
@@ -65,7 +74,16 @@ namespace CuttingOptimizer.AppLogic.Services
         private List<Svg> AddSvg(List<Svg> svgs, Svg svg)
         {
             Svg newSvg = new Svg("Extra", new ViewBox(0, 0, svg.ViewBox.Length, svg.ViewBox.Width), 99, svg.Plate);
-            newSvg.AddGroup(new Group(0, 0, 0, svg.ViewBox.Length, svg.ViewBox.Width));
+            Group newGroup = new Group
+            {
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = svg.ViewBox.Length,
+                Width = svg.ViewBox.Width,
+                Svg = newSvg
+            };
+            newSvg.AddGroup(newGroup);
 
             svgs.Add(newSvg);
 
@@ -347,7 +365,7 @@ namespace CuttingOptimizer.AppLogic.Services
             if(right != null) newGroups.Add(right);
             if (under != null) newGroups.Add(under);
 
-            group.Svg.Groups.AddRange(newGroups);
+            group.Svg.AddGroups(newGroups);
             group.Svg.Groups.Remove(group);
 
             return right;
