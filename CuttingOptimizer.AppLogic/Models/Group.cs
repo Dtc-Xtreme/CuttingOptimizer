@@ -13,33 +13,6 @@ namespace CuttingOptimizer.AppLogic.Models
         {
             
         }
-        public Group(int id, int x, int y, int length, int width)
-        {
-            ID = id;
-            X = x;
-            Y = y;
-            Length = length;
-            Width = width;
-        }
-        public Group(Rectangle rectangle, int x, int y, int length, int width)
-        {
-            ID = 0;
-            Rectangle = rectangle;
-            X = x;
-            Y = y;
-            Length = length;
-            Width = width;
-        }
-        public Group(Rectangle rectangle, int x, int y, int length, int width, Product product)
-        {
-            ID = 1;
-            Rectangle = rectangle;
-            X = x;
-            Y = y;
-            Length = length;
-            Width = width;
-            Product = product;
-        }
 
         public int ID { get; set; }
         public Rectangle Rectangle { get; set; }
