@@ -48,21 +48,25 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
         {
             List<Group> newGroups = new List<Group>();
             Saw sw = new Saw("SX1", 2);
+            Svg svg = new Svg { Priority = 1 };
             Group g = new Group
             {
                 ID = 0,
                 X = 0,
                 Y = 0,
                 Length = groupLength,
-                Width = groupWidth
+                Width = groupWidth,
+                Svg = svg
             };
             Group lg = new Group
             {
-                ID = 0,
+                ID = 1,
                 X = 0,
                 Y = 0,
                 Length = lGroupLength,
-                Width = lGroupWidth
+                Width = lGroupWidth,
+                Product = new Product { ID = "X1", Quantity = 1, Length = lGroupLength, Width = lGroupWidth },
+                Svg = svg
             };
 
             Group? result = calculatorService.CalculateGroupRight(sw, g, lg, newGroups);
