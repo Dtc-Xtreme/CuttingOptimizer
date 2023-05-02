@@ -28,8 +28,14 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
             Product sp = new Product(prodQty, "X1", prodLength, prodWidth, 0);
             Saw sw = new Saw("SX1", sawThickness);
             Svg svg = new Svg();
-            Group sg = new Group(0, 0, 0, groupLength, groupWidth);
-            sg.Svg = svg;
+            Group sg = new Group { 
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = groupLength,
+                Width = groupWidth,
+                Svg = svg
+            };
             int qty = 2;
 
             //Act
@@ -42,8 +48,22 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
         {
             List<Group> newGroups = new List<Group>();
             Saw sw = new Saw("SX1", 2);
-            Group g = new Group(0, 0, 0, groupLength, groupWidth);
-            Group lg = new Group(0,0,0, lGroupLength, lGroupWidth);    
+            Group g = new Group
+            {
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = groupLength,
+                Width = groupWidth
+            };
+            Group lg = new Group
+            {
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = lGroupLength,
+                Width = lGroupWidth
+            };
 
             Group? result = calculatorService.CalculateGroupRight(sw, g, lg, newGroups);
 
@@ -63,8 +83,22 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
         {
             List<Group> newGroups = new List<Group>();
             Saw sw = new Saw("SX1", 2);
-            Group g = new Group(0, 0, 0, groupLength, groupWidth);
-            Group lg = new Group(0, 0, 0, lGroupLength, lGroupWidth);
+            Group g = new Group
+            {
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = groupLength,
+                Width = groupWidth
+            };
+            Group lg = new Group
+            {
+                ID = 0,
+                X = 0,
+                Y = 0,
+                Length = lGroupLength,
+                Width = lGroupWidth
+            };
 
             Group? result = calculatorService.CalculateGroupUnder(sw, g, lg, newGroups);
 
