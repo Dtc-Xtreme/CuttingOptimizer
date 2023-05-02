@@ -72,9 +72,6 @@ namespace CuttingOptimizer.Domain.Models
         [Range(1, 100)]
         public int Quantity { get; set; }
 
-        [NotMapped]
-        public bool Used { get; set; }
-
         public override string ToString()
         {
             return "Quantity: " + Quantity + " | ID: " + ID + " | L : " + Length + " | W : " + Width + " | H: " + Height + " | Area: " +  (Quantity * Area).ToString("0.00 mm²", CultureInfo.InvariantCulture);
