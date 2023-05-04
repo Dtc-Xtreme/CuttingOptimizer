@@ -1,6 +1,12 @@
+using CuttingOptimizer.Infrastructure;
+using CuttingOptimizer.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<CuttingOptimizerDbContext>();
+builder.Services.AddScoped<ISawRepository, SawRepository>();
+builder.Services.AddScoped<IPlateRepository, PlateRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
