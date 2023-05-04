@@ -181,7 +181,15 @@
     {
         int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
         int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
-        bool result = CalculatorFormModel.Products.Any(c => c.Length <= biggestLength && c.Width <= biggestWidth);
+        bool result = false;
+
+        if (CalculatorFormModel.Plates.Any(c => c.Veneer)){
+            result = CalculatorFormModel.Products.Any(c => (c.Length <= biggestLength && c.Width <= biggestWidth));
+        }
+        else
+        {
+            result = CalculatorFormModel.Products.Any(c => (c.Length <= biggestLength && c.Width <= biggestWidth) || (c.Length <= biggestWidth && c.Width <= biggestLength));
+        }
 
         if (!result)
         {
