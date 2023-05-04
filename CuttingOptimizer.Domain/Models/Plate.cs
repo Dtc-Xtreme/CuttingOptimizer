@@ -15,6 +15,17 @@ namespace CuttingOptimizer.Domain.Models
             Length = plate.Length;
             Width = plate.Width;
             Height = plate.Height;
+            Base = plate.Base;
+            Quantity = plate.Quantity;
+            Priority = plate.Priority;
+            Base = plate.Base;
+            Veneer = plate.Veneer;
+            Trim = plate.Trim;
+        }
+        public Plate(bool basePlate)
+        {
+            Quantity = 1;
+            Base = basePlate;
         }
         public Plate(string id, int length, int width, int height)
         {
@@ -32,6 +43,7 @@ namespace CuttingOptimizer.Domain.Models
             Height = plate.Height;
             Veneer = plate.Veneer;
             Trim = plate.Trim;
+            Base = plate.Base;
         }
         public Plate(int quantity, string id, int length, int width, int height, int trim)
         {
@@ -41,7 +53,6 @@ namespace CuttingOptimizer.Domain.Models
             Length = length;
             Height = height;
             Trim = trim;
-            //Products = new List<Product>();
         }
         public Plate(int quantity, string id, int length, int width, int height, int trim, int priority)
         {
@@ -52,7 +63,17 @@ namespace CuttingOptimizer.Domain.Models
             Height = height;
             Trim = trim;
             Priority = priority;
-            //Products = new List<Product>();
+        }
+        public Plate(int quantity, string id, int length, int width, int height, int trim, int priority, bool basePlate)
+        {
+            Quantity = quantity;
+            ID = id;
+            Width = width;
+            Length = length;
+            Height = height;
+            Trim = trim;
+            Priority = priority;
+            Base = basePlate;
         }
 
         [Required]
@@ -102,9 +123,6 @@ namespace CuttingOptimizer.Domain.Models
         [Required]
         [Range(0, 1000)]
         public int Trim { get; set; }
-
-        //[NotMapped]
-        //public List<Product> Products { get; set; }
 
         [NotMapped]
         [Range(1, 100)]

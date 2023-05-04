@@ -1,7 +1,7 @@
 ﻿@using CuttingOptimizer.Domain.Models;
-    <div class="row title-bar">
+    <div class="form-row title-bar">
         <div class="form-group col-auto">
-            <h3>Items</h3>
+            <h4>Items</h4>
         </div>              
         <div class="form-group ml-2">
             <button type="button" class="btn btn-primary" @onclick="AddProduct">+</button>
@@ -13,7 +13,7 @@
             <div class="form-group w-100 col-lg-1 col-xs-12">
                 @if (product == Products[0])
                 {
-                    <label>Info</label>
+                    <label>Item</label>
                 }
                 <InputText class="form-control" id="productID" @bind-Value="product.ID" placeholder="ID" />
             </div>
@@ -61,12 +61,22 @@
 
     protected override void OnInitialized()
     {
-        if(Products.Count() == 0) Products.Add(new Product());
+        Product prod = new Product
+            {
+                Quantity = 1,
+                ID = "IX0"
+            };
+        if(Products.Count() == 0) Products.Add(prod);
     }
 
     private void AddProduct()
     {
-        Products.Add(new Product());
+        Product prod = new Product
+            {
+                Quantity = 1,
+                ID = "IX0"
+            };
+        Products.Add(prod);
     }
 
     private void RemoveProduct(Product product)

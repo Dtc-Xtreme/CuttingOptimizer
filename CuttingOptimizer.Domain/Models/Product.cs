@@ -16,6 +16,11 @@ namespace CuttingOptimizer.Domain.Models
 
         }
 
+        public Product(int quantity)
+        {
+            Quantity = quantity;
+        }
+
         public Product(int quantity, Product product)
         {
             Quantity = quantity;
@@ -66,9 +71,6 @@ namespace CuttingOptimizer.Domain.Models
         [NotMapped]
         [Range(1, 100)]
         public int Quantity { get; set; }
-
-        [NotMapped]
-        public bool Used { get; set; }
 
         public override string ToString()
         {

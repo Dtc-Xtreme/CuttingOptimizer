@@ -1,5 +1,75 @@
-﻿<h3>Overview</h3>
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.Domain.Models;
+<div class="container-fluid">
+    <div class="row mt-5 mb-3">
+        <h4 class="title-border col-12">Overzicht</h4>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Zaagblad: </label>
+            <span>@Saw.ID</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Zaagsnede: </label>
+            <span>@Saw.Thickness mm</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="font-weight-bold">Fineer: </label>
+            @if (Svgs.First().Plate.Veneer)
+            {
+                <span> ja</span>
+            }
+            else
+            {
+                <span> nee</span>
+            }
+        </div>
+    </div>
+    <div class="row mb-3">
+        <h4 class="col-12 title-border">Benodige Materialen</h4>
+        @{
+            var groupByPlate = Svgs.GroupBy(c => c.Plate.ID);
+        }
+        <div class="col">
+            <label class="font-weight-bold">Quantiteit</label>
+            @foreach (var group in groupByPlate)
+            {
+                <div>@group.Count()</div>
+            }
+        </div>
+        <div class="col">
+            <label class="font-weight-bold">Materiaal</label>
+            @foreach (var group in groupByPlate)
+            {
+                <div>@group.Key</div>
+            }
+        </div>
+        <div class="col">
+            <label class="font-weight-bold">Lengte</label>
+            @foreach (var group in groupByPlate)
+            {
+                <div>@group.First().Plate.Length mm</div>
+            }
+        </div>
+        <div class="col">
+            <label class="font-weight-bold">Breedte</label>
+            @foreach (var group in groupByPlate)
+            {
+                <div>@group.First().Plate.Width mm</div>
+            }
+        </div>
+        <div class="col">
+            <label class="font-weight-bold">Dikte</label>
+            @foreach (var group in groupByPlate)
+            {
+                <div>@group.First().Plate.Height mm</div>
+            }
+        </div>
+    </div>
+</div>
 
 @code {
+    [Parameter]
+    public Saw Saw { get; set; }
 
+    [Parameter]
+    public List<Svg> Svgs { get; set; } = new List<Svg>();
 }

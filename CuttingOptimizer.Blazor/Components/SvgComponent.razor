@@ -6,7 +6,7 @@
 {
     <div class="mt-5 print-page-brake-after">
         <div>
-            <PlateDetail Saw=@Saw AreaLossPercentage=@AreaLossPercentage Svg=@Svg/>
+            <PlateDetail Saw=@Saw Svg=@Svg Count="@Count"/>
         </div>
 
         <div>
@@ -51,7 +51,7 @@
     public Saw Saw { get; set; }
 
     [Parameter]
-    public List<Product> Products { get; set; }
+    public int Count { get; set; }
 
     private double Width { get; set; }
 
@@ -71,14 +71,6 @@
         else
         {
             Width = Svg.ViewBox.Length / (double)Scale;
-        }
-    }
-
-    private double AreaLossPercentage
-    {
-        get
-        {
-            return Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
         }
     }
 }
