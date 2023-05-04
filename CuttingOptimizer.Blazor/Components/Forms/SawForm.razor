@@ -1,4 +1,10 @@
-﻿@using CuttingOptimizer.Domain.Models;
+﻿@using CuttingOptimizer.AppLogic.Services;
+@using CuttingOptimizer.Domain.Models;
+@using CuttingOptimizer.Infrastructure.Repositories;
+
+@inject ISawRepository repo;
+@inject IApiService api;
+
     <div class="row title-bar">
         <div class="form-group col-auto">
             <h4>Zaag</h4>
@@ -7,11 +13,14 @@
     <div class="form-row">
         <div class="form-group w-100 col-6">
             <label for="sawID">Zaagblad</label>
-            <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" list="sawList" @onkeyup="() => SearchOrSelect(Saw.ID)"/>
+            <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" list="sawList" @oninput="(args) => SearchOrSelect(args)"/>
             <datalist id="sawList">
-            @foreach (Saw sw in SearchSaws)
+            @if(SearchSaws != null)
             {
-                <option value="@sw.ID">@sw.ID - (@sw.Thickness mm)</option>
+                foreach (Saw sw in SearchSaws)
+                {
+                    <option value="@sw.ID">@sw.ID - (@sw.Thickness mm)</option>
+                }
             }
         </datalist>
         </div>
@@ -25,14 +34,17 @@
     [Parameter]
     public Saw Saw { get; set; }
 
-    private List<Saw> SearchSaws = new List<Saw>{
-            new Saw("SX1", 1),
-            new Saw("SX2", 5),
-            new Saw("SX3", 10)
-        };
+    private List<Saw> SearchSaws = new List<Saw>();
+    //        new Saw("SX1", 1),
+    //        new Saw("SX2", 5),
+    //        new Saw("SX3", 10)
+    //    };
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
+        //SearchSaws = repo.Saws.ToList();
+        SearchSaws = await api.GetAllSaws();
+
         if(Saw == null)
         {
             Saw saw = new Saw
@@ -43,9 +55,9 @@
         };
     }
 
-    private void SearchOrSelect(string value)
+    private async void SearchOrSelect(ChangeEventArgs args)
     {
-        Saw? sawResult = SearchSaws.FirstOrDefault(c => c.ID.ToLower() == value.ToLower());
+        Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
         if (sawResult != null)
         {
             Saw.ID = sawResult.ID;
@@ -53,7 +65,8 @@
         }
         //else
         //{
-        //    // change SearchSaws with api call
+        //    SearchSaws = await api.SearchSaws(args.Value.ToString());
+        //    //StateHasChanged();
         //}
-    }
+   }
 }

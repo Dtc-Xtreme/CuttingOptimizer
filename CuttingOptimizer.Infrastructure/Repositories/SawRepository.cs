@@ -35,5 +35,10 @@ namespace CuttingOptimizer.Infrastructure.Repositories
             if(saw != null) context.Saws.Remove(saw);
             return await context.SaveChangesAsync() == 0 ? false : true;
         }
+
+        public async Task<IList<Saw>> FindMultipleByIdOrThickness(string search)
+        {
+            return await Saws.Where(c => c.ID.ToLower().Contains(search.ToLower()) || c.Thickness.ToString().Equals(search)).ToListAsync();
+        }
     }
 }

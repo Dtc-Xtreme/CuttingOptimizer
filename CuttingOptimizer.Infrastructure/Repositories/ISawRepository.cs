@@ -10,5 +10,8 @@ namespace CuttingOptimizer.Infrastructure.Repositories
     public interface ISawRepository : ICuttingOptimizerRepository<Saw>
     {
         public IQueryable<Saw> Saws { get; }
+
+        public Task<IList<Saw>> FindMultipleByIdOrThickness(string search);
+
     }
 }

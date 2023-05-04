@@ -9,11 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CuttingOptimizer.AppLogic\CuttingOptimizer.AppLogic.csproj" />
     <ProjectReference Include="..\CuttingOptimizer.Domain\CuttingOptimizer.Domain.csproj" />
+    <ProjectReference Include="..\CuttingOptimizer.Infrastructure\CuttingOptimizer.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

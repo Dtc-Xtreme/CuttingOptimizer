@@ -31,6 +31,13 @@ namespace CuttingOptimizer.Api.Controllers
             return Ok(saw == null ? NotFound() : saw);
         }
 
+        [HttpGet("search/{id}")]
+        public async Task<IActionResult> SearchByIdOrThickness(string id)
+        {
+            IList<Saw>? saws = await repository.FindMultipleByIdOrThickness(id);
+            return Ok(saws == null ? NotFound() : saws);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(Saw saw)
         {
