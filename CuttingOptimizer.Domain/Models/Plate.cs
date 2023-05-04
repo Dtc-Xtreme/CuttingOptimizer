@@ -125,7 +125,7 @@ namespace CuttingOptimizer.Domain.Models
         public int Trim { get; set; }
 
         [NotMapped]
-        [Range(1, 100)]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
         [NotMapped]

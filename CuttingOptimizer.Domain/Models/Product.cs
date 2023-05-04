@@ -69,7 +69,7 @@ namespace CuttingOptimizer.Domain.Models
         }
 
         [NotMapped]
-        [Range(1, 100)]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
 
         public override string ToString()
