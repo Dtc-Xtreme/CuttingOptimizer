@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CuttingOptimizer.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CuttingOptimizer.Infrastructure
 {
@@ -6,17 +7,18 @@ namespace CuttingOptimizer.Infrastructure
     {
         public CuttingOptimizerDbContext()
         {
-            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server =.\\SQLEXPRESS; Database = CuttingOptimizer; Trusted_Connection = True;");
+            optionsBuilder.UseSqlServer("Server =.\\SQLEXPRESS; Database=CuttingOptimizer; Trusted_Connection = True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Saw> Saws { get; set; }
     }
 }
