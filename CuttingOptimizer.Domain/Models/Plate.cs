@@ -91,8 +91,10 @@ namespace CuttingOptimizer.Domain.Models
         [Range(1, 1000)]
         public int Height { get; set; }
 
+        [NotMapped]
         public bool Veneer { get; set; }
 
+        [NotMapped]
         public bool Base { get; set; }
 
         public int WidthWithTrim { 

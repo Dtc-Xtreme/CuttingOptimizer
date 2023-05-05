@@ -1,6 +1,8 @@
 ﻿using CuttingOptimizer.Domain.Models;
+using CuttingOptimizer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CuttingOptimizer.Api.Controllers
 {
@@ -8,29 +10,36 @@ namespace CuttingOptimizer.Api.Controllers
     [Route("[controller]")]
     public class PlateController : Controller
     {
-        private IList<Plate> Plates;
-
-        public PlateController()
+        private readonly IPlateRepository repository;
+        public PlateController(IPlateRepository repo)
         {
-            Plates = new List<Plate>
-            {
-                new Plate("PLC2000/1300/5",2000,1300,5),
-                new Plate("PLC3000/1900/10",3000,1900,10),
-            };
+            this.repository = repo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(Plates == null ? NotFound() : Ok(Plates));
+            IList<Plate> Plates = await repository.Plates.ToListAsync();
+            return Ok(Plates == null ? NotFound() : Plates);
         }
 
-        [HttpGet("name")]
-        public async Task<IActionResult> FindByName(string name)
+        [HttpGet("id")]
+        public async Task<IActionResult> FindById(string id)
         {
-            IList<Plate> resultList = Plates.Where(c => c.ID.ToLower().Contains(name.ToLower())).ToList();
-            if (resultList.Count == 0) resultList = null;
-            return resultList == null ? NotFound() : Ok(resultList);
+            Plate? plate = await repository.FindById(id);
+            return Ok(plate == null ? NotFound() : plate);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Plate plate)
+        {
+            return Ok(await repository.Create(plate) == false ? NotFound() : plate);
+        }
+
+        [HttpDelete("id")]
+        public async Task<IActionResult> Remove(string id)
+        {
+            return Ok(await repository.Remove(id) == false ? NotFound() : "Plate is removed!");
         }
     }
 }
