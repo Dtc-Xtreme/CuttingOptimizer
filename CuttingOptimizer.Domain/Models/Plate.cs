@@ -139,5 +139,11 @@ namespace CuttingOptimizer.Domain.Models
         {
             return "Quantity: " + Quantity + " | ID: " + ID + " | L: " + Length + " | W: " + Width + " | H: " + Height + " | Trim: " + Trim + " | Vineer: " + Veneer + " | Priority: " + Priority;
         }
+        public void SwitchHeightAndWidth()
+        {
+            int rest = this.Length;
+            this.Length = this.Width;
+            this.Width = rest;
+        }
     }
 }

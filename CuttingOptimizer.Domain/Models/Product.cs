@@ -81,5 +81,11 @@ namespace CuttingOptimizer.Domain.Models
         {
             return (Product)this.MemberwiseClone();
         }
+        public void SwitchHeightAndWidth()
+        {
+            int rest = this.Length;
+            this.Length = this.Width;
+            this.Width = rest;
+        }
     }
 }

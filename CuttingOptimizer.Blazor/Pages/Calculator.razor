@@ -73,12 +73,12 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        //Saw = new Saw("SX2", 2);
+        Saw = new Saw("SX2", 5);
 
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        //};
+        CalculatorFormModel.Plates = new List<Plate>
+        {
+            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
+        };
 
         //CalculatorFormModel.Products = new List<Product>
         //{
@@ -96,31 +96,31 @@
         //    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
         //};
 
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    #region VB1
-        //    new Product(10, "Y1", 170, 40, 5),
-        //    new Product(2, "X2", 800, 40, 5),
-        //    new Product(4, "X3", 800, 40, 5),
-        //    new Product(30, "K1", 200, 40, 5),
-        //    new Product(60, "K2", 200, 40, 5),
-        //    new Product(4, "P3", 150, 40, 5),
-        //    #endregion
+        CalculatorFormModel.Products = new List<Product>
+        {
+            #region VB1
+            //new Product(10, "Y1", 170, 40, 5),
+            new Product(2, "X2", 800, 40, 5),
+            //new Product(4, "X3", 800, 40, 5),
+            //new Product(30, "K1", 200, 40, 5),
+            //new Product(60, "K2", 200, 40, 5),
+            //new Product(4, "P3", 150, 40, 5),
+            #endregion
 
-        //    #region VB2
-        //    new Product(10, "Y1", 170, 50, 5),
-        //    new Product(2, "X2", 300, 80, 5),
-        //    new Product(3, "X3", 800, 40, 5),
-        //    new Product(18, "K1", 200, 30, 5),
-        //    #endregion
+            #region VB2
+            //new Product(10, "Y1", 170, 50, 5),
+            //new Product(2, "X2", 300, 80, 5),
+            //new Product(3, "X3", 800, 40, 5),
+            //new Product(18, "K1", 200, 30, 5),
+            #endregion
 
-        //    #region VB3
-        //    new Product(1, "Pl215", 999, 40, 5),
-        //    new Product(1, "Pl215", 999, 40, 5)
-        //    #endregion
-        //};
+            #region VB3
+            //new Product(1, "Pl215", 999, 40, 5),
+            //new Product(1, "Pl215", 999, 40, 5)
+            #endregion
+        };
 
-        //HandleSubmit();
+        HandleSubmit();
     }
 
     private void Reset()
@@ -138,7 +138,7 @@
             CalculatorFormModel.Plates.ForEach(c => c.Veneer = Veneer);
 
             // Find the biggest plate to represent as 100% width
-            Scale = CalculatorFormModel.Plates.Max(c => c.LengthWithTrim) / (double)100;
+            RotateBiggestSideForCanvasLength();
 
             // Sort Products from biggest area to smallest
             CalculatorFormModel.Products = CalculatorFormModel.Products.OrderByDescending(c => c.Area).ToList();
@@ -163,10 +163,7 @@
 
     private bool Check()
     {
-        bool prod = ProductCheck();
-        bool saw = SawCheck();
-        bool plate = PlateCheck();
-        return prod && saw && plate;
+        return ProductCheck() && SawCheck() && PlateCheck();
     }
     private bool PlateCheck()
     {
@@ -205,6 +202,24 @@
             Errors.Add("Er is geen zaagblad ingesteld!");
         }
         return result;
+    }
+
+    private void RotateBiggestSideForCanvasLength()
+    {            
+        int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
+        int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
+
+        // If width is bigger then length and Veneer switch length and width of plate and products??
+        if (biggestLength < biggestWidth)
+        {
+            CalculatorFormModel.Plates.ForEach(c => c.SwitchHeightAndWidth());
+
+            if (CalculatorFormModel.Plates.Any(c => c.Veneer))
+            {
+                CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
+            }
+        }
+        Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

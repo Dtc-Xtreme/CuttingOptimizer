@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.7em;
 }
 
 h1:focus {
@@ -105,6 +106,24 @@ rect {
     display: block;
     width: 100%;
     line-height:1.5;
+}
+
+.svg-length-label{
+    position: relative;
+    top: 0.8em;
+    left: 5em;
+    font-weight: bold;
+    background-color: white;
+}
+
+.svg-width-label {
+    position: relative;
+    left: 1.9em;
+    top: 3em;
+    transform: rotate(90deg);
+    transform-origin: 0,0;
+    font-weight: bold;
+    background-color: white;
 }
 
 @media print {

@@ -9,16 +9,29 @@
             <PlateDetail Saw=@Saw Svg=@Svg Count="@Count"/>
         </div>
 
-        <div>
-@*            <h3>@Svg.ID (Rest: @AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture))</h3>
-*@            <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
+        <div class="row">
+            <div class="col-auto m-0"></div>
+            <div class="col">
+                <div class="row w-100 border-bottom mb-4 m-0">
+                    <div class="row svg-length-label">@Svg.ViewBox.Length</div>   
+                </div>
+            </div>
+        </div>
 
+        <div class ="row">
+            <div class="col-auto border-right m-0">
+                <div class="row">
+                    <div class="svg-width-label h-100">@Svg.ViewBox.Width</div>
+                </div>
+            </div>
+            <div class="col">
+                <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
                     @foreach (Group group in Svg.Groups)
                     {
                         <g>
                             @if (group.Rectangle != null)
                             {
-                                if(group.ID == 0)
+                                if (group.ID == 0)
                                 {
                                     <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
                                 }
@@ -27,7 +40,7 @@
                                     <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
                                 }
 
-                                if(group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
+                                if (group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
                                 {
                                     <text>
                                         <text x="@(group.X + Pos)" y="@(group.Y + Pos + 10)" font-family="Verdana" font-size="14" fill="blue">@group.Rectangle.Label</text>
@@ -36,7 +49,8 @@
                             }
                         </g>
                     }
-            </svg>
+                </svg>
+            </div>
         </div>
     </div>
 }
