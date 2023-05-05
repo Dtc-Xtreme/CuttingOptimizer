@@ -1,12 +1,14 @@
 ﻿@using CuttingOptimizer.Domain.Models;
     <div class="row title-bar">
         <div class="col-auto">
-            <h4>Items</h4>
-        </div>              
-        <div class="col-auto">
-            <button type="button" class="btn btn-primary" @onclick="AddProduct">+</button>
+            <button type="button" class="btn btn-primary" @onclick="AddProduct"><b>+</b></button>
         </div>
+        <div class="col-auto">
+            <h4 class="mt-1">Items</h4>
+        </div>              
     </div>
+
+    <div class="container-fluid">
     @foreach(Product product in Products)
     {
         <div class="row my-1">
@@ -50,10 +52,12 @@
                 {
                 <label class="form-label">Verwijder</label>
                 }
-                <button type="button" class="form-control btn btn-danger" @onclick="() => RemoveProduct(product)">X</button>
+                <button type="button" class="form-control btn btn-danger" @onclick="() => RemoveProduct(product)"><span class="oi oi-trash"/></button>
             </div>
         </div>
     }
+    </div>
+
 
 @code {
     [Parameter]

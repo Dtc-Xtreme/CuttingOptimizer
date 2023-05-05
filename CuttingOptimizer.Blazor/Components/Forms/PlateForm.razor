@@ -1,10 +1,10 @@
 ﻿@using CuttingOptimizer.Domain.Models;
     <div class="row title-bar">
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary" @onclick="AddPlate"><b>+</b></button>
+    </div>
         <div class="col-auto">
-            <h4>Materialen</h4>
-        </div>
-        <div class="col-auto">
-            <button type="button" class="btn btn-primary" @onclick="AddPlate">+</button>
+            <h4 class="mt-1">Materialen</h4>
         </div>
     </div>
 
@@ -86,7 +86,7 @@
                 {
                     <label class="form-label">Verwijder</label>
                 }
-                <button type="button" class="form-control btn btn-danger" @onclick="() => RemovePlate(plate)">X</button>
+                <button type="button" class="form-control btn btn-danger" @onclick="() => RemovePlate(plate)"><span class="oi oi-trash"/></button>
             </div>
         </div>
         }

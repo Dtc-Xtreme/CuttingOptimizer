@@ -18,30 +18,33 @@
 
     <ul class="no-print nav nav-tabs">
         <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSaw" aria-expanded="false" aria-controls="collapseSaw ">Zaagblad</button>
+            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseSaw collapsePlatesAndItems">Instellingen</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlates" aria-expanded="false" aria-controls="collapsePlates">Materialen</button>
-        </li>
-        <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">Items</button>
+            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapsePlatesAndItems collapseSaw">Materialen & Items</button>
         </li>
     </ul>
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <div class="collapse show mb-4" id="collapseSaw">
-                <SawForm Saw="@CalculatorFormModel.Saw" />
+            <div class="collapse multi-collapse mb-4" id="collapseSaw">
+                <SettingsForm Saw=@CalculatorFormModel.Saw Veneer=@Veneer/>    
             </div>
-            <div class="collapse show mb-4" id="collapsePlates">
-                <PlateForm Plates=@CalculatorFormModel.Plates />
-            </div>
-            <div class="collapse show mb-4" id="collapseProducts">
-                <ProductForm Products=@CalculatorFormModel.Products />
+            <div class="collapse multi-collapse show" id="collapsePlatesAndItems">
+                <div>
+                    <PlateForm Plates=@CalculatorFormModel.Plates />
+                </div>
+                <div class="my-4">
+                    <ProductForm Products=@CalculatorFormModel.Products />
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
+                    <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
+                    <button type="button" class="btn btn-secondary" @onclick="Save"><span class="oi oi-file" /> Opslaan</button>
+                </div>
             </div>
             <ValidationSummary />
-            <button type="submit" class="btn btn-primary">Uitrekenen</button>
-            <button type="reset" class="btn btn-warning" @onclick="Reset">Reset</button>
+
         </EditForm>
     </div>
 
@@ -262,7 +265,7 @@
 
             if (await localStorage.ContainKeyAsync("currentVeneer"))
             {
-                        Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");            
+                Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");            
             }
             else
             {
@@ -272,5 +275,10 @@
             StateHasChanged();
         }
 
+    }
+
+    private void Save()
+    {
+        
     }
 }

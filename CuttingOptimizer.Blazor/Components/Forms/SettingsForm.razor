@@ -7,14 +7,14 @@
 
     <div class="row title-bar">
         <div class="form-group col-auto">
-            <h4>Zaag</h4>
+            <h4>Instellingen</h4>
         </div>
     </div>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="form-group col-6">
-                <label for="sawID">Zaagblad</label>
+            <div class="form-group col-1 text-center">
+                <label class="form-label" for="sawID">Zaagblad</label>
                 <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" list="sawList" @oninput="(args) => SearchOrSelect(args)" />
                 <datalist id="sawList">
                     @if (SearchSaws != null)
@@ -26,16 +26,27 @@
                     }
                 </datalist>
             </div>
-            <div class="form-group col-6">
-                <label for="sawThickness">Zaagsnede</label>
+
+            <div class="form-group col-1 text-center">
+                <label class="form-label" for="sawThickness">Zaagsnede</label>
                 <InputNumber class="form-control" id="sawThickness" @bind-Value="Saw.Thickness" placeholder="Dikte" />
+            </div>
+
+            <div class="form-group col-1 text-center">
+                <label class="form-label" for="plateBase">Fineer</label>
+                <InputCheckbox class="form-control-checkbox checkbox-big" id="veneerId" name="check" @bind-Value="Veneer" placeholder="Fineer" />
             </div>
         </div>
     </div>
 
+    <button type="button" class="btn btn-secondary mt-4"><span class="oi oi-file" /> Instellingen opslaan</button>
+
 @code {
     [Parameter]
     public Saw Saw { get; set; }
+
+    [Parameter]
+    public bool Veneer { get; set; }
 
     private List<Saw> SearchSaws = new List<Saw>();
     //{
