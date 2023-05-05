@@ -15,11 +15,30 @@
 
 <div class="container-fluid">
     <h2 class="no-print">Platen Optimalisatie</h2>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSaw" aria-expanded="false" aria-controls="collapseSaw ">Zaagblad</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePlates" aria-expanded="false" aria-controls="collapsePlates">Materialen</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">Items</button>
+        </li>
+    </ul>
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <PlateForm Plates=@CalculatorFormModel.Plates />
-            <ProductForm Products=@CalculatorFormModel.Products />
+            <div class="collapse show mb-4" id="collapseSaw">
+                <SawForm Saw="@CalculatorFormModel.Saw" />
+            </div>
+            <div class="collapse show mb-4" id="collapsePlates">
+                <PlateForm Plates=@CalculatorFormModel.Plates />
+            </div>
+            <div class="collapse show mb-4" id="collapseProducts">
+                <ProductForm Products=@CalculatorFormModel.Products />
+            </div>
             <ValidationSummary />
             <button type="submit" class="btn btn-primary">Uitrekenen</button>
             <button type="reset" class="btn btn-warning" @onclick="Reset">Reset</button>

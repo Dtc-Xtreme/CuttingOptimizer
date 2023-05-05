@@ -1,20 +1,21 @@
 ﻿@using CuttingOptimizer.Domain.Models;
-    <div class="form-row title-bar">
-        <div class="form-group col-auto">
+    <div class="row title-bar">
+        <div class="col-auto">
             <h4>Materialen</h4>
         </div>
-        <div class="form-group ml-2">
+        <div class="col-auto">
             <button type="button" class="btn btn-primary" @onclick="AddPlate">+</button>
         </div>
     </div>
 
+    <div class="container-fluid">
     @foreach (Plate plate in Plates)
     {
-        <div class="form-row">
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+        <div class="row my-1">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateID">Materiaal</label>
+                    <label class="form-label" for="plateID">Materiaal</label>
                 }
                 <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, Plates.IndexOf(plate))" />
                 <datalist id="plateList">
@@ -24,45 +25,45 @@
                     }
                 </datalist>
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateQuantity">Aantal</label>
+                    <label class="form-label" for="plateQuantity">Aantal</label>
                 }
                 <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="#" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateLength">Lengte</label>
+                    <label class="form-label" for="plateLength">Lengte</label>
                 }
                 <InputNumber class="form-control" id="plateLength" @bind-Value="plate.Length" placeholder="Lengte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateWidth">Breedte</label>
+                    <label class="form-label" for="plateWidth">Breedte</label>
                 }
                 <InputNumber class="form-control" id="plateWidth" @bind-Value="plate.Width" placeholder="Breedte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateHeight">Dikte</label>
+                    <label class="form-label" for="plateHeight">Dikte</label>
                 }
                 <InputNumber class="form-control" id="plateHeight" @bind-Value="plate.Height" placeholder="Hoogte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateTrim">Trim</label>
+                    <label class="form-label" for="plateTrim">Trim</label>
                 }
                 <InputNumber class="form-control" id="plateTrim" @bind-Value="plate.Trim" placeholder="Trim" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="platePriority">Prio</label>
+                    <label class="form-label" for="platePriority">Prio</label>
                 }
                 <InputNumber class="form-control" id="platePriority" @bind-Value="plate.Priority" placeholder="Prio" />
             </div>
@@ -73,22 +74,24 @@
                 }
                 <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
             </div>*@
-            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label for="plateBase" class="pr-1" >Standaard</label>
+                    <label class="form-label" for="plateBase">Standaard</label>
                 }
             <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="() => CheckBase(plate)" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+            <div class="form-group col-1 text-center">
                 @if (plate == Plates[0])
                 {
-                    <label>Verwijder</label>
+                    <label class="form-label">Verwijder</label>
                 }
                 <button type="button" class="form-control btn btn-danger" @onclick="() => RemovePlate(plate)">X</button>
             </div>
         </div>
-    }
+        }
+</div>
+
 
 @code {
     [Parameter]

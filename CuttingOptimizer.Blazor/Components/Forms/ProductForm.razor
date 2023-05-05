@@ -1,54 +1,54 @@
 ﻿@using CuttingOptimizer.Domain.Models;
-    <div class="form-row title-bar">
-        <div class="form-group col-auto">
+    <div class="row title-bar">
+        <div class="col-auto">
             <h4>Items</h4>
         </div>              
-        <div class="form-group ml-2">
+        <div class="col-auto">
             <button type="button" class="btn btn-primary" @onclick="AddProduct">+</button>
         </div>
     </div>
     @foreach(Product product in Products)
     {
-        <div class="form-row">
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+        <div class="row my-1">
+            <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Item</label>
+                <label class="form-label">Item</label>
                 }
                 <InputText class="form-control" id="productID" @bind-Value="product.ID" placeholder="ID" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Aantal</label>
+                <label class="form-label">Aantal</label>
                 }
                 <InputNumber class="form-control" id="productQuantity" @bind-Value="product.Quantity" placeholder="#"/>
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+            <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Lengte</label>
+                <label class="form-label">Lengte</label>
                 }
                 <InputNumber class="form-control" id="productLength" @bind-Value="product.Length" placeholder="Lengte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+        <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Breedte</label>
+                <label class="form-label">Breedte</label>
                 }
                 <InputNumber class="form-control" id="productWidth" @bind-Value="product.Width" placeholder="Breedte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12">
+        <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Dikte</label>
+                <label class="form-label">Dikte</label>
                 }
                 <InputNumber class="form-control" id="productHeight" @bind-Value="product.Height" placeholder="Hoogte" />
             </div>
-            <div class="form-group w-100 col-lg-1 col-xs-12 text-center">
+        <div class="form-group col-1 text-center">
                 @if (product == Products[0])
                 {
-                    <label>Verwijder</label>
+                <label class="form-label">Verwijder</label>
                 }
                 <button type="button" class="form-control btn btn-danger" @onclick="() => RemoveProduct(product)">X</button>
             </div>
