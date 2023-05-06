@@ -56,12 +56,12 @@
             }
             @foreach (var group in groupSvg)
             {
-                <SvgComponent Scale=@Scale Svg=group.First() Saw=@Saw Count=group.Count()/>
+                <SvgComponent Scale=@Scale Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
         </div>
 
     <div>
-            <Overview Svgs=@Svgs Saw=@Saw />
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw />
     </div>
     }
 
@@ -81,7 +81,6 @@
 
 @code {
     private CalculatorFormModel CalculatorFormModel { get; set; }
-    private Saw Saw { get; set; }
     private bool Veneer { get; set; }
     private double Scale { get; set; }
     private int PlateArea { get; set; }
@@ -95,54 +94,54 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        Saw = new Saw("SX2", 5);
-
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        };
-
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    new Product(2, "Y1", 993, 500, 5),
-        //    //new Product(2, "X2", 2000, 88, 5),
-        //};
+        //CalculatorFormModel.Saw = new Saw("SX2", 5);
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
-        //    new Plate(2, "PL1", 2000, 400, 5, 0, 0, true),
-        //    //new Plate(2, "PL1", 1000, 500, 5, 0, 1, true),
-
-        //    //new Plate(2, "PL1", 2006, 400, 5, 0, 1),
-        //    //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
-        //    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
+        //    new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
         //};
 
-        CalculatorFormModel.Products = new List<Product>
-        {
-            #region VB1
-            //new Product(10, "Y1", 170, 40, 5),
-            new Product(2, "X2", 800, 40, 5),
-            //new Product(4, "X3", 800, 40, 5),
-            //new Product(30, "K1", 200, 40, 5),
-            //new Product(60, "K2", 200, 40, 5),
-            //new Product(4, "P3", 150, 40, 5),
-            #endregion
+        ////CalculatorFormModel.Products = new List<Product>
+        ////{
+        ////    new Product(2, "Y1", 993, 500, 5),
+        ////    //new Product(2, "X2", 2000, 88, 5),
+        ////};
 
-            #region VB2
-            //new Product(10, "Y1", 170, 50, 5),
-            //new Product(2, "X2", 300, 80, 5),
-            //new Product(3, "X3", 800, 40, 5),
-            //new Product(18, "K1", 200, 30, 5),
-            #endregion
+        ////CalculatorFormModel.Plates = new List<Plate>
+        ////{
+        ////    new Plate(2, "PL1", 2000, 400, 5, 0, 0, true),
+        ////    //new Plate(2, "PL1", 1000, 500, 5, 0, 1, true),
 
-            #region VB3
-            //new Product(1, "Pl215", 999, 40, 5),
-            //new Product(1, "Pl215", 999, 40, 5)
-            #endregion
-        };
+        ////    //new Plate(2, "PL1", 2006, 400, 5, 0, 1),
+        ////    //new Plate(1, "PL3", 1000, 400, 5, 0, 1),
+        ////    //new Plate(1, "PL2", 800, 400, 5, 0, 0),
+        ////};
 
-        HandleSubmit();
+        //CalculatorFormModel.Products = new List<Product>
+        //{
+        //    #region VB1
+        //    //new Product(10, "Y1", 170, 40, 5),
+        //    new Product(2, "X2", 800, 40, 5),
+        //    //new Product(4, "X3", 800, 40, 5),
+        //    //new Product(30, "K1", 200, 40, 5),
+        //    //new Product(60, "K2", 200, 40, 5),
+        //    //new Product(4, "P3", 150, 40, 5),
+        //    #endregion
+
+        //    #region VB2
+        //    //new Product(10, "Y1", 170, 50, 5),
+        //    //new Product(2, "X2", 300, 80, 5),
+        //    //new Product(3, "X3", 800, 40, 5),
+        //    //new Product(18, "K1", 200, 30, 5),
+        //    #endregion
+
+        //    #region VB3
+        //    //new Product(1, "Pl215", 999, 40, 5),
+        //    //new Product(1, "Pl215", 999, 40, 5)
+        //    #endregion
+        //};
+
+        //HandleSubmit();
     }
 
     private void Reset()
@@ -179,7 +178,7 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(Saw, CalculatorFormModel.Plates, productList.ToList());
+            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
         }
     }
 
@@ -218,7 +217,7 @@
     }
     private bool SawCheck()
     {
-        bool result = Saw != null;
+        bool result = CalculatorFormModel.Saw != null;
         if (!result)
         {
             Errors.Add("Er is geen zaagblad ingesteld!");
@@ -249,9 +248,9 @@
         if (firstRender)
         {
             //return base.OnAfterRenderAsync(firstRender);
-            if (await localStorage.ContainKeyAsync("currentSaw"))
+            if (CalculatorFormModel.Saw.ID == null && await localStorage.ContainKeyAsync("currentSaw"))
             {
-                Saw = await localStorage.GetItemAsync<Saw>("currentSaw");
+                CalculatorFormModel.Saw = await localStorage.GetItemAsync<Saw>("currentSaw");
             }
             else
             {

@@ -26,7 +26,7 @@ namespace CuttingOptimizer.Domain.Models
         public string ID { get; set; }
 
         [Required]
-        [Range(1,50)]
+        [Range(1,50, ErrorMessageResourceName = "test")]
         public int Thickness { get; set; }
 
         public override string ToString()

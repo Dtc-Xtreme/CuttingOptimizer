@@ -1,9 +1,13 @@
 ﻿@using CuttingOptimizer.AppLogic.Services;
 @using CuttingOptimizer.Domain.Models;
 @using CuttingOptimizer.Infrastructure.Repositories;
+@using Blazored.LocalStorage;
+
 
 @inject ISawRepository repo;
 @inject IApiService api;
+@inject ILocalStorageService localStorage;
+@inject IJSRuntime JSRuntime;
 
     <div class="row title-bar">
         <div class="form-group col-auto">
@@ -39,14 +43,17 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-secondary mt-4"><span class="oi oi-file" /> Instellingen opslaan</button>
+    <button type="button" class="btn btn-secondary mt-4" @onclick="Save"><span class="oi oi-file" /> Instellingen opslaan</button>
 
+    <div></div>
 @code {
     [Parameter]
     public Saw Saw { get; set; }
 
     [Parameter]
     public bool Veneer { get; set; }
+
+    private string Result { get; set; }
 
     private List<Saw> SearchSaws = new List<Saw>();
     //{
@@ -60,14 +67,14 @@
         //SearchSaws = repo.Saws.ToList();
         SearchSaws = await api.GetAllSaws();
 
-        if(Saw == null)
-        {
-            Saw saw = new Saw
-            {
-                ID = "SX0",
-                Thickness = 5
-            };
-        };
+        //if(Saw == null)
+        //{
+        //    Saw saw = new Saw
+        //    {
+        //        ID = "SX0",
+        //        Thickness = 5
+        //    };
+        //};
     }
 
     private async void SearchOrSelect(ChangeEventArgs args)
@@ -83,5 +90,12 @@
         //    SearchSaws = await api.SearchSaws(args.Value.ToString());
         //    //StateHasChanged();
         //}
-   }
+    }
+
+    private async Task Save()
+    {
+        await localStorage.SetItemAsync("currentSaw", Saw);
+        await localStorage.SetItemAsync("currentVeneer", Veneer);
+        await JSRuntime.InvokeAsync<object>("Alert", "Instellingen zijn opgeslagen!");
+    }
 }
