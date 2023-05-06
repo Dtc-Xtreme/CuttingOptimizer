@@ -9,23 +9,23 @@
     <div class="row mb-3">
         <h4 class="title-border col-12">Materiaal: @Svg.Plate.ID</h4>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Lengte: </label>
+            <label class="fw-bold">Lengte: </label>
             <span>@Svg.Plate.Length mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Breedte: </label>
+            <label class="fw-bold">Breedte: </label>
             <span>@Svg.Plate.Width mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Dikte: </label>
+            <label class="fw-bold">Dikte: </label>
             <span>@Svg.Plate.Height mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Trim: </label>
+            <label class="fw-bold">Trim: </label>
             <span>@Svg.Plate.Trim mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Aantal: </label>
+            <label class="fw-bold">Aantal: </label>
             <span>@Count</span>
         </div>
 @*        <div class="col-3 pl-3 pr-3 pt-0">
@@ -47,28 +47,28 @@
             var groupByProduct = Svg.Groups.Where(c => c.ID != 0).GroupBy(c => c.Product.ID);
         }
         <div class="col-3">
-            <label class="font-weight-bold">Quantiteit</label>
+            <label class="fw-bold">Quantiteit</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Count()</div>
             }
         </div>
         <div class="col-3">
-            <label class="font-weight-bold">Item</label>
+            <label class="fw-bold">Item</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Key</div>
             }
         </div>
         <div class="col-3">
-            <label class="font-weight-bold">Lengte</label>
+            <label class="fw-bold">Lengte</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.First().Length mm</div>
             }
         </div>
         <div class="col-3">
-            <label class="font-weight-bold">Breedte</label>
+            <label class="fw-bold">Breedte</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.First().Width mm</div>
@@ -77,16 +77,12 @@
     </div>
     <div class="row mb-3">
         <h4 class="col-12 title-border">Parameters</h4>
-@*        <div class="col-6 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Zaagsnede: </label>
-            <span>@Saw.Thickness mm</span>
-        </div>*@
         <div class="col-6 pl-3 pr-3 pt-0">
-            <label><b>Verlies:</b></label>
+            <label class="fw-bold">Verlies:</label>
             <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
         </div>
         <div class="col-6 pl-3 pr-3 pt-0">
-            <label><b>Snijlijnen:</b></label>
+            <label class="fw-bold">Snijlijnen:</label>
             <span>@CutLines</span>
         </div>
     </div>

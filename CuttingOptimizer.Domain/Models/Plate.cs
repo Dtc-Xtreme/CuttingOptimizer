@@ -76,19 +76,19 @@ namespace CuttingOptimizer.Domain.Models
             Base = basePlate;
         }
 
-        [Required]
+        [Required(ErrorMessage = "Materiaal is een verplicht veld.")]
         public string ID { get; set; }
 
-        [Required]
-        [Range(10, 100000)]
+        [Required(ErrorMessage = "Materiaal lengte is een verplicht veld.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Materiaal lengte moet groter zijn dan 0.")]
         public int Length { get; set; }
 
-        [Required]
-        [Range(10, 100000)]
+        [Required(ErrorMessage = "Materiaal breedte is een verplicht veld.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Materiaal breedte moet groter zijn dan 0.")]
         public int Width { get; set; }
 
-        [Required]
-        [Range(1, 1000)]
+        [Required(ErrorMessage = "Materiaal dikte is een verplicht veld.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Materiaal dikte moet groter zijn dan 0.")]
         public int Height { get; set; }
 
         [NotMapped]
@@ -122,17 +122,17 @@ namespace CuttingOptimizer.Domain.Models
         }
 
         [NotMapped]
-        [Required]
-        [Range(0, 1000)]
+        [Required(ErrorMessage = "Materiaal trim is een verplicht veld.")]
+        [Range(0, int.MaxValue)]
         public int Trim { get; set; }
 
         [NotMapped]
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "Materiaal aantal moet groter zijn dan 0.")]
         public int Quantity { get; set; }
 
         [NotMapped]
-        [Required]
-        [Range(0, 10)]
+        [Required(ErrorMessage = "Materiaal prio is een verplicht veld.")]
+        [Range(0, int.MaxValue)]
         public int Priority { get; set; }       // Higher the Priority the more important it is
         
         public override string ToString()

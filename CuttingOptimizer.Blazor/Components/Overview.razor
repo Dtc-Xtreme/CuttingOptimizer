@@ -4,15 +4,19 @@
     <div class="row mt-5 mb-3">
         <h4 class="title-border col-12">Overzicht</h4>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Zaagblad: </label>
+            <label class="fw-bold">Offertenummer: </label>
+            <span>XXXS</span>
+        </div>
+        <div class="col-3 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Zaagblad: </label>
             <span>@Saw.ID</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Zaagsnede: </label>
+            <label class="fw-bold">Zaagsnede: </label>
             <span>@Saw.Thickness mm</span>
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="font-weight-bold">Fineer: </label>
+            <label class="fw-bold">Fineer: </label>
             @if (Svgs.First().Plate.Veneer)
             {
                 <span> ja</span>
@@ -29,35 +33,35 @@
             var groupByPlate = Svgs.GroupBy(c => c.Plate.ID);
         }
         <div class="col">
-            <label class="font-weight-bold">Quantiteit</label>
+            <label class="fw-bold">Quantiteit</label>
             @foreach (var group in groupByPlate)
             {
                 <div>@group.Count()</div>
             }
         </div>
         <div class="col">
-            <label class="font-weight-bold">Materiaal</label>
+            <label class="fw-bold">Materiaal</label>
             @foreach (var group in groupByPlate)
             {
                 <div>@group.Key</div>
             }
         </div>
         <div class="col">
-            <label class="font-weight-bold">Lengte</label>
+            <label class="fw-bold">Lengte</label>
             @foreach (var group in groupByPlate)
             {
                 <div>@group.First().Plate.Length mm</div>
             }
         </div>
         <div class="col">
-            <label class="font-weight-bold">Breedte</label>
+            <label class="fw-bold">Breedte</label>
             @foreach (var group in groupByPlate)
             {
                 <div>@group.First().Plate.Width mm</div>
             }
         </div>
         <div class="col">
-            <label class="font-weight-bold">Dikte</label>
+            <label class="fw-bold">Dikte</label>
             @foreach (var group in groupByPlate)
             {
                 <div>@group.First().Plate.Height mm</div>

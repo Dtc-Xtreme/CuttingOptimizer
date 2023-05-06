@@ -22,11 +22,11 @@ namespace CuttingOptimizer.Domain.Models
             Thickness = thickness;
         }
 
-        [Required]
+        [Required(ErrorMessage = "Zaagblad is een verplicht veld.")]
         public string ID { get; set; }
 
-        [Required]
-        [Range(1,50, ErrorMessageResourceName = "test")]
+        [Required(ErrorMessage = "Zaagsnede is een verplicht veld.")]
+        [Range(1,50, ErrorMessageResourceName = "Zaagsneden moet tussen 1 en 50 zijn.")]
         public int Thickness { get; set; }
 
         public override string ToString()

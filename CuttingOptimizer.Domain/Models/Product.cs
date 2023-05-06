@@ -38,16 +38,19 @@ namespace CuttingOptimizer.Domain.Models
             Height = height;
         }
 
-        [Required]
+        [Required(ErrorMessage = "Item is een verplicht veld.")]
         public string ID { get; set; }
 
-        [Range(10, 100000)]
+        [Required(ErrorMessage = "Item breedte is een verplicht veld.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Item breedte moet groter zijn dan 0.")]
         public int Width { get; set; }
 
-        [Range(10, 100000)]
+        [Required(ErrorMessage = "Item lengte is een verplicht veld.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Item lengte moet groter zijn dan 0.")]
         public int Length { get; set; }
 
-        [Range(0, 50)]
+        [Required(ErrorMessage = "Item dikte is een verplicht veld.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Item dikte moet groter zijn dan 0.")]
         public int Height { get; set; }
 
         public double Area
@@ -69,7 +72,7 @@ namespace CuttingOptimizer.Domain.Models
         }
 
         [NotMapped]
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "Item dikte moet groter zijn dan 0.")]
         public int Quantity { get; set; }
 
         public override string ToString()
