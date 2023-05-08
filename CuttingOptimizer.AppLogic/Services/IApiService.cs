@@ -11,5 +11,9 @@ namespace CuttingOptimizer.AppLogic.Services
     {
         public Task<List<Saw>?> GetAllSaws();
         public Task<List<Saw>?> SearchSaws(string search);
+
+        public Task<Quotation?> SaveQuotation(Quotation quotation);
+        public Task<Quotation?> GetQuotationById(int id);
+
     }
 }

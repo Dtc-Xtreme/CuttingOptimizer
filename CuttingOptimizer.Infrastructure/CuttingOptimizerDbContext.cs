@@ -20,5 +20,6 @@ namespace CuttingOptimizer.Infrastructure
 
         public DbSet<Saw> Saws { get; set; }
         public DbSet<Plate> Plates { get; set; }
+        public DbSet<Quotation> Quotes { get; set; }
     }
 }

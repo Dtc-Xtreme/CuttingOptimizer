@@ -19,8 +19,8 @@ namespace CuttingOptimizer.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IList<Plate> Plates = await repository.Plates.ToListAsync();
-            return Ok(Plates == null ? NotFound() : Plates);
+            IList<Plate> plates = await repository.Plates.ToListAsync();
+            return Ok(plates == null ? NotFound() : plates);
         }
 
         [HttpGet("id")]
