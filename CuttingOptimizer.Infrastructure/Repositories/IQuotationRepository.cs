@@ -11,6 +11,7 @@ namespace CuttingOptimizer.Infrastructure.Repositories
     {
         public IQueryable<Quotation> Quotes { get; }
         public Task<bool> Create(Quotation item);
+        public Task<bool> Update(Quotation quotation);
         public Task<Quotation?> FindById(int id);
         public Task<bool> Remove(int id);
     }

@@ -5,7 +5,12 @@
         <h4 class="title-border col-12">Overzicht</h4>
         <div class="col-3 pl-3 pr-3 pt-0">
             <label class="fw-bold">Offertenummer: </label>
-            <span>XXXS</span>
+@*            @if(QuotationID != 0)
+            {*@
+            <span>
+                   @QuotationID.ToString()
+            </span>
+@*            }*@
         </div>
         <div class="col-3 pl-3 pr-3 pt-0">
             <label class="fw-bold">Zaagblad: </label>
@@ -76,4 +81,7 @@
 
     [Parameter]
     public List<Svg> Svgs { get; set; } = new List<Svg>();
+
+    [Parameter]
+    public int QuotationID { get; set; }
 }

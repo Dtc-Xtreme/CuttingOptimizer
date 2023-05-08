@@ -49,15 +49,19 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             try
             {
-                //HttpClientHandler httpHandler = new HttpClientHandler();
-                //httpHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
-                //{
-                //    return true;
-                //}; 
-                //client = new HttpClient(httpHandler){};
+                HttpResponseMessage httpResponseMessage;
+                Quotation? result = null;
 
-                HttpResponseMessage httpResponseMessage = await client.PostAsJsonAsync("https://localhost:44397/Quotation", quotation);
-                Quotation? result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
+                if (quotation.ID == 0)
+                {
+                    httpResponseMessage = await client.PostAsJsonAsync("https://localhost:44397/Quotation", quotation);
+                    result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
+                }
+                else
+                {
+                    httpResponseMessage = await client.PutAsJsonAsync("https://localhost:44397/Quotation", quotation);
+                    var xasd = httpResponseMessage.Content.ReadAsStringAsync();
+                }
 
                 return httpResponseMessage.StatusCode == HttpStatusCode.OK ? result : null;
             }

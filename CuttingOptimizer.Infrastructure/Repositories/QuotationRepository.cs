@@ -24,6 +24,17 @@ namespace CuttingOptimizer.Infrastructure.Repositories
             return await context.SaveChangesAsync() == 0 ? false : true;
         }
 
+        public async Task<bool> Update(Quotation quotation)
+        {
+            Quotation? selected = await context.Quotes.FirstOrDefaultAsync(c=>c.ID == quotation.ID);
+            if(selected == null)
+            {
+                selected.JsonString = quotation.JsonString;
+                return await context.SaveChangesAsync() == 0 ? false : true;
+            }
+            return false;
+        }
+
         public async Task<Quotation?> FindById(int id)
         {
             return await Quotes.FirstOrDefaultAsync(c => c.ID == id);

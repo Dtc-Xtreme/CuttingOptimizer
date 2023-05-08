@@ -37,6 +37,12 @@ namespace CuttingOptimizer.Api.Controllers
             return Ok(await repository.Create(quotation) == false ? NotFound() : quotation);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Update(Quotation quotation)
+        {
+            return Ok(await repository.Update(quotation) == false ? NotFound() : quotation);
+        }
+
         [HttpDelete("id")]
         public async Task<IActionResult> Remove(int id)
         {
