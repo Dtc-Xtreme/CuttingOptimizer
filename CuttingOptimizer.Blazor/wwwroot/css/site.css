@@ -89,22 +89,44 @@ rect {
     line-height:1.5;
 }
 
-.svg-length-label{
+.svg-left-column {
+    width: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold !important;
+}
+
+.svg-length-label {
+    width: auto;
     position: relative;
     top: 0.8em;
-    left: 5em;
     font-weight: bold;
     background-color: white;
+    text-align: center;
+    margin: auto;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: darkgray;
 }
 
 .svg-width-label {
+    float: right;
+    width: auto;
+    height: auto;
     position: relative;
-    left: 1.9em;
-    top: 3em;
+    left: 1em;
     transform: rotate(90deg);
     transform-origin: 0,0;
     font-weight: bold;
     background-color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: darkgray;
 }
 
 @media print {

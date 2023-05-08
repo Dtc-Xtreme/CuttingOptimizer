@@ -10,21 +10,19 @@
         </div>
 
         <div class="row">
-            <div class="col-auto m-0"></div>
+            <div class="svg-left-column m-0"></div>
             <div class="col">
-                <div class="row w-100 border-bottom mb-4 m-0">
-                    <div class="row svg-length-label">@Svg.ViewBox.Length</div>   
+                <div class="row border-bottom mb-3 m-0 w-100">
+                    <div class="svg-length-label">@Svg.ViewBox.Length</div>   
                 </div>
             </div>
         </div>
 
         <div class ="row">
-            <div class="col-auto border-right m-0">
-                <div class="row">
-                    <div class="svg-width-label h-100">@Svg.ViewBox.Width</div>
-                </div>
+            <div class="svg-left-column border-end m-0">
+                <div class="svg-width-label">@Svg.ViewBox.Width</div>
             </div>
-            <div class="col">
+            <div class="col ms-1 mt-1">
                 <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
                     @foreach (Group group in Svg.Groups)
                     {
