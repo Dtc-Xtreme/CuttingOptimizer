@@ -15,7 +15,7 @@ namespace CuttingOptimizer.AppLogic.Services
 {
     public class CalculatorService : ICalculatorService
     {
-        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
+        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products, double Scale)
         {
             // Creeer svgs and sorting
             List<Svg> svgs = Init(plates);
@@ -27,11 +27,14 @@ namespace CuttingOptimizer.AppLogic.Services
                 products = products.OrderByDescending(c => c.Quantity * c.Area).ToList();
 
                 ChooseCalculation(ref svgs, saw, products);
-                //ChooseNewCalculation(ref svgs, saw, products);
                 RemoveProductsWithQuantityZero(products);
             }
 
-            return svgs.OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
+            int biggestLength = svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Length);
+            int biggestWidth = svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Width);
+            Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+
+            return svgs.Where(c=>c.Groups.Count > 1).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -69,7 +72,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 svg.AddGroup(newGroup);
             }
 
-            return svgs;
+            return svgs.OrderBy(c=>c.Priority).ToList();
         }
         private List<Svg> AddSvg(List<Svg> svgs, Svg svg)
         {
@@ -149,16 +152,6 @@ namespace CuttingOptimizer.AppLogic.Services
                 }
             }
         }
-
-        private bool VerticalTest(Group group, Saw saw, Product product, int quantity)
-        {
-            int length = product.Length * quantity + (saw.Thickness * (quantity-1));
-            bool lengthCheck = group.Length >= length;
-            bool widthCheck = group.Width >= product.Width;
-            return lengthCheck && widthCheck;
-
-        }
-
         private Dictionary<Group, RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, Product product, Saw saw)
         {
             Dictionary<Group, RestResult> results = new Dictionary<Group, RestResult>();
@@ -188,7 +181,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return results;
         }
-
         private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
         {
             bool test = true;
@@ -246,7 +238,6 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return amount;
         }
-
         private List<Group> SearchFits(ref List<Svg> svgs, Product product, Saw saw)
         {
             List<Group> fitGroups = new List<Group>();
@@ -421,7 +412,6 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return null;
         }
-
         public int CalculateCutLines(Svg svg)
         {
             int x = svg.Groups.GroupBy(c=>c.X).Count();
@@ -444,6 +434,5 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return newProductList;
         }
-
     }
 }

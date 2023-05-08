@@ -131,8 +131,8 @@
 
         CalculatorFormModel.Plates = new List<Plate>
         {
-            //new Plate(1, "PL1", 2000, 400, 5, 0, 1, true),
-            new Plate(1, "PL2", 1000, 500, 5, 0, 1, true)
+            new Plate(1, "PL1", 2000, 400, 5, 0, 1, true),
+            new Plate(1, "PL2", 1000, 500, 5, 0, 2, true)
         };
 
         CalculatorFormModel.Products = new List<Product>
@@ -196,7 +196,7 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList(), Scale);
         }
     }
 
@@ -258,7 +258,7 @@
                 CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
             }
         }
-        Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+        //Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
