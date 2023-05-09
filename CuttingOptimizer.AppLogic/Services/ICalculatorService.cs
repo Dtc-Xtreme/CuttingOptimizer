@@ -10,7 +10,7 @@ namespace CuttingOptimizer.AppLogic.Services
 {
     public interface ICalculatorService
     {
-        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products, double scale);
+        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products);
         public int CalculateCutLines(Svg svg);
         public List<Product> CombineProductsWithSameDimentions(List<Product> products);
     }

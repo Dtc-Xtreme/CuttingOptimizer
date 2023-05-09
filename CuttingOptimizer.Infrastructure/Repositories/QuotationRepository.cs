@@ -27,7 +27,7 @@ namespace CuttingOptimizer.Infrastructure.Repositories
         public async Task<bool> Update(Quotation quotation)
         {
             Quotation? selected = await context.Quotes.FirstOrDefaultAsync(c=>c.ID == quotation.ID);
-            if(selected == null)
+            if(selected != null)
             {
                 selected.JsonString = quotation.JsonString;
                 return await context.SaveChangesAsync() == 0 ? false : true;

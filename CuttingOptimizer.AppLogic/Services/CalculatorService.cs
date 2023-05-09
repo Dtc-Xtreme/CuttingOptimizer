@@ -15,7 +15,7 @@ namespace CuttingOptimizer.AppLogic.Services
 {
     public class CalculatorService : ICalculatorService
     {
-        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products, double Scale)
+        public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
         {
             // Creeer svgs and sorting
             List<Svg> svgs = Init(plates);
@@ -29,10 +29,6 @@ namespace CuttingOptimizer.AppLogic.Services
                 ChooseCalculation(ref svgs, saw, products);
                 RemoveProductsWithQuantityZero(products);
             }
-
-            int biggestLength = svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Length);
-            int biggestWidth = svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Width);
-            Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
 
             return svgs.Where(c=>c.Groups.Count > 1).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
         }

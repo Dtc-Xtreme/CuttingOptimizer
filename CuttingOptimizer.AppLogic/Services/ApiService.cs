@@ -50,18 +50,17 @@ namespace CuttingOptimizer.AppLogic.Services
             try
             {
                 HttpResponseMessage httpResponseMessage;
-                Quotation? result = null;
 
                 if (quotation.ID == 0)
                 {
                     httpResponseMessage = await client.PostAsJsonAsync("https://localhost:44397/Quotation", quotation);
-                    result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
                 }
                 else
                 {
                     httpResponseMessage = await client.PutAsJsonAsync("https://localhost:44397/Quotation", quotation);
-                    var xasd = httpResponseMessage.Content.ReadAsStringAsync();
                 }
+
+                Quotation? result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
 
                 return httpResponseMessage.StatusCode == HttpStatusCode.OK ? result : null;
             }

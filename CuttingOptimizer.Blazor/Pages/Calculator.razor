@@ -23,14 +23,14 @@
         </div>
 
         <div class="col-auto">
-                <div class="row">
-                    <div class="col">
-                        <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
-                    </div>
-                    <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick=Load>Ophalen van optimalisatieplan</button>
-                    </div>
+            <EditForm class="row" Model="@SearchQuotation" OnSubmit="() => Load()">
+                <div class="col">
+                    <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
                 </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled>Ophalen van optimalisatieplan</button>
+                </div>
+            </EditForm>
         </div>
     </div>
 
@@ -196,8 +196,34 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList(), Scale);
+            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+            CalculateScale();
         }
+    }
+
+    private void CalculateScale()
+    {
+        int biggestLength = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Length);
+        int biggestWidth = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Width);
+        Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+    }
+
+    private void RotateBiggestSideForCanvasLength()
+    {
+        int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
+        int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
+
+        // If width is bigger then length and Veneer switch length and width of plate and products??
+        if (biggestLength < biggestWidth)
+        {
+            CalculatorFormModel.Plates.ForEach(c => c.SwitchHeightAndWidth());
+
+            if (CalculatorFormModel.Plates.Any(c => c.Veneer))
+            {
+                CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
+            }
+        }
+        //Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
     }
 
     private bool Check()
@@ -243,24 +269,6 @@
         return result;
     }
 
-    private void RotateBiggestSideForCanvasLength()
-    {            
-        int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
-        int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
-
-        // If width is bigger then length and Veneer switch length and width of plate and products??
-        if (biggestLength < biggestWidth)
-        {
-            CalculatorFormModel.Plates.ForEach(c => c.SwitchHeightAndWidth());
-
-            if (CalculatorFormModel.Plates.Any(c => c.Veneer))
-            {
-                CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
-            }
-        }
-        //Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -297,14 +305,19 @@
     private async void Save()
     {
         ButtonEnabled = true;
-        Quotation.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
-        Quotation? result = await api.SaveQuotation(Quotation);
-        if (result != null)
+        try
         {
-            Quotation = result;
-            await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Quotation.ID);
+            Quotation.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
+            Quotation? result = await api.SaveQuotation(Quotation);
+            if (result != null)
+            {
+                Quotation = result;
+                await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Quotation.ID);
+            }
+        }catch(Exception ex)
+        {
+            await JSRuntime.InvokeAsync<object>("Alert", "Het opgeslagen van optimalistatieplan is mislukt!");
         }
-
         ButtonEnabled = false;
         StateHasChanged();
     }
@@ -314,20 +327,28 @@
         if (Quotation.ID != SearchQuotation)
         {
             ButtonEnabled = true;
-            Quotation? result = await api.GetQuotationById(SearchQuotation);
-            if (result != null && result.JsonString != null)
+            try
             {
-                Quotation = result;
-                CalculatorFormModel calc = JsonSerializer.Deserialize<CalculatorFormModel>(Quotation.JsonString);
-
-                if (calc != null)
+                
+                Quotation? result = await api.GetQuotationById(SearchQuotation);
+                if (result != null && result.JsonString != null)
                 {
-                    CalculatorFormModel = calc;
+                    Quotation = result;
+                    CalculatorFormModel calc = JsonSerializer.Deserialize<CalculatorFormModel>(Quotation.JsonString);
+
+                    if (calc != null)
+                    {
+                        CalculatorFormModel = calc;
+                    }
                 }
-            }
-            else
+                else
+                {
+                    await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
+                }
+                
+            }catch(Exception ex)
             {
-                await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
+                await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
             }
             ButtonEnabled = false;
             StateHasChanged();
