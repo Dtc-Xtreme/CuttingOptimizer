@@ -31,7 +31,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 RemoveProductsWithQuantityZero(products);
             }
 
-            return svgs.OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
+            return svgs.Where(c => c.Groups.Count > 1).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
         }
 
         private List<Svg> Init(List<Plate> plates)
