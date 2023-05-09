@@ -23,12 +23,12 @@
         </div>
 
         <div class="col-auto">
-            <EditForm class="row" Model="@SearchQuotation" OnSubmit="() => Load()">
+            <EditForm class="row" Model="@SearchQuotation">
                 <div class="col">
                     <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled>Ophalen van optimalisatieplan</button>
+                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick=Load>Ophalen van optimalisatieplan</button>
                 </div>
             </EditForm>
         </div>
@@ -36,10 +36,10 @@
 
     <ul class="no-print nav nav-tabs">
         <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseSaw collapsePlatesAndItems">Instellingen</button>
+            <a class="@SettingNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseSaw collapsePlatesAndItems" @onclick="ToggleNav">Instellingen</a>
         </li>
         <li class="nav-item">
-            <button class="nav-link" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapsePlatesAndItems collapseSaw">Materialen & Items</button>
+            <a class="@PlateAndItemNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapsePlatesAndItems collapseSaw" @onclick="ToggleNav">Materialen & Items</a>
         </li>
     </ul>
     <div class="no-print mt-3">
@@ -99,6 +99,16 @@
 </div>
 
 @code {
+    private string SettingNavClass { get; set; } = "nav-link subnav-link";
+    private string PlateAndItemNavClass { get; set; } = "nav-link active subnav-link";
+
+    private void ToggleNav()
+    {
+        string mem = SettingNavClass;
+        SettingNavClass = PlateAndItemNavClass;
+        PlateAndItemNavClass = mem;
+    }
+
     private CalculatorFormModel CalculatorFormModel { get; set; }
     private bool Veneer { get; set; }
     private double Scale { get; set; }
@@ -118,10 +128,10 @@
 
         //CalculatorFormModel.Saw = new Saw("SX2", 5);
 
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        };
+        //CalculatorFormModel.Plates = new List<Plate>
+        //{
+        //    new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
+        //};
 
         //CalculatorFormModel.Products = new List<Product>
         //{
@@ -129,37 +139,37 @@
         //    //new Product(2, "X2", 2000, 88, 5),
         //};
 
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(1, "PL1", 2000, 400, 5, 0, 1, true),
-            //new Plate(1, "PL2", 1000, 500, 5, 0, 2, true)
-        };
+        //CalculatorFormModel.Plates = new List<Plate>
+        //{
+        //    new Plate(1, "PL1", 2000, 400, 5, 0, 1, true),
+        //    //new Plate(1, "PL2", 1000, 500, 5, 0, 2, true)
+        //};
 
-        CalculatorFormModel.Products = new List<Product>
-        {
-            #region VB1
-            //new Product(10, "Y1", 170, 40, 5),
-            //new Product(2, "X2", 800, 40, 5),
-            //new Product(4, "X3", 800, 40, 5),
-            //new Product(30, "K1", 200, 40, 5),
-            //new Product(60, "K2", 200, 40, 5),
-            //new Product(4, "P3", 150, 40, 5),
-            #endregion
+        //CalculatorFormModel.Products = new List<Product>
+        //{
+        //    #region VB1
+        //    //new Product(10, "Y1", 170, 40, 5),
+        //    //new Product(2, "X2", 800, 40, 5),
+        //    //new Product(4, "X3", 800, 40, 5),
+        //    //new Product(30, "K1", 200, 40, 5),
+        //    //new Product(60, "K2", 200, 40, 5),
+        //    //new Product(4, "P3", 150, 40, 5),
+        //    #endregion
 
-            #region VB2
-            //new Product(10, "Y1", 170, 50, 5),
-            //new Product(2, "X2", 300, 80, 5),
-            //new Product(3, "X3", 800, 40, 5),
-            //new Product(18, "K1", 200, 30, 5),
-            #endregion
+        //    #region VB2
+        //    //new Product(10, "Y1", 170, 50, 5),
+        //    //new Product(2, "X2", 300, 80, 5),
+        //    //new Product(3, "X3", 800, 40, 5),
+        //    //new Product(18, "K1", 200, 30, 5),
+        //    #endregion
 
-            #region VB3
-            new Product(1, "Pl215", 999, 40, 5),
-            new Product(1, "Pl215", 999, 40, 5)
-            #endregion
-        };
+        //    #region VB3
+        //    new Product(1, "Pl215", 999, 40, 5),
+        //    new Product(1, "Pl215", 999, 40, 5)
+        //    #endregion
+        //};
 
-        HandleSubmit();
+        //HandleSubmit();
     }
 
     private void Reset()
@@ -168,7 +178,7 @@
         CalculatorFormModel = new();
     }
 
-    public void HandleSubmit()
+    private void HandleSubmit()
     {
         Errors.Clear();
         if (Check())

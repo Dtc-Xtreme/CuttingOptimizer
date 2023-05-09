@@ -129,6 +129,29 @@ rect {
     color: darkgray;
 }
 
+.bg-benvitec-dark {
+    background-color: #101820;
+}
+
+h2 {
+    color: #9ABEAA;
+    font-weight: bolder;
+}
+
+
+.subnav-link {
+    color: black !important;
+    font-weight: bold !important;
+/*    border: 1px solid gray !important;
+    border-top-left-radius: 0.8em !important;
+    border-top-right-radius: 0.8em !important;*/
+}
+
+.subnav-link:hover {
+    color: #4B5C52 !important;
+    cursor: pointer;
+}
+
 @media print {
     .no-print{
         display: none !important;
