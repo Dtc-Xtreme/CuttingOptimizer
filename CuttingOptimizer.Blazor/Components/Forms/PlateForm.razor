@@ -1,4 +1,8 @@
 ﻿@using CuttingOptimizer.Domain.Models;
+@using CuttingOptimizer.AppLogic.Services;
+
+@inject IApiService api;
+
     <div class="row title-bar">
     <div class="col-auto">
         <button type="button" class="btn btn-primary" @onclick="AddPlate"><b>+</b></button>
@@ -97,25 +101,28 @@
     [Parameter]
     public List<Plate> Plates { get; set; }
 
-    private List<Plate> SearchPlates = new List<Plate>{
-            new Plate{
-                ID = "PL255",
-                Length = 2000, 
-                Width = 500,
-                Height = 5,
-                Priority = 1
-            },
-            new Plate{
-                ID = "PL155",
-                Length = 1000,
-                Width = 500,
-                Height = 5,
-                Priority = 1
-            }
-        };
+    private List<Plate> SearchPlates = new List<Plate>();
+    //{
+    //        new Plate{
+    //            ID = "PL255",
+    //            Length = 2000, 
+    //            Width = 500,
+    //            Height = 5,
+    //            Priority = 1
+    //        },
+    //        new Plate{
+    //            ID = "PL155",
+    //            Length = 1000,
+    //            Width = 500,
+    //            Height = 5,
+    //            Priority = 1
+    //        }
+    //    };
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
+        SearchPlates = await api.GetAllPlates();
+
         if (Plates.Count() == 0)
         {
             Plate plate = new Plate

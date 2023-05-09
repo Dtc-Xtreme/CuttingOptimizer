@@ -8,12 +8,14 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace CuttingOptimizer.AppLogic.Services
 {
     public class ApiService : IApiService
     {
         private HttpClient client = new HttpClient();
+        private string url = "https://localhost:44397";
 
         public ApiService()
         {
@@ -24,7 +26,7 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             try
             {
-                return await client.GetFromJsonAsync<List<Saw>>("https://localhost:44397/saw");
+                return await client.GetFromJsonAsync<List<Saw>>(url + "/Saw");
 
             }
             catch (Exception ex)
@@ -32,12 +34,24 @@ namespace CuttingOptimizer.AppLogic.Services
                return null;
             }
         }
-
         public async Task<List<Saw>?> SearchSaws(string search)
         {
             try
             {
-                return await client.GetFromJsonAsync<List<Saw>>("https://localhost:44397/saw/search/" + search.Trim());
+                return await client.GetFromJsonAsync<List<Saw>>(url + "/" + search.Trim());
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Plate>?> GetAllPlates()
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<List<Plate>>(url + "/Plate");
+
             }
             catch (Exception ex)
             {
@@ -53,11 +67,11 @@ namespace CuttingOptimizer.AppLogic.Services
 
                 if (quotation.ID == 0)
                 {
-                    httpResponseMessage = await client.PostAsJsonAsync("https://localhost:44397/Quotation", quotation);
+                    httpResponseMessage = await client.PostAsJsonAsync(url + "/Quotation", quotation);
                 }
                 else
                 {
-                    httpResponseMessage = await client.PutAsJsonAsync("https://localhost:44397/Quotation", quotation);
+                    httpResponseMessage = await client.PutAsJsonAsync(url + "/Quotation", quotation);
                 }
 
                 Quotation? result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
@@ -69,17 +83,18 @@ namespace CuttingOptimizer.AppLogic.Services
                 return null;
             }
         }
-
         public async Task<Quotation?> GetQuotationById(int id)
         {
             try
             {
-                return await client.GetFromJsonAsync<Quotation>("https://localhost:44397/Quotation/id?id=" + id);
+                return await client.GetFromJsonAsync<Quotation>(url + "/Quotation/id?id=" + id);
             }
             catch (Exception ex)
             {
                 return null;
             }
         }
+
+
     }
 }
