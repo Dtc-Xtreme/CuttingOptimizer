@@ -12,6 +12,7 @@ namespace CuttingOptimizer.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server =.\\SQLEXPRESS; Database=CuttingOptimizer; Trusted_Connection = True; TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer("Server=GB-SQL;Database=CuttingOptimizer;Trusted_Connection=True;MultipleActiveResultSets=true; TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
