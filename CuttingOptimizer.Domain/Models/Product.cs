@@ -53,11 +53,11 @@ namespace CuttingOptimizer.Domain.Models
         [Range(0, int.MaxValue, ErrorMessage = "Item dikte moet groter zijn dan 0.")]
         public int Height { get; set; }
 
-        public double Area
+        public int Area
         {
             get
             {
-                return (Width * Length) * Quantity;
+                return Width * Length;
             }
         }
 
