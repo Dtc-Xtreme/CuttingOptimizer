@@ -341,8 +341,6 @@ namespace CuttingOptimizer.AppLogic.Services
             Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, checkCount);
             Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups);
 
-            List<Group>? cuttingLines = CalculateCuttingLines(lastCreated, right, under, group);
-
             if(right != null) newGroups.Add(right);
             if (under != null) newGroups.Add(under);
 
@@ -350,11 +348,6 @@ namespace CuttingOptimizer.AppLogic.Services
             group.Svg.Groups.Remove(group);
 
             return right;
-        }
-
-        private List<Group>? CalculateCuttingLines(Group lastCreated, Group? right, Group? under, Group group)
-        {
-            return null;
         }
 
         internal void CalculateGroupBlock(Product selectedProduct, Saw saw, Group group, int vert, int hor)
