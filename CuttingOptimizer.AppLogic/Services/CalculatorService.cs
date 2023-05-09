@@ -242,7 +242,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             while (fitGroups.Count == 0)
             {
-                svgs = svgs.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
+                svgs = svgs.OrderBy(c => c.Priority).ThenByDescending(c => c.Area).ToList();
 
                 foreach (Svg svg in svgs)
                 {
