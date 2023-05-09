@@ -23,9 +23,12 @@
                 }
                 <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, Plates.IndexOf(plate))" />
                 <datalist id="plateList">
-                    @foreach (Plate pl in SearchPlates)
+                    @if(SearchPlates != null)
                     {
-                        <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
+                        foreach (Plate pl in SearchPlates)
+                        {
+                            <option value="@pl.ID">@pl.ID - (@pl.ToString())</option>
+                        }
                     }
                 </datalist>
             </div>
@@ -162,21 +165,24 @@
 
     private void SearchOrSelect(string value, int position)
     {
-        Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == Plates[position].ID.ToLower());
-        if (plateResult != null)
+        if(SearchPlates != null && SearchPlates.Count > 0)
         {
-            bool b = Plates[position].Base;
-            Plates[position] = new Plate(plateResult);
-            Plates[position].Quantity = 1;
-            Plates[position].Base = b;
-            Plates[position].Priority = 1;
-            StateHasChanged();
+            Plate? plateResult = SearchPlates.FirstOrDefault(c => c.ID.ToLower() == Plates[position].ID.ToLower());
+            if (plateResult != null)
+            {
+                bool b = Plates[position].Base;
+                Plates[position] = new Plate(plateResult);
+                Plates[position].Quantity = 1;
+                Plates[position].Base = b;
+                Plates[position].Priority = 1;
+                StateHasChanged();
 
+            }
+            //else
+            //{
+            //    // change SearchPlates with api call
+            //}
         }
-        //else
-        //{
-        //    // change SearchPlates with api call 
-        //}
     }
 
     private void CheckBase(Plate plate)

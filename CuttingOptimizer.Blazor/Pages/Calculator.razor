@@ -17,9 +17,9 @@
 <PageTitle>Platen Optimalisatie</PageTitle>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row no-print">
         <div class="col">
-            <h2 class="no-print">Platen Optimalisatie</h2>
+            <h2>Platen Optimalisatie</h2>
         </div>
 
         <div class="col-auto">
@@ -102,12 +102,7 @@
     private string SettingNavClass { get; set; } = "nav-link subnav-link";
     private string PlateAndItemNavClass { get; set; } = "nav-link active subnav-link";
 
-    private void ToggleNav()
-    {
-        string mem = SettingNavClass;
-        SettingNavClass = PlateAndItemNavClass;
-        PlateAndItemNavClass = mem;
-    }
+
 
     private CalculatorFormModel CalculatorFormModel { get; set; }
     private bool Veneer { get; set; }
@@ -128,16 +123,16 @@
 
         //CalculatorFormModel.Saw = new Saw("SX2", 5);
 
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        //};
+        CalculatorFormModel.Plates = new List<Plate>
+        {
+            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
+        };
 
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    new Product(2, "Y1", 993, 500, 5),
-        //    //new Product(2, "X2", 2000, 88, 5),
-        //};
+        CalculatorFormModel.Products = new List<Product>
+        {
+            new Product(1, "Y1", 993, 500, 5),
+            //new Product(2, "X2", 2000, 88, 5),
+        };
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
@@ -169,7 +164,14 @@
         //    #endregion
         //};
 
-        //HandleSubmit();
+        HandleSubmit();
+    }
+
+    private void ToggleNav()
+    {
+        string mem = SettingNavClass;
+        SettingNavClass = PlateAndItemNavClass;
+        PlateAndItemNavClass = mem;
     }
 
     private void Reset()

@@ -79,17 +79,20 @@
 
     private async void SearchOrSelect(ChangeEventArgs args)
     {
-        Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
-        if (sawResult != null)
+        if(SearchSaws != null && SearchSaws.Count > 0)
         {
-            Saw.ID = sawResult.ID;
-            Saw.Thickness = sawResult.Thickness;
+            Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
+            if (sawResult != null)
+            {
+                Saw.ID = sawResult.ID;
+                Saw.Thickness = sawResult.Thickness;
+            }
+            //else
+            //{
+            //    SearchSaws = await api.SearchSaws(args.Value.ToString());
+            //    //StateHasChanged();
+            //}
         }
-        //else
-        //{
-        //    SearchSaws = await api.SearchSaws(args.Value.ToString());
-        //    //StateHasChanged();
-        //}
     }
 
     private async Task Save()
