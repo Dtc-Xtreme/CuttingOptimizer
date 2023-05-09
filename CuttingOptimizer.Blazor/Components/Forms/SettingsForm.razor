@@ -56,25 +56,22 @@
     private string Result { get; set; }
 
     private List<Saw> SearchSaws = new List<Saw>();
-    //{
-    //    new Saw("SX1", 1),
-    //    new Saw("SX2", 5),
-    //    new Saw("SX3", 10)
-    //};
 
-    protected override async void OnInitialized()
+    protected override void OnInitialized()
     {
-        //SearchSaws = repo.Saws.ToList();
-        SearchSaws = await api.GetAllSaws();
+        if(Saw == null)
+        {
+            Saw saw = new Saw
+            {
+                ID = "SX0",
+                Thickness = 5
+            };
+        };
+    }
 
-        //if(Saw == null)
-        //{
-        //    Saw saw = new Saw
-        //    {
-        //        ID = "SX0",
-        //        Thickness = 5
-        //    };
-        //};
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) SearchSaws = await api.GetAllSaws();
     }
 
     private async void SearchOrSelect(ChangeEventArgs args)
@@ -87,11 +84,6 @@
                 Saw.ID = sawResult.ID;
                 Saw.Thickness = sawResult.Thickness;
             }
-            //else
-            //{
-            //    SearchSaws = await api.SearchSaws(args.Value.ToString());
-            //    //StateHasChanged();
-            //}
         }
     }
 
