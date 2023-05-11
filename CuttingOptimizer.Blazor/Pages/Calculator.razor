@@ -121,24 +121,24 @@
         Svgs = new();
         CalculatorFormModel = new();
 
-        //CalculatorFormModel.Saw = new Saw("SX2", 5);
-
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        //};
-
-        CalculatorFormModel.Products = new List<Product>
-        {
-            new Product(3, "Y1", 993, 400, 5),
-            //new Product(2, "X2", 2000, 88, 5),
-        };
+        CalculatorFormModel.Saw = new Saw("SX2", 5);
 
         CalculatorFormModel.Plates = new List<Plate>
         {
-            new Plate(1, "PL1", 2000, 400, 5, 0, 2, true),
-            new Plate(1, "PL2", 1000, 500, 5, 0, 1, false)
+            new Plate(1, "PL1200", 1000, 200, 5, 0, 1, true),
         };
+
+        CalculatorFormModel.Products = new List<Product>
+        {
+            new Product(1, "Y1", 1000, 200, 5),
+            //new Product(2, "X2", 2000, 88, 5),
+        };
+
+        //CalculatorFormModel.Plates = new List<Plate>
+        //{
+        //    new Plate(1, "PL1", 2000, 400, 5, 0, 2, true),
+        //    new Plate(1, "PL2", 1000, 500, 5, 0, 1, false)
+        //};
 
         //CalculatorFormModel.Products = new List<Product>
         //{
@@ -215,9 +215,12 @@
 
     private void CalculateScale()
     {
-        int biggestLength = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Length);
-        int biggestWidth = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Width);
-        Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+        if(Svgs.Count > 0)
+        {
+            int biggestLength = Svgs.Max(c => c.ViewBox.Length);
+            int biggestWidth = Svgs.Max(c => c.ViewBox.Width);
+            Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+        }
     }
 
     private void RotateBiggestSideForCanvasLength()

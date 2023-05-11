@@ -31,7 +31,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 RemoveProductsWithQuantityZero(products);
             }
 
-            return svgs.Where(c => c.Groups.Count > 1).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
+            return svgs.Where(c => c.Groups.Any(c=>c.ID == 1)).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -367,7 +367,7 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         internal Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool checkCount = true)
         {
-            bool run = checkCount ? (lastCreated.Length * (newGroups.Count - 1)) + ((saw.Thickness + 1) * (newGroups.Count - 1)) - saw.Thickness < group.Length : lastCreated.Length < group.Length;
+            bool run = checkCount ? (lastCreated.Length * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count) < group.Length : lastCreated.Length < group.Length;
 
             if (run)
             {
@@ -394,7 +394,9 @@ namespace CuttingOptimizer.AppLogic.Services
         }
         internal Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool checkCount = true)
         {
-            bool run = checkCount ? (lastCreated.Width * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count) <= group.Width : lastCreated.Width < group.Width;
+            var a = (lastCreated.Width * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count);
+
+            bool run = checkCount ? (lastCreated.Width * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count) < group.Width : lastCreated.Width < group.Width;
 
             if (run)
             {
