@@ -170,31 +170,6 @@
         //HandleSubmit();
     }
 
-    private void ToggleNav(bool settings)
-    {
-        if (settings)
-        {
-            SettingNavClass = "active";
-            PlateAndItemNavClass = "";
-            SettingClass = "show";
-            PlateAndItemClass = "";
-        }
-        else
-        {
-            PlateAndItemNavClass = "active";
-            SettingNavClass = "";
-            PlateAndItemClass = "show";
-            SettingClass = "";
-        }
-    }
-
-    private void Reset()
-    {
-        Svgs = new();
-        CalculatorFormModel = new();
-        ToggleSavePrintButtons();
-    }
-
     private void HandleSubmit()
     {
         Errors.Clear();
@@ -333,6 +308,35 @@
 
     }
 
+    private void ToggleSavePrintButtons()
+    {
+        SaveButtonDisabled = !SaveButtonDisabled;
+        PrintButtonDisabled = !PrintButtonDisabled;
+    }
+    private void ToggleNav(bool settings)
+    {
+        if (settings)
+        {
+            SettingNavClass = "active";
+            PlateAndItemNavClass = "";
+            SettingClass = "show";
+            PlateAndItemClass = "";
+        }
+        else
+        {
+            PlateAndItemNavClass = "active";
+            SettingNavClass = "";
+            PlateAndItemClass = "show";
+            SettingClass = "";
+        }
+    }
+    private void Reset()
+    {
+        Svgs = new();
+        CalculatorFormModel = new();
+        ToggleSavePrintButtons();
+    }
+
     private async void Save()
     {
         SaveButtonDisabled = true;
@@ -352,7 +356,6 @@
         SaveButtonDisabled = false;
         StateHasChanged();
     }
-
     private async Task Load()
     {
         if (Quotation.ID != SearchQuotation)
@@ -386,15 +389,8 @@
             StateHasChanged();
         }
     }
-
     private async Task Print()
     {
         await JSRuntime.InvokeAsync<object>("Print");
-    }
-
-    private void ToggleSavePrintButtons()
-    {
-        SaveButtonDisabled = !SaveButtonDisabled;
-        PrintButtonDisabled = !PrintButtonDisabled;
     }
 }
