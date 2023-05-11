@@ -41,10 +41,12 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-secondary" @onclick="Save"><span class="oi oi-file" /> Instellingen opslaan</button>
+<button type="button" class="btn btn-secondary" @onclick="Save" disabled="@SaveButtonDisabled"><span class="oi oi-file" /> Instellingen opslaan</button>
 
     <div></div>
 @code {
+    private bool SaveButtonDisabled { get; set; } = false;
+
     [Parameter]
     public Saw Saw { get; set; }
 
@@ -74,7 +76,7 @@
 
     private async void SearchOrSelect(ChangeEventArgs args)
     {
-        if(SearchSaws != null && SearchSaws.Count > 0)
+         if(SearchSaws != null && SearchSaws.Count > 0)
         {
             Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
             if (sawResult != null)
@@ -87,8 +89,10 @@
 
     private async Task Save()
     {
+        SaveButtonDisabled = true;
         await localStorage.SetItemAsync("currentSaw", Saw);
         await localStorage.SetItemAsync("currentVeneer", Veneer);
         await JSRuntime.InvokeAsync<object>("Alert", "Instellingen zijn opgeslagen!");
+        SaveButtonDisabled = false;
     }
 }

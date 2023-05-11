@@ -47,7 +47,7 @@
             var groupByProduct = Svg.Groups.Where(c => c.ID != 0).GroupBy(c => c.Product.ID);
         }
         <div class="col-3">
-            <label class="fw-bold">Quantiteit</label>
+            <label class="fw-bold">Aantal</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Count()</div>
@@ -102,7 +102,8 @@
     {
         get
         {
-            return Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
+            double percentage = Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
+            return percentage > 0 ? percentage : 0;
         }
     }
 
