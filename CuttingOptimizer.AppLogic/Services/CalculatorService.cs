@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 [assembly: InternalsVisibleTo("CuttingOptimizer.AppLogic.Tests")]
 namespace CuttingOptimizer.AppLogic.Services
@@ -31,7 +32,25 @@ namespace CuttingOptimizer.AppLogic.Services
                 RemoveProductsWithQuantityZero(products);
             }
 
+            CalculateScale(ref svgs);
+
             return svgs.Where(c => c.Groups.Any(c=>c.ID == 1)).OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
+        }
+
+        private void CalculateScale(ref List<Svg> svgs)
+        {
+            double scale = 0;
+            if (svgs.Count > 0)
+            {
+                int biggestLength = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Length);
+                int biggestWidth = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Width);
+                scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+
+                foreach (Svg s in svgs)
+                {
+                    s.Scale = scale;
+                }
+            }
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -107,7 +126,7 @@ namespace CuttingOptimizer.AppLogic.Services
             //List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c => c.Group.Width > 0 && c.Group.Length > 0).OrderBy(c => c.Group.Svg.Priority).ThenByDescending(c => c.CompareMostPossible()).ToList();
             List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c=>c.Group.Svg.Priority).ThenByDescending(c=>c.CompareBestCandidate()).ToList();
 
-            RestResult selectedResult = results.First();
+            RestResult? selectedResult = results.FirstOrDefault();
 
             if (selectedResult != null)
             {
@@ -120,8 +139,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
                 if (selectedResult.Product.Quantity == 1)
                 {
-                    //CalculateGroupsNewVertical(selectedResult.Product, saw, selectedResult.Group, vert);
-                    //CalculateEmptyGroups(svgs);
                     CalculateGroupsVertical(selectedResult.Product, saw, selectedResult.Group, vert);
                 }
                 else

@@ -37,7 +37,7 @@ namespace CuttingOptimizer.AppLogic.Models
             }
         }
         public Plate Plate { get; set; }
-
+        public double Scale { get; set; }
         public void AddGroup(Group group)
         {
             if (Groups.Count() != 0)
@@ -60,7 +60,7 @@ namespace CuttingOptimizer.AppLogic.Models
                 {
                     if (group.Product != null) stringBuilder.Append(group.Product.GetHashCode());
                 }
-                return stringBuilder.ToString();
+                return stringBuilder.ToString() + this.Plate.ID + this.Plate.Length + this.Plate.Width + this.Plate.Height;
             }
         }
     }
