@@ -204,7 +204,12 @@
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
             CalculateScale();
-            if (Svgs != null && Svgs.Count > 0) ToggleSavePrintButtons();
+
+            if (Svgs != null && Svgs.Count > 0)
+            {
+                SaveButtonDisabled = false;
+                PrintButtonDisabled = false;
+            }
         }
     }
 
@@ -312,11 +317,6 @@
 
     }
 
-    private void ToggleSavePrintButtons()
-    {
-        SaveButtonDisabled = !SaveButtonDisabled;
-        PrintButtonDisabled = !PrintButtonDisabled;
-    }
     private void ToggleNav(bool settings)
     {
         if (settings)
@@ -336,7 +336,8 @@
     {
         Svgs = new();
         CalculatorFormModel = new();
-        ToggleSavePrintButtons();
+        SaveButtonDisabled = true;
+        PrintButtonDisabled = true;
     }
 
     private async void Save()

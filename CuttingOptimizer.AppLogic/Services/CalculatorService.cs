@@ -31,7 +31,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 RemoveProductsWithQuantityZero(products);
             }
 
-            return svgs.Where(c => c.Groups.Any(c=>c.ID == 1)).OrderBy(c => c.Priority).ThenBy(c => c.Area).ToList();
+            return svgs.Where(c => c.Groups.Any(c=>c.ID == 1)).OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -105,9 +105,9 @@ namespace CuttingOptimizer.AppLogic.Services
             }
 
             //List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c => c.Group.Width > 0 && c.Group.Length > 0).OrderBy(c => c.Group.Svg.Priority).ThenByDescending(c => c.CompareMostPossible()).ToList();
-            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderBy(c=>c.Group.Svg.Priority).ThenByDescending(c=>c.CompareBestCandidate()).ToList();
+            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c=>c.Group.Svg.Priority).ThenByDescending(c=>c.CompareBestCandidate()).ToList();
 
-            RestResult selectedResult = results.FirstOrDefault();
+            RestResult selectedResult = results.First();
 
             if (selectedResult != null)
             {
