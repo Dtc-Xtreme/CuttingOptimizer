@@ -23,32 +23,32 @@
         </div>
 
         <div class="col-auto mb-4">
-            <EditForm class="row" Model="@SearchQuotation">
+            <div class="row">
                 <div class="col">
                     <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick=Load>Ophalen van optimalisatieplan</button>
+                    <button type="button" class="btn btn-secondary" Disabled=@LoadButtonDisabled @onclick=Load>Ophalen van optimalisatieplan</button>
                 </div>
-            </EditForm>
+            </div>
         </div>
     </div>
 
     <ul class="no-print nav nav-tabs">
         <li class="nav-item">
-            <a class="@SettingNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseSaw collapsePlatesAndItems" @onclick="ToggleNav">Instellingen</a>
+            <a class="@SettingNavClass nav-link subnav-link user-select-none" @onclick="() => ToggleNav(true)">Instellingen</a>
         </li>
         <li class="nav-item">
-            <a class="@PlateAndItemNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapsePlatesAndItems collapseSaw" @onclick="ToggleNav">Materialen & Items</a>
+            <a class="@PlateAndItemNavClass nav-link subnav-link user-select-none" @onclick="() => ToggleNav(false)">Materialen & Items</a>
         </li>
     </ul>
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <div class="collapse multi-collapse mb-4" id="collapseSaw">
+            <div class="collapse mb-4 @SettingClass">
                 <SettingsForm Saw=@CalculatorFormModel.Saw Veneer=@Veneer/>    
             </div>
-            <div class="collapse multi-collapse show" id="collapsePlatesAndItems">
+            <div class="collapse @PlateAndItemClass">
                 <div>
                     <PlateForm Plates=@CalculatorFormModel.Plates />
                 </div>
@@ -61,7 +61,8 @@
                 <div class="col mt-3">
                     <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
                     <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
-                    <button type="button" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick="Save"><span class="oi oi-file" /> Opslaan</button>
+                    <button type="button" class="btn btn-secondary" Disabled=@SaveButtonDisabled @onclick="Save"><span class="oi oi-file" /> Opslaan</button>
+                    <button type="button" class="btn btn-secondary" Disabled=@PrintButtonDisabled @onclick ="Print"><span class="oi oi-file" /> Afdrukken</button>
                 </div>
             </div>
         </EditForm>
@@ -99,11 +100,14 @@
 </div>
 
 @code {
-    private string SettingNavClass { get; set; } = "nav-link subnav-link";
-    private string PlateAndItemNavClass { get; set; } = "nav-link active subnav-link";
-
-
-
+    private string SettingNavClass { get; set; }
+    private string PlateAndItemNavClass { get; set; } = "active";
+    private string SettingClass { get; set; }
+    private string PlateAndItemClass { get; set; } = "show";
+    private bool SaveButtonDisabled { get; set; } = true;
+    private bool PrintButtonDisabled { get; set; } = true;
+    private bool LoadButtonDisabled { get; set; } = false;
+    private bool NavSettingsSelected { get; set; } = false;
     private CalculatorFormModel CalculatorFormModel { get; set; }
     private bool Veneer { get; set; }
     private double Scale { get; set; }
@@ -114,25 +118,24 @@
     private int SearchQuotation { get; set; } = 0;
     private List<Svg> Svgs { get; set; }
 
-    private bool ButtonEnabled { get; set; } = false;
 
     protected override void OnInitialized()
     {
         Svgs = new();
         CalculatorFormModel = new();
 
-        CalculatorFormModel.Saw = new Saw("SX2", 5);
+        //CalculatorFormModel.Saw = new Saw("SX2", 5);
 
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(1, "PL1200", 1000, 200, 5, 0, 1, true),
-        };
+        //CalculatorFormModel.Plates = new List<Plate>
+        //{
+        //    new Plate(1, "PL1200", 1000, 200, 5, 0, 1, true),
+        //};
 
-        CalculatorFormModel.Products = new List<Product>
-        {
-            new Product(1, "Y1", 1000, 200, 5),
-            //new Product(2, "X2", 2000, 88, 5),
-        };
+        //CalculatorFormModel.Products = new List<Product>
+        //{
+        //    new Product(1, "Y1", 1000, 200, 5),
+        //    //new Product(2, "X2", 2000, 88, 5),
+        //};
 
         //CalculatorFormModel.Plates = new List<Plate>
         //{
@@ -164,20 +167,32 @@
         //    #endregion
         //};
 
-        HandleSubmit();
+        //HandleSubmit();
     }
 
-    private void ToggleNav()
+    private void ToggleNav(bool settings)
     {
-        string mem = SettingNavClass;
-        SettingNavClass = PlateAndItemNavClass;
-        PlateAndItemNavClass = mem;
+        if (settings)
+        {
+            SettingNavClass = "active";
+            PlateAndItemNavClass = "";
+            SettingClass = "show";
+            PlateAndItemClass = "";
+        }
+        else
+        {
+            PlateAndItemNavClass = "active";
+            SettingNavClass = "";
+            PlateAndItemClass = "show";
+            SettingClass = "";
+        }
     }
 
     private void Reset()
     {
         Svgs = new();
         CalculatorFormModel = new();
+        ToggleSavePrintButtons();
     }
 
     private void HandleSubmit()
@@ -210,6 +225,7 @@
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
             CalculateScale();
+            if (Svgs != null && Svgs.Count > 0) ToggleSavePrintButtons();
         }
     }
 
@@ -319,7 +335,7 @@
 
     private async void Save()
     {
-        ButtonEnabled = true;
+        SaveButtonDisabled = true;
         try
         {
             Quotation.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
@@ -333,7 +349,7 @@
         {
             await JSRuntime.InvokeAsync<object>("Alert", "Het opgeslagen van optimalistatieplan is mislukt!");
         }
-        ButtonEnabled = false;
+        SaveButtonDisabled = false;
         StateHasChanged();
     }
 
@@ -341,10 +357,10 @@
     {
         if (Quotation.ID != SearchQuotation)
         {
-            ButtonEnabled = true;
+            LoadButtonDisabled = true;
             try
             {
-                
+
                 Quotation? result = await api.GetQuotationById(SearchQuotation);
                 if (result != null && result.JsonString != null)
                 {
@@ -354,19 +370,31 @@
                     if (calc != null)
                     {
                         CalculatorFormModel = calc;
+                        HandleSubmit();
                     }
                 }
                 else
                 {
                     await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
                 }
-                
+
             }catch(Exception ex)
             {
                 await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
             }
-            ButtonEnabled = false;
+            LoadButtonDisabled = false;
             StateHasChanged();
         }
+    }
+
+    private async Task Print()
+    {
+        await JSRuntime.InvokeAsync<object>("Print");
+    }
+
+    private void ToggleSavePrintButtons()
+    {
+        SaveButtonDisabled = !SaveButtonDisabled;
+        PrintButtonDisabled = !PrintButtonDisabled;
     }
 }
