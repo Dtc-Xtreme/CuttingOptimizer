@@ -47,10 +47,10 @@
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <div class="collapse mb-4 @SettingClass">
+            <div class=" mb-4" hidden="@(!NavSettingsSelected)">
                 <SettingsForm Saw=@CalculatorFormModel.Saw Veneer=@Veneer/>    
             </div>
-            <div class="collapse @PlateAndItemClass">
+            <div class="" hidden="@NavSettingsSelected">
                 <div>
                     <PlateForm Plates=@CalculatorFormModel.Plates />
                 </div>
@@ -104,10 +104,8 @@
 </div>
 
 @code {
-    private string SettingNavClass { get; set; }
+    private string SettingNavClass { get; set; } = "";
     private string PlateAndItemNavClass { get; set; } = "active";
-    private string SettingClass { get; set; }
-    private string PlateAndItemClass { get; set; } = "show";
     private bool SaveButtonDisabled { get; set; } = true;
     private bool PrintButtonDisabled { get; set; } = true;
     private bool LoadButtonDisabled { get; set; } = false;
@@ -325,15 +323,13 @@
         {
             SettingNavClass = "active";
             PlateAndItemNavClass = "";
-            SettingClass = "show";
-            PlateAndItemClass = "";
+            NavSettingsSelected = true;
         }
         else
         {
             PlateAndItemNavClass = "active";
             SettingNavClass = "";
-            PlateAndItemClass = "show";
-            SettingClass = "";
+            NavSettingsSelected = false;
         }
     }
     private void Reset()
