@@ -1,18 +1,21 @@
 ﻿using CuttingOptimizer.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CuttingOptimizer.Infrastructure
 {
     public class CuttingOptimizerDbContext : DbContext
     {
-        public CuttingOptimizerDbContext()
+        private readonly IConfiguration configuration;
+
+        public CuttingOptimizerDbContext(IConfiguration configuration)
         {
+            this.configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server =.\\SQLEXPRESS; Database=CuttingOptimizer; Trusted_Connection = True; TrustServerCertificate=True");
-            //optionsBuilder.UseSqlServer("Server=GB-SQL;Database=CuttingOptimizer;Trusted_Connection=True;MultipleActiveResultSets=true; TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("db"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

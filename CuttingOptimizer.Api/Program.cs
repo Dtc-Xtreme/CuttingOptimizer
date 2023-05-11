@@ -3,6 +3,14 @@ using CuttingOptimizer.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment()){
+    builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+}
+else
+{
+    builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+}
+
 // Add services to the container.
 builder.Services.AddDbContext<CuttingOptimizerDbContext>();
 builder.Services.AddScoped<ISawRepository, SawRepository>();
