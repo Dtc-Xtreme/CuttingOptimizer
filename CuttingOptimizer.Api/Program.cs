@@ -3,7 +3,6 @@ using CuttingOptimizer.Infrastructure;
 using CuttingOptimizer.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
 if (builder.Environment.IsDevelopment()){
     builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
 }
