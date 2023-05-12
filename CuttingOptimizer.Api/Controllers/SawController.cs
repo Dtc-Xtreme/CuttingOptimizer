@@ -10,16 +10,19 @@ namespace CuttingOptimizer.Api.Controllers
     [Route("[controller]")]
     public class SawController : Controller
     {
+        //private readonly ILogger<SawController> logger;
         private readonly ISawRepository repository;
 
-        public SawController(ISawRepository repo)
+        public SawController(ISawRepository repo/*, ILogger<SawController> logger*/)
         {
+            //this.logger = logger;
             this.repository = repo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            //logger.LogInformation("GetAll Saws");
             IList<Saw> Saws = await repository.Saws.ToListAsync();
             return Ok(Saws == null ? NotFound() : Saws);
         }
