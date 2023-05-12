@@ -12,7 +12,7 @@
         <div class="row">
             <div class="svg-left-column m-0"></div>
             <div class="col">
-                <div class="row border-bottom mb-3 m-0" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
+                <div class="row border-bottom mb-3 m-0" style="width: @(((double)100 / Svg.Scale).ToString("0.00", CultureInfo.InvariantCulture))%;">
                     <div class="svg-length-label">@Svg.ViewBox.Length</div>   
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="svg-width-label">@Svg.ViewBox.Width</div>
             </div>
             <div class="col ms-1 mt-1">
-                <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @Width.ToString("0.00", CultureInfo.InvariantCulture)%;">
+                <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @(((double)100 / Svg.Scale).ToString("0.00", CultureInfo.InvariantCulture))%;">
                     @foreach (Group group in Svg.Groups)
                     {
                         <g>
@@ -64,20 +64,6 @@
 
     [Parameter]
     public int Count { get; set; }
-
-    private double Width { get; set; }
-
-    protected override void OnInitialized()
-    {
-        if (Svg.ViewBox.Length / (double)100 == Scale)
-        {
-            Width = 100;
-        }
-        else
-        {
-            Width = Svg.ViewBox.Length / (double)Scale;
-        }
-    }
 
     private double CalculateLabelX(Group group)
     {

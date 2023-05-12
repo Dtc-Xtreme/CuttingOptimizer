@@ -44,11 +44,13 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 int biggestLength = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Length);
                 int biggestWidth = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Width);
-                scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+
+                scale = biggestLength < biggestWidth ? biggestLength / (double)100 : biggestLength / (double)100;
+                bool lengthBiggest = biggestLength < biggestWidth ? true : false;
 
                 foreach (Svg s in svgs)
                 {
-                    s.Scale = scale;
+                    s.Scale = biggestLength / s.ViewBox.Length;
                 }
             }
         }

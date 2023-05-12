@@ -44,11 +44,12 @@
             <a class="@PlateAndItemNavClass nav-link subnav-link user-select-none" @onclick="() => ToggleNav(false)">Materialen & Items</a>
         </li>
     </ul>
+
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
             <div class=" mb-4" hidden="@(!NavSettingsSelected)">
-                <SettingsForm Saw=@CalculatorFormModel.Saw Veneer=@Veneer/>    
+                <SettingsForm CalculatorFormModel=@CalculatorFormModel />
             </div>
             <div class="" hidden="@NavSettingsSelected">
                 <div>
@@ -80,7 +81,7 @@
             }
             @foreach (var group in groupSvg)
             {
-                <SvgComponent Scale=@Scale Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
+                <SvgComponent Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
         </div>
 
@@ -113,8 +114,11 @@
     private bool SaveSpinnerDisabled { get; set; } = true;
 
     private CalculatorFormModel CalculatorFormModel { get; set; }
-    private bool Veneer { get; set; }
-    private double Scale { get; set; }
+    private bool veneer;
+    private bool Veneer { 
+        get { return veneer; }
+        set { veneer = value; }
+    }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
     private List<string> Errors { get; set; } = new List<string>();
@@ -180,7 +184,7 @@
         if (Check())
         {
             // Use LocalStorage Veneer setting
-            CalculatorFormModel.Plates.ForEach(c => c.Veneer = Veneer);
+            CalculatorFormModel.Plates.ForEach(c => c.Veneer = CalculatorFormModel.Veneer);
 
             // Find the biggest plate to represent as 100% width
             RotateBiggestSideForCanvasLength();
@@ -203,23 +207,12 @@
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
             Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
-            CalculateScale();
 
             if (Svgs != null && Svgs.Count > 0)
             {
                 SaveButtonDisabled = false;
                 PrintButtonDisabled = false;
             }
-        }
-    }
-
-    private void CalculateScale()
-    {
-        if(Svgs.Count > 0)
-        {
-            int biggestLength = Svgs.Max(c => c.ViewBox.Length);
-            int biggestWidth = Svgs.Max(c => c.ViewBox.Width);
-            Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
         }
     }
 
@@ -314,7 +307,6 @@
 
             StateHasChanged();
         }
-
     }
 
     private void ToggleNav(bool settings)
@@ -361,6 +353,7 @@
         SaveButtonDisabled = false;
         StateHasChanged();
     }
+
     private async Task Load()
     {
         if (Quotation.ID != SearchQuotation)
