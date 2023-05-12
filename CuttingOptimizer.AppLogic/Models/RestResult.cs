@@ -76,7 +76,7 @@ namespace CuttingOptimizer.AppLogic.Models
 
         public override string ToString()
         {
-            return "HorMaxQ: " + MaxHorizontalQuantity + " | : HvsV: " + HorizontalScaleVsVertical + " | HUsed: " + HorizontalUsed + " | HArea: " + HorizontalArea + " | HorQ: " + HorizontalQuantity + " | VertMaxQ: " + MaxVerticalQuantity + " | : VvsH: " + VerticalScaleVsHorizontal + " | VUsed: " + VerticalUsed + " | VArea: " + VerticalArea + " | VertQ: " + VerticalQuantity + " | Rest: " + Rest + " | Rotated: " + Rotated + " | Prio: " + Group.Svg.Priority + " | Product: " + Product.ToString();
+            return "Prio: " + Group.Svg.Priority + " | HorMaxQ: " + MaxHorizontalQuantity + " | : HvsV: " + HorizontalScaleVsVertical + " | HUsed: " + HorizontalUsed + " | HArea: " + HorizontalArea + " | HorQ: " + HorizontalQuantity + " | VertMaxQ: " + MaxVerticalQuantity + " | : VvsH: " + VerticalScaleVsHorizontal + " | VUsed: " + VerticalUsed + " | VArea: " + VerticalArea + " | VertQ: " + VerticalQuantity + " | Rest: " + Rest + " | Rotated: " + Rotated + " | Product: " + Product.ToString();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CuttingOptimizer.AppLogic.Services
     public class ApiService : IApiService
     {
         private HttpClient client = new HttpClient();
-        private string url = "https://localhost:44397";
+        private string url = "https://localhost:7181";
 
         public ApiService()
         {

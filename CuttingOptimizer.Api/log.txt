@@ -19,3 +19,474 @@
 2023-05-12 15:17:43.180 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2981.3174ms
 2023-05-12 15:17:43.187 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
 2023-05-12 15:17:43.215 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 3068.6559ms
+2023-05-12 15:32:22.510 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:32:22.526 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:32:22.533 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:32:22.534 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:32:22.534 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:32:23.958 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:32:24.661 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:32:24.661 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:32:24.691 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 736.5346ms
+2023-05-12 15:32:24.692 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 30.7812ms
+2023-05-12 15:32:24.788 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 126.9662ms
+2023-05-12 15:32:24.866 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:32:25.103 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 236.8641ms
+2023-05-12 15:33:12.761 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:33:12.800 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:33:12.817 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:33:12.820 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:33:12.820 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:33:13.897 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:33:14.493 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:33:14.493 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:33:14.515 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 11.9295ms
+2023-05-12 15:33:14.520 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 627.7195ms
+2023-05-12 15:33:14.543 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 50.6803ms
+2023-05-12 15:33:14.621 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:33:14.796 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 174.8765ms
+2023-05-12 15:38:18.528 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/Quotation - -
+2023-05-12 15:38:18.538 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:38:18.565 +02:00 [INF] Route matched with {action = "GetAll", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:38:20.944 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Quotation, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:38:20.967 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.GetAll (CuttingOptimizer.Api) in 2396.5545ms
+2023-05-12 15:38:20.970 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:38:20.990 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/Quotation - - - 200 - application/json;+charset=utf-8 2461.7419ms
+2023-05-12 15:40:36.637 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:40:36.649 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:40:36.655 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:40:36.656 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:40:36.656 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:40:38.778 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:40:39.585 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:40:39.602 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:40:39.611 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 841.4289ms
+2023-05-12 15:40:39.858 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 273.7633ms
+2023-05-12 15:40:39.982 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 379.9852ms
+2023-05-12 15:40:40.118 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:40:40.399 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 280.2295ms
+2023-05-12 15:40:44.572 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/Plate - -
+2023-05-12 15:40:44.581 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:40:44.619 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:40:46.741 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:40:46.764 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2140.0984ms
+2023-05-12 15:40:46.769 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:40:46.790 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2217.8596ms
+2023-05-12 15:41:43.270 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:41:43.281 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:41:43.293 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:41:43.294 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:41:43.294 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:41:45.215 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:41:46.576 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:41:46.576 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:41:46.608 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 29.5396ms
+2023-05-12 15:41:46.647 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1443.6463ms
+2023-05-12 15:41:46.665 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 88.4746ms
+2023-05-12 15:41:46.780 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:41:47.049 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 269.0792ms
+2023-05-12 15:41:50.704 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/Plate - -
+2023-05-12 15:41:50.712 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:50.747 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:41:53.651 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:41:53.672 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2918.6543ms
+2023-05-12 15:41:53.675 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:53.699 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2994.8006ms
+2023-05-12 15:41:58.174 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:41:58.174 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:41:58.175 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:58.175 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:58.175 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:41:58.178 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:41:58.212 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:41:58.220 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:41:58.221 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 45.6003ms
+2023-05-12 15:41:58.221 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:58.221 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 46.9734ms
+2023-05-12 15:41:58.222 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 44.7296ms
+2023-05-12 15:41:58.223 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:41:58.223 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 48.3002ms
+2023-05-12 15:42:41.830 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:42:41.840 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:42:41.846 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:42:41.847 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:42:41.847 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:42:44.765 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:42:45.987 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:42:45.987 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:42:46.023 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 14.9216ms
+2023-05-12 15:42:46.024 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1267.9478ms
+2023-05-12 15:42:46.125 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 137.0833ms
+2023-05-12 15:42:46.223 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:42:46.609 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 385.5294ms
+2023-05-12 15:42:59.902 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:42:59.902 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:42:59.908 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:42:59.908 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:42:59.939 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:42:59.939 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:43:02.604 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:43:02.604 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:43:02.652 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2702.8075ms
+2023-05-12 15:43:02.652 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2702.7747ms
+2023-05-12 15:43:02.656 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:43:02.656 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:43:02.676 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2774.5338ms
+2023-05-12 15:43:02.676 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2774.5320ms
+2023-05-12 15:47:50.144 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7181/Quotation application/json;+charset=utf-8 -
+2023-05-12 15:47:50.144 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Create (CuttingOptimizer.Api)'
+2023-05-12 15:47:50.162 +02:00 [INF] Route matched with {action = "Create", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(CuttingOptimizer.Domain.Models.Quotation) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:47:50.685 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:47:50.692 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.Create (CuttingOptimizer.Api) in 530.0794ms
+2023-05-12 15:47:50.692 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Create (CuttingOptimizer.Api)'
+2023-05-12 15:47:50.692 +02:00 [INF] Request finished HTTP/1.1 POST https://localhost:7181/Quotation application/json;+charset=utf-8 - - 200 - application/json;+charset=utf-8 548.7870ms
+2023-05-12 15:47:59.635 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:47:59.646 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:47:59.651 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:47:59.651 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:47:59.651 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:48:03.006 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:48:04.373 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:48:04.387 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:48:04.418 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 42.8147ms
+2023-05-12 15:48:04.420 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1430.1294ms
+2023-05-12 15:48:04.459 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 87.6948ms
+2023-05-12 15:48:04.601 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:48:04.943 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 342.4463ms
+2023-05-12 15:48:13.180 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:48:13.180 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:48:13.187 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:13.187 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:13.218 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:48:13.218 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:48:15.334 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:48:15.334 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:48:15.362 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2137.8266ms
+2023-05-12 15:48:15.362 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2137.8295ms
+2023-05-12 15:48:15.365 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:15.365 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:15.382 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2201.8368ms
+2023-05-12 15:48:15.382 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2201.8368ms
+2023-05-12 15:48:16.031 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:48:16.032 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:48:16.051 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:48:16.437 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:48:16.442 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 390.9376ms
+2023-05-12 15:48:16.442 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:48:16.443 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 411.4121ms
+2023-05-12 15:48:19.990 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:48:19.990 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:19.990 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:48:19.991 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:48:19.991 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:19.991 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:48:19.998 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:48:20.004 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 13.2998ms
+2023-05-12 15:48:20.006 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:20.006 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 16.4525ms
+2023-05-12 15:48:20.007 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:48:20.008 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 16.5778ms
+2023-05-12 15:48:20.008 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:48:20.008 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 17.1482ms
+2023-05-12 15:53:05.568 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:53:05.607 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:53:05.620 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:53:05.621 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:53:05.621 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:53:06.601 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:53:07.523 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:53:07.523 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:53:07.700 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 11.8346ms
+2023-05-12 15:53:07.713 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1130.1952ms
+2023-05-12 15:53:07.724 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 201.5085ms
+2023-05-12 15:53:07.844 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:53:08.294 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 450.0858ms
+2023-05-12 15:53:12.414 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:53:12.414 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:53:12.420 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:12.420 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:12.449 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:53:12.449 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:53:14.511 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:53:14.511 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:53:14.542 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2085.3102ms
+2023-05-12 15:53:14.542 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2085.3061ms
+2023-05-12 15:53:14.546 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:14.546 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:14.574 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2159.7959ms
+2023-05-12 15:53:14.574 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2159.7957ms
+2023-05-12 15:53:15.231 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:53:15.231 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.245 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:53:15.616 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:53:15.621 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 375.224ms
+2023-05-12 15:53:15.621 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.621 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 390.2285ms
+2023-05-12 15:53:15.693 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:53:15.694 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.694 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:53:15.695 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:53:15.695 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.695 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:53:15.697 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:53:15.698 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 3.6096ms
+2023-05-12 15:53:15.698 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.698 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 4.5806ms
+2023-05-12 15:53:15.698 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:53:15.698 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 3.5312ms
+2023-05-12 15:53:15.698 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:53:15.699 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 4.0716ms
+2023-05-12 15:54:51.246 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:54:51.259 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:54:51.264 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:54:51.265 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:54:51.265 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:54:53.272 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:54:54.796 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:54:54.849 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:54:54.879 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 71.7210ms
+2023-05-12 15:54:54.894 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1632.4682ms
+2023-05-12 15:54:55.062 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 226.2271ms
+2023-05-12 15:54:55.544 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:54:55.847 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 302.2899ms
+2023-05-12 15:54:59.702 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:54:59.702 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:54:59.710 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:54:59.710 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:54:59.751 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:54:59.751 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:55:01.858 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:55:01.858 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:55:01.885 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2128.0923ms
+2023-05-12 15:55:01.885 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2128.109ms
+2023-05-12 15:55:01.888 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:01.888 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:01.907 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2204.6775ms
+2023-05-12 15:55:01.907 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2204.6816ms
+2023-05-12 15:55:03.456 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:55:03.457 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.478 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:55:03.840 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:55:03.845 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 367.3363ms
+2023-05-12 15:55:03.845 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.846 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 389.3356ms
+2023-05-12 15:55:03.923 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:55:03.924 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.924 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:55:03.924 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:55:03.924 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.925 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:55:03.927 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:55:03.928 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 3.8717ms
+2023-05-12 15:55:03.928 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.928 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:55:03.928 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 4.5719ms
+2023-05-12 15:55:03.928 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 3.3257ms
+2023-05-12 15:55:03.929 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:55:03.929 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 4.5561ms
+2023-05-12 15:55:11.930 +02:00 [INF] Request starting HTTP/1.1 PUT https://localhost:7181/Quotation application/json;+charset=utf-8 -
+2023-05-12 15:55:11.930 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api)'
+2023-05-12 15:55:11.933 +02:00 [INF] Route matched with {action = "Update", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(CuttingOptimizer.Domain.Models.Quotation) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:55:12.180 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:55:12.181 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api) in 247.5838ms
+2023-05-12 15:55:12.181 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api)'
+2023-05-12 15:55:12.181 +02:00 [INF] Request finished HTTP/1.1 PUT https://localhost:7181/Quotation application/json;+charset=utf-8 - - 200 - application/json;+charset=utf-8 250.6210ms
+2023-05-12 15:55:16.653 +02:00 [INF] Request starting HTTP/1.1 PUT https://localhost:7181/Quotation application/json;+charset=utf-8 -
+2023-05-12 15:55:16.653 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api)'
+2023-05-12 15:55:16.653 +02:00 [INF] Route matched with {action = "Update", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(CuttingOptimizer.Domain.Models.Quotation) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:55:16.671 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:55:16.671 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api) in 18.0597ms
+2023-05-12 15:55:16.671 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.Update (CuttingOptimizer.Api)'
+2023-05-12 15:55:16.672 +02:00 [INF] Request finished HTTP/1.1 PUT https://localhost:7181/Quotation application/json;+charset=utf-8 - - 200 - application/json;+charset=utf-8 18.6480ms
+2023-05-12 15:55:59.802 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:55:59.815 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:55:59.821 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:55:59.821 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:55:59.822 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:56:02.221 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:56:03.676 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:56:03.676 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:56:03.702 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 22.7727ms
+2023-05-12 15:56:03.812 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1600.5442ms
+2023-05-12 15:56:03.855 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 179.5553ms
+2023-05-12 15:56:03.980 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:56:04.352 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 371.9871ms
+2023-05-12 15:56:10.258 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:56:10.258 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:56:10.268 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:10.268 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:10.301 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:56:10.301 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:56:12.478 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:56:12.478 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:56:12.505 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2197.6821ms
+2023-05-12 15:56:12.505 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2197.744ms
+2023-05-12 15:56:12.508 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:12.508 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:12.526 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2267.1351ms
+2023-05-12 15:56:12.526 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2267.1361ms
+2023-05-12 15:56:12.742 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:56:12.742 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:56:12.762 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:56:13.162 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:56:13.169 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 407.4038ms
+2023-05-12 15:56:13.170 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:56:13.170 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 427.8643ms
+2023-05-12 15:56:22.560 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:56:22.561 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:22.561 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:56:22.562 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:56:22.562 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:22.562 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:56:22.565 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:56:22.566 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 4.7244ms
+2023-05-12 15:56:22.566 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:22.566 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:56:22.566 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 5.7515ms
+2023-05-12 15:56:22.566 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 4.2377ms
+2023-05-12 15:56:22.567 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:56:22.567 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 5.6266ms
+2023-05-12 15:58:19.333 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:58:19.345 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:58:19.351 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:58:19.351 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:58:19.352 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:58:21.421 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:58:22.803 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:58:22.803 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:58:22.826 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 18.9731ms
+2023-05-12 15:58:22.889 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1480.1743ms
+2023-05-12 15:58:22.948 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 144.1062ms
+2023-05-12 15:58:23.064 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:58:23.418 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 353.8155ms
+2023-05-12 15:58:28.126 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:58:28.126 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:58:28.132 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:28.132 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:28.160 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:58:28.160 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:58:30.307 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:58:30.307 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:58:30.335 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2169.2348ms
+2023-05-12 15:58:30.335 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2169.232ms
+2023-05-12 15:58:30.338 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:30.338 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:30.361 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2235.2326ms
+2023-05-12 15:58:30.361 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2235.2343ms
+2023-05-12 15:58:32.416 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:58:32.416 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.436 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:58:32.817 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:58:32.823 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 386.9821ms
+2023-05-12 15:58:32.824 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.824 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 408.3888ms
+2023-05-12 15:58:32.913 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:58:32.913 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.913 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:58:32.914 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:58:32.914 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.914 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:58:32.917 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:58:32.917 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:58:32.917 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 3.767ms
+2023-05-12 15:58:32.917 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.917 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 3.0718ms
+2023-05-12 15:58:32.917 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:58:32.917 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 4.5746ms
+2023-05-12 15:58:32.917 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 3.6179ms
+2023-05-12 15:59:13.472 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 15:59:13.494 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 15:59:13.502 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 15:59:13.504 +02:00 [INF] Hosting environment: Development
+2023-05-12 15:59:13.504 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 15:59:15.738 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 15:59:17.531 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 15:59:17.547 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 15:59:17.571 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 33.4623ms
+2023-05-12 15:59:17.572 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1843.5037ms
+2023-05-12 15:59:17.667 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 119.5962ms
+2023-05-12 15:59:17.769 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 15:59:18.122 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 352.9200ms
+2023-05-12 15:59:22.156 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:59:22.157 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:59:22.163 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:22.163 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:22.192 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:59:22.192 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:59:24.287 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:59:24.287 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:59:24.315 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2115.3199ms
+2023-05-12 15:59:24.315 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2115.324ms
+2023-05-12 15:59:24.318 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:24.318 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:24.338 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2181.0736ms
+2023-05-12 15:59:24.338 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2181.0737ms
+2023-05-12 15:59:25.003 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 15:59:25.003 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.016 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 15:59:25.385 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 15:59:25.392 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 375.1741ms
+2023-05-12 15:59:25.392 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.392 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 389.3616ms
+2023-05-12 15:59:25.474 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 15:59:25.474 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.474 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 15:59:25.475 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 15:59:25.475 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.475 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 15:59:25.477 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:59:25.478 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 3.1557ms
+2023-05-12 15:59:25.479 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.479 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 4.9115ms
+2023-05-12 15:59:25.479 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 15:59:25.480 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 4.1125ms
+2023-05-12 15:59:25.480 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 15:59:25.480 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 4.5811ms
+2023-05-12 16:02:19.127 +02:00 [INF] Now listening on: https://localhost:7181
+2023-05-12 16:02:19.144 +02:00 [INF] Now listening on: http://localhost:5188
+2023-05-12 16:02:19.152 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-05-12 16:02:19.153 +02:00 [INF] Hosting environment: Development
+2023-05-12 16:02:19.154 +02:00 [INF] Content root path: C:\Users\steven.kazmierczak\source\repos\CuttingOptimizer\CuttingOptimizer.Api\
+2023-05-12 16:02:21.100 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/index.html - -
+2023-05-12 16:02:22.568 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - -
+2023-05-12 16:02:22.568 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/_vs/browserLink - -
+2023-05-12 16:02:22.588 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_framework/aspnetcore-browser-refresh.js - - - 200 12010 application/javascript;+charset=utf-8 17.9419ms
+2023-05-12 16:02:22.590 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/index.html - - - 200 - text/html;charset=utf-8 1498.8588ms
+2023-05-12 16:02:22.626 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 57.1390ms
+2023-05-12 16:02:22.777 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - -
+2023-05-12 16:02:23.109 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7181/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 332.4828ms
+2023-05-12 16:02:26.494 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 16:02:26.494 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 16:02:26.501 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:26.501 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:26.529 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 16:02:26.529 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 16:02:28.967 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 16:02:28.967 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 16:02:28.994 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 2459.8051ms
+2023-05-12 16:02:28.994 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 2459.8049ms
+2023-05-12 16:02:28.997 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:28.997 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:29.014 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 2520.0489ms
+2023-05-12 16:02:29.014 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 2520.0484ms
+2023-05-12 16:02:30.425 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - -
+2023-05-12 16:02:30.426 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.444 +02:00 [INF] Route matched with {action = "FindById", controller = "Quotation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] FindById(Int32) on controller CuttingOptimizer.Api.Controllers.QuotationController (CuttingOptimizer.Api).
+2023-05-12 16:02:30.815 +02:00 [INF] Executing OkObjectResult, writing value of type 'CuttingOptimizer.Domain.Models.Quotation'.
+2023-05-12 16:02:30.821 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api) in 376.8004ms
+2023-05-12 16:02:30.821 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.QuotationController.FindById (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.821 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Quotation/id?id=48 - - - 200 - application/json;+charset=utf-8 395.9848ms
+2023-05-12 16:02:30.897 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Saw - -
+2023-05-12 16:02:30.897 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.897 +02:00 [INF] Route matched with {action = "GetAll", controller = "Saw"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.SawController (CuttingOptimizer.Api).
+2023-05-12 16:02:30.898 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7181/Plate - -
+2023-05-12 16:02:30.898 +02:00 [INF] Executing endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.898 +02:00 [INF] Route matched with {action = "GetAll", controller = "Plate"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller CuttingOptimizer.Api.Controllers.PlateController (CuttingOptimizer.Api).
+2023-05-12 16:02:30.901 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Saw, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 16:02:30.901 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api) in 3.8703ms
+2023-05-12 16:02:30.901 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.SawController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.901 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[CuttingOptimizer.Domain.Models.Plate, CuttingOptimizer.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-05-12 16:02:30.901 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Saw - - - 200 - application/json;+charset=utf-8 4.8896ms
+2023-05-12 16:02:30.902 +02:00 [INF] Executed action CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api) in 3.6539ms
+2023-05-12 16:02:30.902 +02:00 [INF] Executed endpoint 'CuttingOptimizer.Api.Controllers.PlateController.GetAll (CuttingOptimizer.Api)'
+2023-05-12 16:02:30.902 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7181/Plate - - - 200 - application/json;+charset=utf-8 4.2737ms
