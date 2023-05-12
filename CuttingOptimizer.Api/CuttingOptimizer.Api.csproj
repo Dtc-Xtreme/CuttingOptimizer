@@ -20,10 +20,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CuttingOptimizer.AppLogic\CuttingOptimizer.AppLogic.csproj" />
     <ProjectReference Include="..\CuttingOptimizer.Domain\CuttingOptimizer.Domain.csproj" />
     <ProjectReference Include="..\CuttingOptimizer.Infrastructure\CuttingOptimizer.Infrastructure.csproj" />
   </ItemGroup>

@@ -19,6 +19,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "CuttingOptimizer.Api-Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "https://api-bco.benvitec.be",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

@@ -1,3 +1,4 @@
+using CuttingOptimizer.AppLogic.Services;
 using CuttingOptimizer.Infrastructure;
 using CuttingOptimizer.Infrastructure.Repositories;
 
@@ -23,13 +24,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+//app.UseCors(x => x
+//            .SetIsOriginAllowed(origin => true)
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .AllowCredentials());
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

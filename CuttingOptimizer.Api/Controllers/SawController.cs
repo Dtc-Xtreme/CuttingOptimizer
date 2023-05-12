@@ -10,6 +10,7 @@ namespace CuttingOptimizer.Api.Controllers
     [Route("[controller]")]
     public class SawController : Controller
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly ISawRepository repository;
 
         public SawController(ISawRepository repo)
@@ -20,6 +21,7 @@ namespace CuttingOptimizer.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            Logger.Info("testing api");
             IList<Saw> Saws = await repository.Saws.ToListAsync();
             return Ok(Saws == null ? NotFound() : Saws);
         }
