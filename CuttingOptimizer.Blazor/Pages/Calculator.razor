@@ -206,7 +206,15 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+
+            try
+            {
+                Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+
+            }catch(Exception ex)
+            {
+                Errors.Add(ex.Message);
+            }
 
             if (Svgs != null && Svgs.Count > 0)
             {
@@ -221,7 +229,6 @@
         int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
         int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
 
-        // If width is bigger then length and Veneer switch length and width of plate and products??
         if (biggestLength < biggestWidth)
         {
             CalculatorFormModel.Plates.ForEach(c => c.SwitchHeightAndWidth());
@@ -231,7 +238,6 @@
                 CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
             }
         }
-        //Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
     }
 
     private bool Check()
@@ -281,7 +287,6 @@
     {
         if (firstRender)
         {
-            //return base.OnAfterRenderAsync(firstRender);
             if (CalculatorFormModel.Saw.ID == null && await localStorage.ContainKeyAsync("currentSaw"))
             {
                 CalculatorFormModel.Saw = await localStorage.GetItemAsync<Saw>("currentSaw");

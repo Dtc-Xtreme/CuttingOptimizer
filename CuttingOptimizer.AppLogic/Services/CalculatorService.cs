@@ -1,4 +1,5 @@
-﻿using CuttingOptimizer.AppLogic.Models;
+﻿using CuttingOptimizer.AppLogic.Exceptions;
+using CuttingOptimizer.AppLogic.Models;
 using CuttingOptimizer.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -108,6 +109,11 @@ namespace CuttingOptimizer.AppLogic.Services
                     Width = baseSvg.ViewBox.Width,
                 });
                 
+            if(svgs.Any(c=>c.Hash == newSvg.Hash))
+            {
+                throw new CreateSvgLoopException("Standaard plaat is te klein om te hergebruiken!");
+            }
+
             svgs.Add(newSvg);
             return svgs;
         }
