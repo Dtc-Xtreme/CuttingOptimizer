@@ -131,9 +131,9 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c => c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c => c.Group.Svg.Priority).ThenByDescending(c => c.CompareMostPossible()).ToList();
+            //List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c => c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c => c.Group.Svg.Priority).ThenByDescending(c => c.CompareMostPossible()).ToList();
             //List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c => c.Group.Width > 0 && c.Group.Length > 0).OrderBy(c => c.Group.Svg.Priority).ThenByDescending(c => c.CompareHighestArea()).ToList();
-            //List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c=>c.Group.Svg.Priority).ThenByDescending(c=>c.CompareBestCandidate()).ToList();
+            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw).Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0)).Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0).Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c=>c.Group.Svg.Priority).ThenByDescending(c=>c.CompareBestCandidate()).ToList();
 
             RestResult? selectedResult = results.FirstOrDefault();
 
