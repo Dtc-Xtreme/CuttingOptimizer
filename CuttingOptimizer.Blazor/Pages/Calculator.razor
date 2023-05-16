@@ -38,20 +38,29 @@
 
     <ul class="no-print nav nav-tabs">
         <li class="nav-item">
-            <a class="@SettingNavClass nav-link subnav-link user-select-none" @onclick="() => ToggleNav(true)">Instellingen</a>
+            <a class="@(SettingsSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(1)">Instellingen</a>
         </li>
         <li class="nav-item">
-            <a class="@PlateAndItemNavClass nav-link subnav-link user-select-none" @onclick="() => ToggleNav(false)">Materialen & Items</a>
+            <a class="@(QuotationSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(3)">Offerte</a>
+        </li>
+        <li class="nav-item">
+            <a class="@(ProductsAndItemsSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(2)">Materialen & Items</a>
         </li>
     </ul>
 
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <div class=" mb-4" hidden="@(!NavSettingsSelected)">
+            <div class="mb-4" hidden="@(!SettingsSelected)">
                 <SettingsForm CalculatorFormModel=@CalculatorFormModel />
             </div>
-            <div class="" hidden="@NavSettingsSelected">
+            <div class="" hidden="@(!QuotationSelected)">
+                <div class="form-group col-auto mb-3">
+                    <label class="form-label" for="quotationId">Offertenummer</label>
+                    <InputText class="form-control" id="quotationId" name="check" @bind-Value="CalculatorFormModel.QuotationID" placeholder="Offertenummer" />
+                </div>
+            </div>
+            <div class="" hidden="@(!ProductsAndItemsSelected)">
                 <div>
                     <PlateForm Plates=@CalculatorFormModel.Plates />
                 </div>
@@ -86,7 +95,7 @@
         </div>
 
     <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw QuotationID=@Quotation.ID UserID=@CalculatorFormModel.UserID />
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
     </div>
     }
 
@@ -105,19 +114,19 @@
 </div>
 
 @code {
-    private string SettingNavClass { get; set; } = "";
-    private string PlateAndItemNavClass { get; set; } = "active";
     private bool SaveButtonDisabled { get; set; } = true;
     private bool PrintButtonDisabled { get; set; } = true;
     private bool LoadButtonDisabled { get; set; } = false;
-    private bool NavSettingsSelected { get; set; } = false;
+    private bool SettingsSelected { get; set; } = false;
+    private bool ProductsAndItemsSelected { get; set; } = true;
+    private bool QuotationSelected { get; set; } = false;
     private bool SaveSpinnerDisabled { get; set; } = true;
 
     private CalculatorFormModel CalculatorFormModel { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
     private List<string> Errors { get; set; } = new List<string>();
-    private Quotation Quotation { get; set; } = new Quotation();
+    private Blueprint Blueprint { get; set; } = new Blueprint();
     private int SearchQuotation { get; set; }
     private List<Svg> Svgs { get; set; }
 
@@ -126,51 +135,6 @@
     {
         Svgs = new();
         CalculatorFormModel = new();
-
-        //CalculatorFormModel.Saw = new Saw("SX2", 5);
-
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1200", 1000, 200, 5, 0, 1, true),
-        //};
-
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    new Product(1, "Y1", 1000, 200, 5),
-        //    //new Product(2, "X2", 2000, 88, 5),
-        //};
-
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 400, 5, 0, 2, true),
-        //    new Plate(1, "PL2", 1000, 500, 5, 0, 1, false)
-        //};
-
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    #region VB1
-        //    //new Product(10, "Y1", 170, 40, 5),
-        //    //new Product(2, "X2", 800, 40, 5),
-        //    //new Product(4, "X3", 800, 40, 5),
-        //    //new Product(30, "K1", 200, 40, 5),
-        //    //new Product(60, "K2", 200, 40, 5),
-        //    //new Product(4, "P3", 150, 40, 5),
-        //    #endregion
-
-        //    #region VB2
-        //    //new Product(10, "Y1", 170, 50, 5),
-        //    //new Product(2, "X2", 300, 80, 5),
-        //    //new Product(3, "X3", 800, 40, 5),
-        //    //new Product(18, "K1", 200, 30, 5),
-        //    #endregion
-
-        //    #region VB3
-        //    new Product(1, "Pl215", 999, 40, 5),
-        //    new Product(1, "Pl215", 999, 40, 5)
-        //    #endregion
-        //};
-
-        //HandleSubmit();
     }
 
     private void HandleSubmit()
@@ -314,19 +278,23 @@
         }
     }
 
-    private void ToggleNav(bool settings)
+    private void ToggleNav(int nr)
     {
-        if (settings)
+        SettingsSelected = false;
+        ProductsAndItemsSelected = false;
+        QuotationSelected = false;
+
+        switch (nr)
         {
-            SettingNavClass = "active";
-            PlateAndItemNavClass = "";
-            NavSettingsSelected = true;
-        }
-        else
-        {
-            PlateAndItemNavClass = "active";
-            SettingNavClass = "";
-            NavSettingsSelected = false;
+            case 1:
+                SettingsSelected = true;
+                break;
+            case 2:
+                ProductsAndItemsSelected = true;
+                break;
+            case 3:
+                QuotationSelected = true;
+                break;
         }
     }
     private async void Reset()
@@ -349,12 +317,12 @@
         SaveSpinnerDisabled = false;
         try
         {
-            Quotation.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
-            Quotation? result = await api.SaveQuotation(Quotation);
+            Blueprint.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
+            Blueprint? result = await api.SaveBlueprint(Blueprint);
             if (result != null)
             {
-                Quotation = result;
-                await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Quotation.ID);
+                Blueprint = result;
+                await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Blueprint.ID);
             }
         }catch(Exception ex)
         {
@@ -367,17 +335,17 @@
 
     private async Task Load()
     {
-        if (Quotation.ID != SearchQuotation)
+        if (Blueprint.ID != SearchQuotation)
         {
             LoadButtonDisabled = true;
             try
             {
 
-                Quotation? result = await api.GetQuotationById(SearchQuotation);
+                Blueprint? result = await api.GetBlueprintById(SearchQuotation);
                 if (result != null && result.JsonString != null)
                 {
-                    Quotation = result;
-                    CalculatorFormModel calc = JsonSerializer.Deserialize<CalculatorFormModel>(Quotation.JsonString);
+                    Blueprint = result;
+                    CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
 
                     if (calc != null)
                     {
@@ -400,13 +368,13 @@
     }
     private async Task Print()
     {
-        if(Quotation.ID == 0)
+        if(Blueprint.ID == 0)
         {
             await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + DateTime.Now.ToShortDateString());
         }
         else
         {
-            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Quotation.ID);            
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Blueprint.ID);            
         }
     }
 }

@@ -14,8 +14,8 @@ namespace CuttingOptimizer.AppLogic.Services
 
         public Task<List<Plate>?> GetAllPlates();
 
-        public Task<Quotation?> SaveQuotation(Quotation quotation);
-        public Task<Quotation?> GetQuotationById(int id);
+        public Task<Blueprint?> SaveBlueprint(Blueprint quotation);
+        public Task<Blueprint?> GetBlueprintById(int id);
 
     }
 }

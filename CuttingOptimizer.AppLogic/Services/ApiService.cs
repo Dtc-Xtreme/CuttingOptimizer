@@ -59,22 +59,22 @@ namespace CuttingOptimizer.AppLogic.Services
             }
         }
 
-        public async Task<Quotation?> SaveQuotation(Quotation quotation)
+        public async Task<Blueprint?> SaveBlueprint(Blueprint blueprint)
         {
             try
             {
                 HttpResponseMessage httpResponseMessage;
 
-                if (quotation.ID == 0)
+                if (blueprint.ID == 0)
                 {
-                    httpResponseMessage = await client.PostAsJsonAsync(url + "/Quotation", quotation);
+                    httpResponseMessage = await client.PostAsJsonAsync(url + "/Blueprint", blueprint);
                 }
                 else
                 {
-                    httpResponseMessage = await client.PutAsJsonAsync(url + "/Quotation", quotation);
+                    httpResponseMessage = await client.PutAsJsonAsync(url + "/Blueprint", blueprint);
                 }
 
-                Quotation? result = httpResponseMessage.Content.ReadFromJsonAsync<Quotation>().Result;
+                Blueprint? result = httpResponseMessage.Content.ReadFromJsonAsync<Blueprint>().Result;
 
                 return httpResponseMessage.StatusCode == HttpStatusCode.OK ? result : null;
             }
@@ -83,11 +83,11 @@ namespace CuttingOptimizer.AppLogic.Services
                 return null;
             }
         }
-        public async Task<Quotation?> GetQuotationById(int id)
+        public async Task<Blueprint?> GetBlueprintById(int id)
         {
             try
             {
-                return await client.GetFromJsonAsync<Quotation>(url + "/Quotation/id?id=" + id);
+                return await client.GetFromJsonAsync<Blueprint>(url + "/Blueprint/id?id=" + id);
             }
             catch (Exception ex)
             {

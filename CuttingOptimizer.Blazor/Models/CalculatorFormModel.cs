@@ -17,6 +17,8 @@ namespace CuttingOptimizer.Blazor.Models
 
         public string UserID { get;set; }
 
+        public string QuotationID { get; set; }
+
         public CalculatorFormModel() {
             Saw = new Saw();
             Plates = new List<Plate>();

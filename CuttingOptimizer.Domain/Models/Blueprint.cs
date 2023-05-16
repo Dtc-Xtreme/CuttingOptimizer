@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CuttingOptimizer.Domain.Models
 {
-    public class Quotation
+    public class Blueprint
     {
         [Required]
         public int ID { get; set; }

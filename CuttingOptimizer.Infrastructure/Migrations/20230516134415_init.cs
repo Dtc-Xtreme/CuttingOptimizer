@@ -23,6 +23,18 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                 startValue: 2500001L);
 
             migrationBuilder.CreateTable(
+                name: "Blueprints",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR OPNR2023"),
+                    JsonString = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blueprints", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Plates",
                 columns: table => new
                 {
@@ -34,18 +46,6 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plates", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Quotes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR OPNR2023"),
-                    JsonString = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Quotes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,10 +65,10 @@ namespace CuttingOptimizer.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Plates");
+                name: "Blueprints");
 
             migrationBuilder.DropTable(
-                name: "Quotes");
+                name: "Plates");
 
             migrationBuilder.DropTable(
                 name: "Saws");

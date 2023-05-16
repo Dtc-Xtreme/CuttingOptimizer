@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CuttingOptimizer.Infrastructure.Migrations
 {
     [DbContext(typeof(CuttingOptimizerDbContext))]
-    [Migration("20230516115251_init")]
+    [Migration("20230516134415_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -33,6 +33,22 @@ namespace CuttingOptimizer.Infrastructure.Migrations
             modelBuilder.HasSequence<int>("OPNR2025")
                 .StartsAt(2500001L);
 
+            modelBuilder.Entity("CuttingOptimizer.Domain.Models.Blueprint", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
+
+                    b.Property<string>("JsonString")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Blueprints");
+                });
+
             modelBuilder.Entity("CuttingOptimizer.Domain.Models.Plate", b =>
                 {
                     b.Property<string>("ID")
@@ -50,22 +66,6 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Plates");
-                });
-
-            modelBuilder.Entity("CuttingOptimizer.Domain.Models.Quotation", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
-
-                    b.Property<string>("JsonString")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Quotes");
                 });
 
             modelBuilder.Entity("CuttingOptimizer.Domain.Models.Saw", b =>

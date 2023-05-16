@@ -5,9 +5,17 @@
         <h4 class="title-border col-12">Overzicht</h4>
         <div class="col-4 pl-3 pr-3 pt-0">
             <label class="fw-bold">Optimalisatieplan: </label>
-            @if(QuotationID != 0)
+            @if (BlueprintID != 0)
             {
-            <span>@(" " + QuotationID)</span>
+                <span>@(" " + BlueprintID)</span>
+            }
+        </div>
+
+        <div class="col-4 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Offerte: </label>
+            @if (QuotationID != "")
+            {
+                <span>@(" " + QuotationID)</span>
             }
         </div>
 
@@ -89,7 +97,10 @@
     public List<Svg> Svgs { get; set; } = new List<Svg>();
 
     [Parameter]
-    public int QuotationID { get; set; }
+    public string QuotationID { get; set; }
+
+    [Parameter]
+    public int BlueprintID { get; set; }
 
     [Parameter]
     public string UserID { get; set; }
