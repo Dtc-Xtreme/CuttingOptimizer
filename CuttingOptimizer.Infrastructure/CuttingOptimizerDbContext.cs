@@ -20,6 +20,10 @@ namespace CuttingOptimizer.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasSequence<int>("OPNR2023").StartsAt(2300001).IncrementsBy(1);
+            modelBuilder.HasSequence<int>("OPNR2024").StartsAt(2400001).IncrementsBy(1);
+            modelBuilder.HasSequence<int>("OPNR2025").StartsAt(2500001).IncrementsBy(1);
+            modelBuilder.Entity<Quotation>().Property(c => c.ID).HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
         }
 
         public DbSet<Saw> Saws { get; set; }

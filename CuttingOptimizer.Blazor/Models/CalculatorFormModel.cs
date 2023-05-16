@@ -15,6 +15,8 @@ namespace CuttingOptimizer.Blazor.Models
 
         public bool Veneer { get; set; }
 
+        public string UserID { get;set; }
+
         public CalculatorFormModel() {
             Saw = new Saw();
             Plates = new List<Plate>();

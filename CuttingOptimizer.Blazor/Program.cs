@@ -1,9 +1,6 @@
 using Blazored.LocalStorage;
 using CuttingOptimizer.AppLogic.Services;
 using CuttingOptimizer.Infrastructure;
-using CuttingOptimizer.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 

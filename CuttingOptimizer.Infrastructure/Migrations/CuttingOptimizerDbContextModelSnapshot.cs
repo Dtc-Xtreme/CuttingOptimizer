@@ -21,6 +21,15 @@ namespace CuttingOptimizer.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("OPNR2023")
+                .StartsAt(2300001L);
+
+            modelBuilder.HasSequence<int>("OPNR2024")
+                .StartsAt(2400001L);
+
+            modelBuilder.HasSequence<int>("OPNR2025")
+                .StartsAt(2500001L);
+
             modelBuilder.Entity("CuttingOptimizer.Domain.Models.Plate", b =>
                 {
                     b.Property<string>("ID")
@@ -44,9 +53,8 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
 
                     b.Property<string>("JsonString")
                         .IsRequired()

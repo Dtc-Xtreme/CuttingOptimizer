@@ -86,7 +86,7 @@
         </div>
 
     <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw QuotationID="@Quotation.ID"/>
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw QuotationID=@Quotation.ID UserID=@CalculatorFormModel.UserID />
     </div>
     }
 
@@ -114,16 +114,11 @@
     private bool SaveSpinnerDisabled { get; set; } = true;
 
     private CalculatorFormModel CalculatorFormModel { get; set; }
-    private bool veneer;
-    private bool Veneer { 
-        get { return veneer; }
-        set { veneer = value; }
-    }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
     private List<string> Errors { get; set; } = new List<string>();
     private Quotation Quotation { get; set; } = new Quotation();
-    private int SearchQuotation { get; set; } = 0;
+    private int SearchQuotation { get; set; }
     private List<Svg> Svgs { get; set; }
 
 
@@ -303,11 +298,16 @@
 
             if (await localStorage.ContainKeyAsync("currentVeneer"))
             {
-                Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");            
+                CalculatorFormModel.Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");
             }
             else
             {
                 await localStorage.SetItemAsync("currentVeneer", false);
+            }
+
+            if (await localStorage.ContainKeyAsync("userID"))
+            {
+                CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
             }
 
             StateHasChanged();
@@ -329,12 +329,18 @@
             NavSettingsSelected = false;
         }
     }
-    private void Reset()
+    private async void Reset()
     {
         Svgs = new();
         CalculatorFormModel = new();
         SaveButtonDisabled = true;
         PrintButtonDisabled = true;
+        if (await localStorage.ContainKeyAsync("userID"))
+        {
+            CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
+        }
+        await JSRuntime.InvokeAsync<object>("changeTitle", "Platen Optimalisatie");
+
     }
 
     private async void Save()
@@ -394,6 +400,6 @@
     }
     private async Task Print()
     {
-        await JSRuntime.InvokeAsync<object>("Print");
+        await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Quotation.ID);
     }
 }
