@@ -400,6 +400,13 @@
     }
     private async Task Print()
     {
-        await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Quotation.ID);
+        if(Quotation.ID == 0)
+        {
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + DateTime.Now.ToShortDateString());
+        }
+        else
+        {
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Quotation.ID);            
+        }
     }
 }
