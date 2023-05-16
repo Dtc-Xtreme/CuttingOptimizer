@@ -3,26 +3,20 @@
 <div class="container-fluid print-page-brake-after">
     <div class="row mt-5 mb-3">
         <h4 class="title-border col-12">Overzicht</h4>
-        <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="fw-bold">Optimalisatieplan nummer: </label>
+        <div class="col-4 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Optimalisatieplan: </label>
             @if(QuotationID != 0)
             {
             <span>@(" " + QuotationID)</span>
             }
         </div>
-        <div class="col-3 pl-3 pr-3 pt-0">
+
+        <div class="col-4 pl-3 pr-3 pt-0">
             <label class="fw-bold">Initiale: </label>
             <span>@UserID</span>
         </div>
-        <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="fw-bold">Zaagblad: </label>
-            <span>@Saw.ID</span>
-        </div>
-        <div class="col-3 pl-3 pr-3 pt-0">
-            <label class="fw-bold">Zaagsnede: </label>
-            <span>@Saw.Thickness mm</span>
-        </div>
-        <div class="col-3 pl-3 pr-3 pt-0">
+
+        <div class="col-4 pl-3 pr-3 pt-0">
             <label class="fw-bold">Fineer: </label>
             @if (Svgs.First().Plate.Veneer)
             {
@@ -32,6 +26,16 @@
             {
                 <span> nee</span>
             }
+        </div>
+
+        <div class="col-4 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Zaagblad: </label>
+            <span>@Saw.ID</span>
+        </div>
+
+        <div class="col-4 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Zaagsnede: </label>
+            <span>@Saw.Thickness mm</span>
         </div>
     </div>
     <div class="row mb-3">
