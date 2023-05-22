@@ -1,0 +1,95 @@
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using System.Globalization;
+<div class="row">
+    <div class="svg-left-column m-0"></div>
+    <div class="col">
+        <div class="row border-bottom mb-3 m-0" style="width: @(((double)100 / Svg.Scale).ToString("0.00", CultureInfo.InvariantCulture))%;">
+            <div class="svg-length-label">@Svg.ViewBox.Length</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="svg-left-column border-end m-0">
+        <div class="svg-width-label">@Svg.ViewBox.Width</div>
+    </div>
+    <div class="col ms-1 mt-1">
+        <svg viewBox="0 0 @Svg.ViewBox.Length @Svg.ViewBox.Width" style="width: @(((double)100 / Svg.Scale).ToString("0.00", CultureInfo.InvariantCulture))%;">
+            @foreach (Group group in Svg.Groups)
+            {
+                <g>
+                    @if (group.Rectangle != null)
+                    {
+                        if (group.ID == 0)
+                        {
+                            <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                            if (group.Length >= 20 && group.Width >= 20)
+                            {
+                                <text>
+                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="0.7rem" fill="black">@group.Length</text>
+                                </text>
+
+                                <text>
+                                    <text x="0" y="-7" font-family="Verdana" font-size="0.7rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
+                                </text>
+                            }
+                        }
+                        else
+                        {
+                            <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
+                            if (group.Length >= 50 && group.Width >= 50 && group.Rectangle != null)
+                            {
+                                <text>
+                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="0.7rem" fill="black">@group.Length</text>
+                                </text>
+
+                                <text>
+                                    <text x="0" y="-7" font-family="Verdana" font-size="0.7rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
+                                </text>
+                            }
+
+                            if (group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
+                            {
+                                <text>
+                                    <text x="@(CalculateLabelX(group))" y="@(CalculateLabelY(group))" font-family="Verdana" font-size="1rem" fill="blue">@group.Rectangle.Label</text>
+                                </text>
+                            }
+                        }
+                    }
+                </g>
+            }
+        </svg>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Svg Svg { get; set; }
+
+    private double CalculateLabelX(Group group)
+    {
+        return group.X + (group.Length / 2) - 12;
+    }
+    private double CalculateLabelY(Group group)
+    {
+        return group.Y + (group.Width / 2) + 5;
+    }
+
+    private double CalculateLengthLabelX(Group group)
+    {
+        return group.X + (group.Length / 2) - 8;
+    }
+    private double CalculateLengthLabelY(Group group)
+    {
+        return group.Y + 10;
+    }
+
+    private double CalculateWidthLabelX(Group group)
+    {
+        return group.X - 5;
+    }
+    private double CalculateWidthLabelY(Group group)
+    {
+        return group.Y + (group.Width / 2) - 8;
+    }
+}
