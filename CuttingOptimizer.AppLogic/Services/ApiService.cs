@@ -1,4 +1,5 @@
 ﻿using CuttingOptimizer.Domain.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace CuttingOptimizer.AppLogic.Services
 {
     public class ApiService : IApiService
     {
-        private HttpClient client = new HttpClient();
-        private string url = "https://localhost:7181";
+        private readonly IConfiguration configuration;
 
-        public ApiService()
+        private HttpClient client = new HttpClient();
+        private string? url;
+
+        public ApiService(IConfiguration configuration)
         {
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };
+            this.url = configuration.GetConnectionString("api");
         }
 
         public async Task<List<Saw>?> GetAllSaws()
