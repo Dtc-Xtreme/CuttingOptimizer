@@ -23,35 +23,35 @@
                         if (group.ID == 0)
                         {
                             <rect class="rect-free-space" width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
-                            if (group.Length >= 20 && group.Width >= 20)
+                            if (group.Length >= 50 && group.Width >= 50)
                             {
                                 <text>
-                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="0.7rem" fill="black">@group.Length</text>
+                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="1.3rem" fill="black">@group.Length</text>
                                 </text>
 
                                 <text>
-                                    <text x="0" y="-7" font-family="Verdana" font-size="0.7rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
+                                    <text x="0" y="-7" font-family="Verdana" font-size="1.3rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
                                 </text>
                             }
                         }
                         else
                         {
                             <rect width="@group.Rectangle.Length" height="@group.Rectangle.Width" x="@group.Rectangle.X" y="@group.Rectangle.Y" />
-                            if (group.Length >= 50 && group.Width >= 50 && group.Rectangle != null)
+                            if (group.Length >= 65 && group.Width >= 65 && group.Rectangle != null)
                             {
                                 <text>
-                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="0.7rem" fill="black">@group.Length</text>
+                                    <text x="@(CalculateLengthLabelX(group))" y="@(CalculateLengthLabelY(group))" font-family="Verdana" font-size="1.3rem" fill="black">@group.Length</text>
                                 </text>
 
                                 <text>
-                                    <text x="0" y="-7" font-family="Verdana" font-size="0.7rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
+                                    <text x="0" y="-7" font-family="Verdana" font-size="1.3rem" fill="black" transform="translate(@(CalculateWidthLabelX(group)), @(CalculateWidthLabelY(group))) rotate(90)">@group.Width</text>
                                 </text>
                             }
 
                             if (group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
                             {
                                 <text>
-                                    <text x="@(CalculateLabelX(group))" y="@(CalculateLabelY(group))" font-family="Verdana" font-size="1rem" fill="blue">@group.Rectangle.Label</text>
+                                    <text x="@(CalculateLabelX(group))" y="@(CalculateLabelY(group))" font-family="Verdana" font-size="1.5rem" fill="blue" text-anchor="end">@(group.Length >= 65 && group.Width >=65 ? group.Rectangle.Label : group.Rectangle.Label.ToString().Substring(0, 3))</text>
                                 </text>
                             }
                         }
@@ -68,28 +68,28 @@
 
     private double CalculateLabelX(Group group)
     {
-        return group.X + (group.Length / 2) - 12;
+        return group.X + (group.Length) -5;
     }
     private double CalculateLabelY(Group group)
     {
-        return group.Y + (group.Width / 2) + 5;
+        return group.Y + (group.Width) -8;
     }
 
     private double CalculateLengthLabelX(Group group)
     {
-        return group.X + (group.Length / 2) - 8;
+        return group.X + (group.Length / 2) - 13;
     }
     private double CalculateLengthLabelY(Group group)
     {
-        return group.Y + 10;
+        return group.Y + 19;
     }
 
     private double CalculateWidthLabelX(Group group)
     {
-        return group.X - 5;
+        return group.X - 4;
     }
     private double CalculateWidthLabelY(Group group)
     {
-        return group.Y + (group.Width / 2) - 8;
+        return group.Y + (group.Width / 2) - 13;
     }
 }

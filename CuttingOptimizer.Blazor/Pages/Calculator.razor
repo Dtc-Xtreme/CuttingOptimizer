@@ -90,12 +90,12 @@
             }
             @foreach (var group in groupSvg)
             {
-                <SvgComponent Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
+                <PlateOverview Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
         </div>
 
         <div>
-
+            <PlatesOverview Svgs=@Svgs />
         </div>
 
         <div>

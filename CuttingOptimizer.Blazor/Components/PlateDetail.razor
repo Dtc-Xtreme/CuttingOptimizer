@@ -79,7 +79,7 @@
         <h4 class="col-12 title-border">Parameters</h4>
         <div class="col-6 pl-3 pr-3 pt-0">
             <label class="fw-bold">Verlies:</label>
-            <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
+            <span>@Svg.AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
         </div>
         <div class="col-6 pl-3 pr-3 pt-0">
             <label class="fw-bold">Snijlijnen:</label>
@@ -97,15 +97,6 @@
 
     [Parameter]
     public int Count { get; set; }
-
-    private double AreaLossPercentage
-    {
-        get
-        {
-            double percentage = Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
-            return percentage > 0 ? percentage : 0;
-        }
-    }
 
     private int CutLines
     {

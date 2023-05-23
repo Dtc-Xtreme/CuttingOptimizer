@@ -50,6 +50,14 @@ namespace CuttingOptimizer.AppLogic.Models
             Groups.Add(group);
         }
 
+        public double AreaLossPercentage
+        {
+            get
+            {
+                double percentage = Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Area;
+                return percentage > 0 ? percentage : 0;
+            }
+        }
         public string Hash
         {
             get

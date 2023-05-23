@@ -1,0 +1,41 @@
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using System.Globalization;
+
+<div class="container-fluid print-page-brake-after">
+    <div class="row mt-5">
+        <h4 class="title-border col-12">Plannen Overzicht</h4>
+    </div>
+    <div class="row mb-3">
+        @{
+            var groupSvg = Svgs.GroupBy(c => c.Hash);
+        }
+        @foreach (var group in groupSvg)
+        {
+            <div class="col-6">
+                <div class="row text-center">
+                    <div class="col">
+                        <label class="fw-bold">Materiaal</label>
+                        <div>@group.First().Plate.ID</div>
+                    </div>
+
+                    <div class="col">
+                        <label class="fw-bold">Aantal</label>
+                        <div>@group.Count()</div>
+                    </div>
+                    <div class="col">
+                        <label class="fw-bold">Verlies</label>
+                        <div>@group.First().AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <PlatePreview Svg=@group.First() />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public List<Svg> Svgs { get; set; } = new List<Svg>();
+}
