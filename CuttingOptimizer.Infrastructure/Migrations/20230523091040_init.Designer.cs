@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CuttingOptimizer.Infrastructure.Migrations
 {
     [DbContext(typeof(CuttingOptimizerDbContext))]
-    [Migration("20230516134415_init")]
+    [Migration("20230523091040_init")]
     partial class init
     {
         /// <inheritdoc />
