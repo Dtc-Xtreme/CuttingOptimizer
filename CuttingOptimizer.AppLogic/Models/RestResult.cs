@@ -74,6 +74,13 @@ namespace CuttingOptimizer.AppLogic.Models
             return this.HorizontalQuantity > this.VerticalQuantity ? this.HorizontalQuantity : this.VerticalQuantity;
         }
 
+        public bool VerticalAlignment { 
+            get
+            {
+                return Product.Length < Product.Width ? true : false;
+            }
+        }
+
         public override string ToString()
         {
             return "Prio: " + Group.Svg.Priority + " | HorMaxQ: " + MaxHorizontalQuantity + " | : HvsV: " + HorizontalScaleVsVertical + " | HUsed: " + HorizontalUsed + " | HArea: " + HorizontalArea + " | HorQ: " + HorizontalQuantity + " | VertMaxQ: " + MaxVerticalQuantity + " | : VvsH: " + VerticalScaleVsHorizontal + " | VUsed: " + VerticalUsed + " | VArea: " + VerticalArea + " | VertQ: " + VerticalQuantity + " | Rest: " + Rest + " | Rotated: " + Rotated + " | Product: " + Product.ToString();

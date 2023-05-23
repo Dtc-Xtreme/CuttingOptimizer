@@ -26,7 +26,6 @@ namespace CuttingOptimizer.AppLogic.Models
         {
             get { return Length * Width; }
         }
-
         public override string ToString()
         {
             return "L: " + Length + " | W: " + Width + " | Area: " + Area + " | ID: " + ID + " | SVG Prio: " + Svg.Priority;
