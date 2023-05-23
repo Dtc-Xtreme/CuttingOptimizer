@@ -16,6 +16,5 @@ namespace CuttingOptimizer.AppLogic.Services
 
         public Task<Blueprint?> SaveBlueprint(Blueprint quotation);
         public Task<Blueprint?> GetBlueprintById(int id);
-
     }
 }

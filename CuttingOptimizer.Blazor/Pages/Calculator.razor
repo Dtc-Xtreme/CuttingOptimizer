@@ -67,17 +67,18 @@
                 <div class="mt-4">
                     <ProductForm Products=@CalculatorFormModel.Products />
                 </div>
-                <div>
-                    <ValidationSummary />
-                </div>
-                <div class="col mt-3">
-                    <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
-                    <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
-                    <button type="button" class="btn btn-secondary" disabled=@SaveButtonDisabled @onclick="Save"><span class="oi oi-file" /> Opslaan
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@SaveSpinnerDisabled"></span>
-                    </button>
-                    <button type="button" class="btn btn-secondary" disabled=@PrintButtonDisabled @onclick ="Print"><span class="oi oi-file" /> Afdrukken</button>
-                </div>
+            </div>
+            <div>
+                <ValidationSummary />
+            </div>
+            <div class="col mt-3">
+                <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
+                <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
+                <button type="button" class="btn btn-secondary" disabled=@SaveButtonDisabled @onclick="Save">
+                    <span class="oi oi-file" /> Opslaan
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@SaveSpinnerDisabled"></span>
+                </button>
+                <button type="button" class="btn btn-secondary" disabled=@PrintButtonDisabled @onclick="Print"><span class="oi oi-file" /> Afdrukken</button>
             </div>
         </EditForm>
     </div>

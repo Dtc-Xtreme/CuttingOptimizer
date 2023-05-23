@@ -18,8 +18,4 @@
     <ProjectReference Include="..\CuttingOptimizer.Infrastructure\CuttingOptimizer.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\NewFolder\" />
-  </ItemGroup>
-
 </Project>

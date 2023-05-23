@@ -97,7 +97,5 @@ namespace CuttingOptimizer.AppLogic.Services
                 return null;
             }
         }
-
-
     }
 }
