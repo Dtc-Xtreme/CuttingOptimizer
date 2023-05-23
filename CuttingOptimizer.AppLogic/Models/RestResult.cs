@@ -77,7 +77,13 @@ namespace CuttingOptimizer.AppLogic.Models
         public bool VerticalAlignment { 
             get
             {
+                if (Rotated)
+                {
+                    return Product.Length >= Product.Width ? true : false;
+                }
+
                 return Product.Length < Product.Width ? true : false;
+
             }
         }
 
