@@ -10,6 +10,30 @@ namespace CuttingOptimizer.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence<int>(
+                name: "OPNR2023",
+                startValue: 2300001L);
+
+            migrationBuilder.CreateSequence<int>(
+                name: "OPNR2024",
+                startValue: 2400001L);
+
+            migrationBuilder.CreateSequence<int>(
+                name: "OPNR2025",
+                startValue: 2500001L);
+
+            migrationBuilder.CreateTable(
+                name: "Blueprints",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR OPNR2023"),
+                    JsonString = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blueprints", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Plates",
                 columns: table => new
@@ -22,19 +46,6 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plates", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Quotes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JsonString = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Quotes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,13 +65,22 @@ namespace CuttingOptimizer.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Blueprints");
+
+            migrationBuilder.DropTable(
                 name: "Plates");
 
             migrationBuilder.DropTable(
-                name: "Quotes");
-
-            migrationBuilder.DropTable(
                 name: "Saws");
+
+            migrationBuilder.DropSequence(
+                name: "OPNR2023");
+
+            migrationBuilder.DropSequence(
+                name: "OPNR2024");
+
+            migrationBuilder.DropSequence(
+                name: "OPNR2025");
         }
     }
 }

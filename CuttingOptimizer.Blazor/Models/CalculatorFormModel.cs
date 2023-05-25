@@ -13,6 +13,12 @@ namespace CuttingOptimizer.Blazor.Models
         [ValidateComplexType]
         public List<Product> Products { get; set; }
 
+        public bool Veneer { get; set; }
+
+        public string UserID { get;set; }
+
+        public string QuotationID { get; set; }
+
         public CalculatorFormModel() {
             Saw = new Saw();
             Plates = new List<Plate>();

@@ -4,22 +4,22 @@
 @inject IApiService api;
 
     <div class="row title-bar">
-    <div class="col-auto">
-        <button type="button" class="btn btn-secondary" @onclick="AddPlate"><b>+</b></button>
-    </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-secondary" @onclick="AddPlate"><b>+</b></button>
+        </div>
         <div class="col-auto">
             <h4 class="mt-1">Materialen</h4>
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-2">
     @foreach (Plate plate in Plates)
     {
-        <div class="row my-1">
-            <div class="form-group col-1 text-center">
+        <div class="row my-4 my-xl-0">
+            <div class="form-group col-12 col-xl-2 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateID">Materiaal</label>
+                    <label class="form-label d-none d-xl-block" for="plateID">Materiaal</label>
                 }
                 <InputText class="form-control" id="plateID" @bind-Value="plate.ID" placeholder="ID" list="plateList" @onkeyup="() => SearchOrSelect(plate.ID, Plates.IndexOf(plate))" />
                 <datalist id="plateList">
@@ -32,45 +32,45 @@
                     }
                 </datalist>
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateQuantity">Aantal</label>
+                    <label class="form-label d-none d-xl-block" for="plateQuantity">Aantal</label>
                 }
-                <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="#" />
+                <InputNumber class="form-control" id="plateQuantity" @bind-Value="plate.Quantity" placeholder="Aantal" />
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-2 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateLength">Lengte</label>
+                    <label class="form-label d-none d-xl-block" for="plateLength">Lengte</label>
                 }
                 <InputNumber class="form-control" id="plateLength" @bind-Value="plate.Length" placeholder="Lengte" />
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-2 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateWidth">Breedte</label>
+                    <label class="form-label d-none d-xl-block" for="plateWidth">Breedte</label>
                 }
                 <InputNumber class="form-control" id="plateWidth" @bind-Value="plate.Width" placeholder="Breedte" />
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateHeight">Dikte</label>
+                    <label class="form-label d-none d-xl-block" for="plateHeight">Dikte</label>
                 }
                 <InputNumber class="form-control" id="plateHeight" @bind-Value="plate.Height" placeholder="Hoogte" />
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateTrim">Trim</label>
+                    <label class="form-label d-none d-xl-block" for="plateTrim">Trim</label>
                 }
                 <InputNumber class="form-control" id="plateTrim" @bind-Value="plate.Trim" placeholder="Trim" />
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="platePriority">Prio</label>
+                    <label class="form-label d-none d-xl-block" for="platePriority">Prio</label>
                 }
                 <InputNumber class="form-control" id="platePriority" @bind-Value="plate.Priority" placeholder="Prio" />
             </div>
@@ -81,17 +81,21 @@
                 }
                 <InputCheckbox class="form-control-checkbox checkbox-big" id="plateVeneer" @bind-Value="plate.Veneer" placeholder="Fineer" />
             </div>*@
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label" for="plateBase">Standaard</label>
+                    <label class="form-label d-none d-xl-block" for="plateBase">Standaard</label>
                 }
-            <InputCheckbox class="form-control-checkbox checkbox-big" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="() => CheckBase(plate)" />
+                <div class="form-check">
+                    <InputCheckbox class="form-check-input checkbox-big m-xl-auto" id="plateBase" name="check" @bind-Value="plate.Base" placeholder="Basis" @onclick="() => CheckBase(plate)" />
+                    <label class="form-check-label d-block d-xl-none ps-2 pt-1" for="plateBase">Standaard</label>
+                </div>
+
             </div>
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-xl-1 md-5 mb-xl-1">
                 @if (plate == Plates[0])
                 {
-                    <label class="form-label">Verwijder</label>
+                    <label class="form-label d-none d-xl-block">Verwijder</label>
                 }
                 <button type="button" class="form-control btn btn-danger" @onclick="() => RemovePlate(plate)"><span class="oi oi-trash"/></button>
             </div>
@@ -104,39 +108,24 @@
     [Parameter]
     public List<Plate> Plates { get; set; }
 
-    private List<Plate> SearchPlates = new List<Plate>();
-    //{
-    //        new Plate{
-    //            ID = "PL255",
-    //            Length = 2000, 
-    //            Width = 500,
-    //            Height = 5,
-    //            Priority = 1
-    //        },
-    //        new Plate{
-    //            ID = "PL155",
-    //            Length = 1000,
-    //            Width = 500,
-    //            Height = 5,
-    //            Priority = 1
-    //        }
-    //    };
+    private List<Plate>? SearchPlates = new List<Plate>();
 
-    protected override async void OnInitialized()
+    protected override void OnInitialized()
     {
-        SearchPlates = await api.GetAllPlates();
+        Plate plate = new Plate
+            {
+                ID = "PLX0",
+                Base = true,
+                Quantity = 1,
+                Priority = 1,
+            };
 
-        if (Plates.Count() == 0)
-        {
-            Plate plate = new Plate
-                {
-                    ID = "PLX0",
-                    Base = true,
-                    Quantity = 1,
-                    Priority = 1,                
-                };
-            Plates.Add(plate);
-        }
+        if (Plates.Count() == 0) Plates.Add(plate);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) SearchPlates = await api.GetAllPlates();
     }
 
     private void AddPlate()
@@ -178,10 +167,6 @@
                 StateHasChanged();
 
             }
-            //else
-            //{
-            //    // change SearchPlates with api call
-            //}
         }
     }
 

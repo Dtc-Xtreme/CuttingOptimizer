@@ -1,9 +1,6 @@
 using Blazored.LocalStorage;
 using CuttingOptimizer.AppLogic.Services;
 using CuttingOptimizer.Infrastructure;
-using CuttingOptimizer.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +9,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ICalculatorService, CalculatorService>();
 builder.Services.AddDbContext<CuttingOptimizerDbContext>();
-builder.Services.AddScoped<ISawRepository, SawRepository>();
-builder.Services.AddScoped<IPlateRepository, PlateRepository>();
+//builder.Services.AddScoped<ISawRepository, SawRepository>();
+//builder.Services.AddScoped<IPlateRepository, PlateRepository>();
 builder.Services.AddScoped<IApiService, ApiService>();
 builder.Services.AddBlazoredLocalStorage();
 var app = builder.Build();

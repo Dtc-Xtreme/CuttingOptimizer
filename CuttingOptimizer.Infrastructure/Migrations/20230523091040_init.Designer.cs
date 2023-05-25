@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CuttingOptimizer.Infrastructure.Migrations
 {
     [DbContext(typeof(CuttingOptimizerDbContext))]
-    [Migration("20230508063719_init")]
+    [Migration("20230523091040_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -23,6 +23,31 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.HasSequence<int>("OPNR2023")
+                .StartsAt(2300001L);
+
+            modelBuilder.HasSequence<int>("OPNR2024")
+                .StartsAt(2400001L);
+
+            modelBuilder.HasSequence<int>("OPNR2025")
+                .StartsAt(2500001L);
+
+            modelBuilder.Entity("CuttingOptimizer.Domain.Models.Blueprint", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
+
+                    b.Property<string>("JsonString")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Blueprints");
+                });
 
             modelBuilder.Entity("CuttingOptimizer.Domain.Models.Plate", b =>
                 {
@@ -41,23 +66,6 @@ namespace CuttingOptimizer.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Plates");
-                });
-
-            modelBuilder.Entity("CuttingOptimizer.Domain.Models.Quotation", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("JsonString")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Quotes");
                 });
 
             modelBuilder.Entity("CuttingOptimizer.Domain.Models.Saw", b =>

@@ -9,6 +9,7 @@ namespace CuttingOptimizer.AppLogic.Models
 {
     public class Svg
     {
+        private int groupNr = 1;
         public Svg()
         {
             Groups = new List<Group>();
@@ -36,22 +37,39 @@ namespace CuttingOptimizer.AppLogic.Models
             }
         }
         public Plate Plate { get; set; }
-
+        public double Scale { get; set; }
         public void AddGroup(Group group)
         {
-            if (group.Product != null) Hash += group.Product.GetHashCode();
+            if (Groups.Count() != 0)
+            {
+                group.ID = groupNr;
+                groupNr++;
+            }
+
+            group.Svg = this;
             Groups.Add(group);
         }
 
-        public void AddGroups(List<Group> groups)
+        public double AreaLossPercentage
         {
-            foreach (Group group in groups)
+            get
             {
-                if (group.Product != null) Hash += group.Product.GetHashCode();
+                double percentage = Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Area;
+                return percentage > 0 ? percentage : 0;
             }
-            Groups.AddRange(groups);
         }
+        public string Hash
+        {
+            get
+            {
+                StringBuilder stringBuilder = new StringBuilder();
 
-        public string Hash { get; set; }
+                foreach (Group group in Groups)
+                {
+                    if (group.Product != null) stringBuilder.Append(group.Product.GetHashCode());
+                }
+                return stringBuilder.ToString() + this.Plate.ID + this.Plate.Length + this.Plate.Width + this.Plate.Height;
+            }
+        }
     }
 }

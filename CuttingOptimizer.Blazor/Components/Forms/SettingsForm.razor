@@ -1,10 +1,9 @@
 ﻿@using CuttingOptimizer.AppLogic.Services;
+@using CuttingOptimizer.Blazor.Models;
 @using CuttingOptimizer.Domain.Models;
 @using CuttingOptimizer.Infrastructure.Repositories;
 @using Blazored.LocalStorage;
 
-
-@inject ISawRepository repo;
 @inject IApiService api;
 @inject ILocalStorageService localStorage;
 @inject IJSRuntime JSRuntime;
@@ -17,9 +16,9 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-md-2 mb-3">
                 <label class="form-label" for="sawID">Zaagblad</label>
-                <InputText class="form-control" id="sawID" @bind-Value="Saw.ID" placeholder="ID" list="sawList" @oninput="(args) => SearchOrSelect(args)" />
+                <InputText class="form-control" id="sawID" @bind-Value="CalculatorFormModel.Saw.ID" placeholder="ID" list="sawList" @oninput="(args) => SearchOrSelect(args)" />
                 <datalist id="sawList">
                     @if (SearchSaws != null)
                     {
@@ -31,74 +30,74 @@
                 </datalist>
             </div>
 
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-12 col-md-2 mb-3">
                 <label class="form-label" for="sawThickness">Zaagsnede</label>
-                <InputNumber class="form-control" id="sawThickness" @bind-Value="Saw.Thickness" placeholder="Dikte" />
+                <InputNumber class="form-control" id="sawThickness" @bind-Value="CalculatorFormModel.Saw.Thickness" placeholder="Dikte" />
             </div>
 
-            <div class="form-group col-1 text-center">
+            <div class="form-group col-auto mb-3">
                 <label class="form-label" for="plateBase">Fineer</label>
-                <InputCheckbox class="form-control-checkbox checkbox-big" id="veneerId" name="check" @bind-Value="Veneer" placeholder="Fineer" />
+                <InputCheckbox class="form-control-checkbox checkbox-big" id="veneerId" name="check" @bind-Value="CalculatorFormModel.Veneer" placeholder="Fineer" />
+            </div>
+
+            <div class="form-group col-auto mb-3">
+            <label class="form-label" for="userId">Initiale</label>
+            <InputText class="form-control" id="userId" name="check" @bind-Value="CalculatorFormModel.UserID" placeholder="Initiale" />
             </div>
         </div>
+
     </div>
 
-    <button type="button" class="btn btn-secondary mt-4" @onclick="Save"><span class="oi oi-file" /> Instellingen opslaan</button>
+<button type="button" class="btn btn-secondary" @onclick="Save" disabled="@SaveButtonDisabled"><span class="oi oi-file" /> Instellingen opslaan</button>
 
     <div></div>
 @code {
-    [Parameter]
-    public Saw Saw { get; set; }
+    private bool SaveButtonDisabled { get; set; } = false;
 
     [Parameter]
-    public bool Veneer { get; set; }
+    public CalculatorFormModel CalculatorFormModel { get; set; }
 
     private string Result { get; set; }
 
     private List<Saw> SearchSaws = new List<Saw>();
-    //{
-    //    new Saw("SX1", 1),
-    //    new Saw("SX2", 5),
-    //    new Saw("SX3", 10)
-    //};
 
-    protected override async void OnInitialized()
+    protected override void OnInitialized()
     {
-        //SearchSaws = repo.Saws.ToList();
-        SearchSaws = await api.GetAllSaws();
+        if (CalculatorFormModel.Saw == null)
+        {
+            Saw saw = new Saw
+            {
+                ID = "SX0",
+                Thickness = 5
+            };
+        };
+    }
 
-        //if(Saw == null)
-        //{
-        //    Saw saw = new Saw
-        //    {
-        //        ID = "SX0",
-        //        Thickness = 5
-        //    };
-        //};
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) SearchSaws = await api.GetAllSaws();
     }
 
     private async void SearchOrSelect(ChangeEventArgs args)
     {
-        if(SearchSaws != null && SearchSaws.Count > 0)
+         if(SearchSaws != null && SearchSaws.Count > 0)
         {
             Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
             if (sawResult != null)
             {
-                Saw.ID = sawResult.ID;
-                Saw.Thickness = sawResult.Thickness;
+                CalculatorFormModel.Saw.ID = sawResult.ID;
+                CalculatorFormModel.Saw.Thickness = sawResult.Thickness;
             }
-            //else
-            //{
-            //    SearchSaws = await api.SearchSaws(args.Value.ToString());
-            //    //StateHasChanged();
-            //}
         }
     }
 
     private async Task Save()
     {
-        await localStorage.SetItemAsync("currentSaw", Saw);
-        await localStorage.SetItemAsync("currentVeneer", Veneer);
+        SaveButtonDisabled = true;
+        await localStorage.SetItemAsync("currentSaw", CalculatorFormModel.Saw);
+        await localStorage.SetItemAsync("currentVeneer", CalculatorFormModel.Veneer);
+        await localStorage.SetItemAsync("userID", CalculatorFormModel.UserID);
         await JSRuntime.InvokeAsync<object>("Alert", "Instellingen zijn opgeslagen!");
+        SaveButtonDisabled = false;
     }
 }

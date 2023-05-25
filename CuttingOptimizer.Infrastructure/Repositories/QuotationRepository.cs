@@ -11,22 +11,22 @@ namespace CuttingOptimizer.Infrastructure.Repositories
     public class QuotationRepository : IQuotationRepository
     {
         private CuttingOptimizerDbContext context;
-        public IQueryable<Quotation> Quotes => context.Quotes;
+        public IQueryable<Blueprint> Quotes => context.Blueprints;
 
         public QuotationRepository(CuttingOptimizerDbContext ctx)
         {
             context = ctx;
         }
 
-        public async Task<bool> Create(Quotation quotation)
+        public async Task<bool> Create(Blueprint quotation)
         {
-            context.Quotes.Add(quotation);
+            context.Blueprints.Add(quotation);
             return await context.SaveChangesAsync() == 0 ? false : true;
         }
 
-        public async Task<bool> Update(Quotation quotation)
+        public async Task<bool> Update(Blueprint quotation)
         {
-            Quotation? selected = await context.Quotes.FirstOrDefaultAsync(c=>c.ID == quotation.ID);
+            Blueprint? selected = await context.Blueprints.FirstOrDefaultAsync(c=>c.ID == quotation.ID);
             if(selected != null)
             {
                 selected.JsonString = quotation.JsonString;
@@ -35,15 +35,15 @@ namespace CuttingOptimizer.Infrastructure.Repositories
             return false;
         }
 
-        public async Task<Quotation?> FindById(int id)
+        public async Task<Blueprint?> FindById(int id)
         {
             return await Quotes.FirstOrDefaultAsync(c => c.ID == id);
         }
 
         public async Task<bool> Remove(int id)
         {
-            Quotation? quotation = await Quotes.FirstOrDefaultAsync(c => c.ID == id);
-            if(quotation != null) context.Quotes.Remove(quotation);
+            Blueprint? quotation = await Quotes.FirstOrDefaultAsync(c => c.ID == id);
+            if(quotation != null) context.Blueprints.Remove(quotation);
             return await context.SaveChangesAsync() == 0 ? false : true;
         }
     }

@@ -22,47 +22,63 @@
             <h2>Platen Optimalisatie</h2>
         </div>
 
-        <div class="col-auto">
-            <EditForm class="row" Model="@SearchQuotation">
+        <div class="col-auto mb-4">
+            <div class="row">
                 <div class="col">
                     <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick=Load>Ophalen van optimalisatieplan</button>
+                    <button type="button" class="btn btn-secondary" disabled=@LoadButtonDisabled @onclick=Load>Ophalen van optimalisatieplan
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@(!LoadButtonDisabled)"></span>
+                    </button>
                 </div>
-            </EditForm>
+            </div>
         </div>
     </div>
 
     <ul class="no-print nav nav-tabs">
         <li class="nav-item">
-            <a class="@SettingNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapseSaw collapsePlatesAndItems" @onclick="ToggleNav">Instellingen</a>
+            <a class="@(SettingsSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(1)">Instellingen</a>
         </li>
         <li class="nav-item">
-            <a class="@PlateAndItemNavClass" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="collapsePlatesAndItems collapseSaw" @onclick="ToggleNav">Materialen & Items</a>
+            <a class="@(QuotationSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(3)">Offerte</a>
+        </li>
+        <li class="nav-item">
+            <a class="@(ProductsAndItemsSelected == true ? "active" : "") nav-link subnav-link user-select-none" @onclick="() => ToggleNav(2)">Materialen & Items</a>
         </li>
     </ul>
+
     <div class="no-print mt-3">
         <EditForm Model="@CalculatorFormModel" OnValidSubmit="() => HandleSubmit()">
             <ObjectGraphDataAnnotationsValidator />
-            <div class="collapse multi-collapse mb-4" id="collapseSaw">
-                <SettingsForm Saw=@CalculatorFormModel.Saw Veneer=@Veneer/>    
+            <div class="mb-4" hidden="@(!SettingsSelected)">
+                <SettingsForm CalculatorFormModel=@CalculatorFormModel />
             </div>
-            <div class="collapse multi-collapse show" id="collapsePlatesAndItems">
+            <div class="" hidden="@(!QuotationSelected)">
+                <div class="form-group col-auto mb-3">
+                    <label class="form-label" for="quotationId">Offertenummer</label>
+                    <InputText class="form-control" id="quotationId" name="check" @bind-Value="CalculatorFormModel.QuotationID" placeholder="Offertenummer" />
+                </div>
+            </div>
+            <div class="" hidden="@(!ProductsAndItemsSelected)">
                 <div>
                     <PlateForm Plates=@CalculatorFormModel.Plates />
                 </div>
-                <div class="my-4">
+                <div class="mt-4">
                     <ProductForm Products=@CalculatorFormModel.Products />
                 </div>
-                <div>
-                    <ValidationSummary />
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
-                    <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
-                    <button type="button" class="btn btn-secondary" Disabled=@ButtonEnabled @onclick="Save"><span class="oi oi-file" /> Opslaan</button>
-                </div>
+            </div>
+            <div>
+                <ValidationSummary />
+            </div>
+            <div class="col mt-3">
+                <button type="submit" class="btn btn-primary"><span class="oi oi-calculator" /> Uitrekenen</button>
+                <button type="reset" class="btn btn-warning" @onclick="Reset"><span class="oi oi-reload" /> Resetten</button>
+                <button type="button" class="btn btn-secondary" disabled=@SaveButtonDisabled @onclick="Save">
+                    <span class="oi oi-file" /> Opslaan
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@SaveSpinnerDisabled"></span>
+                </button>
+                <button type="button" class="btn btn-secondary" disabled=@PrintButtonDisabled @onclick="Print"><span class="oi oi-file" /> Afdrukken</button>
             </div>
         </EditForm>
     </div>
@@ -75,13 +91,17 @@
             }
             @foreach (var group in groupSvg)
             {
-                <SvgComponent Scale=@Scale Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
+                <PlateOverview Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
         </div>
 
-    <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw QuotationID="@Quotation.ID"/>
-    </div>
+        <div>
+            <PlatesOverview Svgs=@Svgs />
+        </div>
+
+        <div>
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
+        </div>
     }
 
     @if(Errors != null && Errors.Count() > 0)
@@ -99,82 +119,24 @@
 </div>
 
 @code {
-    private string SettingNavClass { get; set; } = "nav-link subnav-link";
-    private string PlateAndItemNavClass { get; set; } = "nav-link active subnav-link";
-
-
+    private bool SaveButtonDisabled { get; set; } = true;
+    private bool PrintButtonDisabled { get; set; } = true;
+    private bool LoadButtonDisabled { get; set; } = false;
+    private bool SettingsSelected { get; set; } = false;
+    private bool ProductsAndItemsSelected { get; set; } = true;
+    private bool QuotationSelected { get; set; } = false;
+    private bool SaveSpinnerDisabled { get; set; } = true;
 
     private CalculatorFormModel CalculatorFormModel { get; set; }
-    private bool Veneer { get; set; }
-    private double Scale { get; set; }
     private int PlateArea { get; set; }
     private int ProductArea { get; set; }
     private List<string> Errors { get; set; } = new List<string>();
-    private Quotation Quotation { get; set; } = new Quotation();
-    private int SearchQuotation { get; set; } = 0;
+    private Blueprint Blueprint { get; set; } = new Blueprint();
+    private int SearchQuotation { get; set; }
     private List<Svg> Svgs { get; set; }
 
-    private bool ButtonEnabled { get; set; } = false;
 
     protected override void OnInitialized()
-    {
-        Svgs = new();
-        CalculatorFormModel = new();
-
-        //CalculatorFormModel.Saw = new Saw("SX2", 5);
-
-        CalculatorFormModel.Plates = new List<Plate>
-        {
-            new Plate(1, "PL1", 2000, 500, 5, 0, 1, true),
-        };
-
-        CalculatorFormModel.Products = new List<Product>
-        {
-            new Product(1, "Y1", 993, 500, 5),
-            //new Product(2, "X2", 2000, 88, 5),
-        };
-
-        //CalculatorFormModel.Plates = new List<Plate>
-        //{
-        //    new Plate(1, "PL1", 2000, 400, 5, 0, 1, true),
-        //    //new Plate(1, "PL2", 1000, 500, 5, 0, 2, true)
-        //};
-
-        //CalculatorFormModel.Products = new List<Product>
-        //{
-        //    #region VB1
-        //    //new Product(10, "Y1", 170, 40, 5),
-        //    //new Product(2, "X2", 800, 40, 5),
-        //    //new Product(4, "X3", 800, 40, 5),
-        //    //new Product(30, "K1", 200, 40, 5),
-        //    //new Product(60, "K2", 200, 40, 5),
-        //    //new Product(4, "P3", 150, 40, 5),
-        //    #endregion
-
-        //    #region VB2
-        //    //new Product(10, "Y1", 170, 50, 5),
-        //    //new Product(2, "X2", 300, 80, 5),
-        //    //new Product(3, "X3", 800, 40, 5),
-        //    //new Product(18, "K1", 200, 30, 5),
-        //    #endregion
-
-        //    #region VB3
-        //    new Product(1, "Pl215", 999, 40, 5),
-        //    new Product(1, "Pl215", 999, 40, 5)
-        //    #endregion
-        //};
-
-        HandleSubmit();
-    }
-
-    private void ToggleNav()
-    {
-        string mem = SettingNavClass;
-        SettingNavClass = PlateAndItemNavClass;
-        PlateAndItemNavClass = mem;
-    }
-
-    private void Reset()
     {
         Svgs = new();
         CalculatorFormModel = new();
@@ -186,7 +148,7 @@
         if (Check())
         {
             // Use LocalStorage Veneer setting
-            CalculatorFormModel.Plates.ForEach(c => c.Veneer = Veneer);
+            CalculatorFormModel.Plates.ForEach(c => c.Veneer = CalculatorFormModel.Veneer);
 
             // Find the biggest plate to represent as 100% width
             RotateBiggestSideForCanvasLength();
@@ -208,16 +170,22 @@
             // Sort Product on area biggest to smallest
             CalculatorFormModel.Plates = CalculatorFormModel.Plates.OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
             productList = productList.OrderByDescending(c => c.Quantity).ThenByDescending(c => c.Area).ToList();
-            Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
-            CalculateScale();
-        }
-    }
 
-    private void CalculateScale()
-    {
-        int biggestLength = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Length);
-        int biggestWidth = Svgs.Where(c => c.Groups.Count > 1).Max(c => c.ViewBox.Width);
-        Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
+            try
+            {
+                Svgs = calculateService.Place(CalculatorFormModel.Saw, CalculatorFormModel.Plates, productList.ToList());
+
+            }catch(Exception ex)
+            {
+                Errors.Add(ex.Message);
+            }
+
+            if (Svgs != null && Svgs.Count > 0)
+            {
+                SaveButtonDisabled = false;
+                PrintButtonDisabled = false;
+            }
+        }
     }
 
     private void RotateBiggestSideForCanvasLength()
@@ -225,7 +193,6 @@
         int biggestLength = CalculatorFormModel.Plates.MaxBy(c => c.LengthWithTrim).LengthWithTrim;
         int biggestWidth = CalculatorFormModel.Plates.MaxBy(c => c.WidthWithTrim).WidthWithTrim;
 
-        // If width is bigger then length and Veneer switch length and width of plate and products??
         if (biggestLength < biggestWidth)
         {
             CalculatorFormModel.Plates.ForEach(c => c.SwitchHeightAndWidth());
@@ -235,7 +202,6 @@
                 CalculatorFormModel.Products.ForEach(c => c.SwitchHeightAndWidth());
             }
         }
-        //Scale = biggestLength < biggestWidth ? biggestWidth / (double)100 : biggestLength / (double)100;
     }
 
     private bool Check()
@@ -285,7 +251,6 @@
     {
         if (firstRender)
         {
-            //return base.OnAfterRenderAsync(firstRender);
             if (CalculatorFormModel.Saw.ID == null && await localStorage.ContainKeyAsync("currentSaw"))
             {
                 CalculatorFormModel.Saw = await localStorage.GetItemAsync<Saw>("currentSaw");
@@ -302,68 +267,119 @@
 
             if (await localStorage.ContainKeyAsync("currentVeneer"))
             {
-                Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");            
+                CalculatorFormModel.Veneer = await localStorage.GetItemAsync<bool>("currentVeneer");
             }
             else
             {
                 await localStorage.SetItemAsync("currentVeneer", false);
             }
 
+            if (await localStorage.ContainKeyAsync("userID"))
+            {
+                CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
+            }
+
             StateHasChanged();
         }
+    }
+
+    private void ToggleNav(int nr)
+    {
+        SettingsSelected = false;
+        ProductsAndItemsSelected = false;
+        QuotationSelected = false;
+
+        switch (nr)
+        {
+            case 1:
+                SettingsSelected = true;
+                break;
+            case 2:
+                ProductsAndItemsSelected = true;
+                break;
+            case 3:
+                QuotationSelected = true;
+                break;
+        }
+    }
+    private async void Reset()
+    {
+        Svgs = new();
+        CalculatorFormModel = new();
+        SaveButtonDisabled = true;
+        PrintButtonDisabled = true;
+        if (await localStorage.ContainKeyAsync("userID"))
+        {
+            CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
+        }
+        await JSRuntime.InvokeAsync<object>("changeTitle", "Platen Optimalisatie");
 
     }
 
     private async void Save()
     {
-        ButtonEnabled = true;
+        SaveButtonDisabled = true;
+        SaveSpinnerDisabled = false;
         try
         {
-            Quotation.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
-            Quotation? result = await api.SaveQuotation(Quotation);
+            Blueprint.JsonString = JsonSerializer.Serialize(CalculatorFormModel);
+            Blueprint? result = await api.SaveBlueprint(Blueprint);
             if (result != null)
             {
-                Quotation = result;
-                await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Quotation.ID);
+                Blueprint = result;
+                await JSRuntime.InvokeAsync<object>("Alert", "Opgeslagen optimalistatieplannummer: " + Blueprint.ID);
             }
         }catch(Exception ex)
         {
             await JSRuntime.InvokeAsync<object>("Alert", "Het opgeslagen van optimalistatieplan is mislukt!");
         }
-        ButtonEnabled = false;
+        SaveSpinnerDisabled = true;
+        SaveButtonDisabled = false;
         StateHasChanged();
     }
 
     private async Task Load()
     {
-        if (Quotation.ID != SearchQuotation)
+        if (Blueprint.ID != SearchQuotation)
         {
-            ButtonEnabled = true;
+            LoadButtonDisabled = true;
             try
             {
-                
-                Quotation? result = await api.GetQuotationById(SearchQuotation);
+
+                Blueprint? result = await api.GetBlueprintById(SearchQuotation);
                 if (result != null && result.JsonString != null)
                 {
-                    Quotation = result;
-                    CalculatorFormModel calc = JsonSerializer.Deserialize<CalculatorFormModel>(Quotation.JsonString);
+                    Blueprint = result;
+                    CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
 
                     if (calc != null)
                     {
                         CalculatorFormModel = calc;
+                        HandleSubmit();
                     }
                 }
                 else
                 {
                     await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
                 }
-                
+
             }catch(Exception ex)
             {
                 await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
             }
-            ButtonEnabled = false;
+            LoadButtonDisabled = false;
             StateHasChanged();
+        }
+    }
+    private async Task Print()
+    {
+        if(Blueprint.ID == 0)
+        {
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + DateTime.Now.ToShortDateString());
+        }
+        else
+        {
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Blueprint.ID);            
         }
     }
 }

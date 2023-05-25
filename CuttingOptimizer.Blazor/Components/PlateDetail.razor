@@ -47,7 +47,7 @@
             var groupByProduct = Svg.Groups.Where(c => c.ID != 0).GroupBy(c => c.Product.ID);
         }
         <div class="col-3">
-            <label class="fw-bold">Quantiteit</label>
+            <label class="fw-bold">Aantal</label>
             @foreach (var group in groupByProduct)
             {
                 <div>@group.Count()</div>
@@ -79,7 +79,7 @@
         <h4 class="col-12 title-border">Parameters</h4>
         <div class="col-6 pl-3 pr-3 pt-0">
             <label class="fw-bold">Verlies:</label>
-            <span>@AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
+            <span>@Svg.AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
         </div>
         <div class="col-6 pl-3 pr-3 pt-0">
             <label class="fw-bold">Snijlijnen:</label>
@@ -97,14 +97,6 @@
 
     [Parameter]
     public int Count { get; set; }
-
-    private double AreaLossPercentage
-    {
-        get
-        {
-            return Svg.Groups.Where(c => c.ID == 0).Sum(c => c.Area) / (double)Svg.Area;
-        }
-    }
 
     private int CutLines
     {

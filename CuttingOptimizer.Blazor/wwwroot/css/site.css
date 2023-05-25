@@ -67,7 +67,7 @@ rect {
 .checkbox-big {
     width: 1.5em;
     height: 1.5em;
-    margin-top: 0.3em;
+    margin-top: 0.3em !important;
 }
 
 .title-bar{

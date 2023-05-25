@@ -1,0 +1,27 @@
+﻿@using CuttingOptimizer.AppLogic.Models;
+@using CuttingOptimizer.Domain.Models;
+@using System.Globalization;
+
+@if(Svg.Groups != null && Svg.Groups.Exists(c=>c.ID == 1))
+{
+    <div class="mt-5 print-page-brake-after">
+        <div>
+            <PlateDetail Saw=@Saw Svg=@Svg Count="@Count"/>
+        </div>
+
+        <PlatePreview Svg="@Svg" /> 
+    </div>
+}
+@code {
+    [Parameter]
+    public double Scale { get; set; }
+
+    [Parameter]
+    public Svg Svg { get; set; }
+
+    [Parameter]
+    public Saw Saw { get; set; }
+
+    [Parameter]
+    public int Count { get; set; }
+}

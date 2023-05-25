@@ -1,4 +1,5 @@
-﻿using CuttingOptimizer.Domain.Models;
+﻿using CuttingOptimizer.Api.Models;
+using CuttingOptimizer.Domain.Models;
 using CuttingOptimizer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,16 @@ namespace CuttingOptimizer.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Plate plate)
+        public async Task<IActionResult> Create(PlateDTO plate)
         {
-            return Ok(await repository.Create(plate) == false ? NotFound() : plate);
+            Plate newPlate = new Plate
+            {
+                ID = plate.ID,
+                Length = plate.Length,
+                Width = plate.Width,
+                Height = plate.Height
+            };
+            return Ok(await repository.Create(newPlate) == false ? NotFound() : newPlate);
         }
 
         [HttpDelete("id")]

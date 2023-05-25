@@ -1,7 +1,21 @@
 using CuttingOptimizer.Infrastructure;
 using CuttingOptimizer.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Diagnostics;
+using Serilog;
+using System.Net;
+
+Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt").CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
+
+if (builder.Environment.IsDevelopment()){
+    builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+}
+else
+{
+    builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+}
 
 // Add services to the container.
 builder.Services.AddDbContext<CuttingOptimizerDbContext>();
@@ -16,15 +30,16 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//app.UseCors(x => x
+//            .SetIsOriginAllowed(origin => true)
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .AllowCredentials());
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
