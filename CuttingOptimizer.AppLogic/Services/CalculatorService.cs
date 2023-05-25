@@ -124,57 +124,48 @@ namespace CuttingOptimizer.AppLogic.Services
 
         private void ChooseCalculation(ref List<Svg> svgs, Saw saw, List<Product> products)
         {
-
             List<Group> groups = new List<Group>();
             foreach (Svg svg in svgs)
             {
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            
+
             List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw)
                 .Where(c => (c.MaxHorizontalQuantity > 0 && c.HorizontalScaleVsVertical > 0))
                 .Where(c => c.MaxVerticalQuantity > 0 && c.VerticalScaleVsHorizontal > 0)
-                .Where(c=>c.Group.Width > 0 && c.Group.Length > 0).OrderByDescending(c=>c.Group.Svg.Priority).OrderByDescending(c=>c.VerticalAlignment)
-                //.ThenByDescending(c=>c.CompareBestCandidate())
-                //.ThenByDescending(c=>c.Rotated)
+                .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
+                .OrderByDescending(c => c.Group.Svg.Priority)
+                //.OrderByDescending(c => c.VerticalAlignment)
+                .ThenByDescending(c => c.CompareBestCandidate())
+                .ThenByDescending(c => c.Rotated)
                 .ToList();
 
-
             RestResult? selectedResult = results.FirstOrDefault();
-            Product? selectedProduct = products.FirstOrDefault();
 
-            if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
-            int hor = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.MaxHorizontalQuantity : selectedResult.VerticalScaleVsHorizontal;
-            int vert = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.HorizontalScaleVsVertical : selectedResult.MaxVerticalQuantity;
-            if (vert > selectedResult.Product.Quantity) vert = selectedResult.Product.Quantity;
-            if (hor > selectedResult.Product.Quantity) hor = selectedResult.Product.Quantity;
-            CalculateGroupsVertical(selectedProduct, saw, selectedResult.Group, vert);
-            if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
+            if (selectedResult != null)
+            {
+                // Check and replace if vert or hor is bigger then product.qty
+                if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
+                int hor = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.MaxHorizontalQuantity : selectedResult.VerticalScaleVsHorizontal;
+                int vert = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.HorizontalScaleVsVertical : selectedResult.MaxVerticalQuantity;
+                if (vert > selectedResult.Product.Quantity) vert = selectedResult.Product.Quantity;
+                if (hor > selectedResult.Product.Quantity) hor = selectedResult.Product.Quantity;
 
-            //if (selectedResult != null)
-            //{
-            //    // Check and replace if vert or hor is bigger then product.qty
-            //    if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
-            //    int hor = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.MaxHorizontalQuantity : selectedResult.VerticalScaleVsHorizontal;
-            //    int vert = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.HorizontalScaleVsVertical : selectedResult.MaxVerticalQuantity;
-            //    if (vert > selectedResult.Product.Quantity) vert = selectedResult.Product.Quantity;
-            //    if (hor > selectedResult.Product.Quantity) hor = selectedResult.Product.Quantity;
+                if (selectedResult.Product.Quantity == 1)
+                {
+                    CalculateGroupsVertical(selectedResult.Product, saw, selectedResult.Group, vert);
+                }
+                else
+                {
+                    CalculateGroupBlock(selectedResult.Product, saw, selectedResult.Group, hor, vert);
+                }
 
-            //    if (selectedResult.Product.Quantity == 1)
-            //    {
-            //        CalculateGroupsVertical(selectedResult.Product, saw, selectedResult.Group, vert);
-            //    }
-            //    else
-            //    {
-            //        CalculateGroupBlock(selectedResult.Product, saw, selectedResult.Group, hor, vert);
-            //    }
+                if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
+                return;
+            }
 
-            //    if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
-            //    return;
-            //}
-
-            //AddSvg(svgs);
+            AddSvg(svgs);
 
         }
         private bool VerticalTest(Group group, Saw saw, Product product, int quantity)
