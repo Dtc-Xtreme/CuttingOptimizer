@@ -5,7 +5,11 @@
         </div>
         <div class="col-auto">
             <h4 class="mt-1">Items</h4>
-        </div>              
+        </div>
+        <div class="col-auto m-1 h-100">
+            <input id="copyCheck" class="form-check-input checkbox-big" type="checkbox" @bind-value=Copy />
+            <label class="form-label p-1 fw-bold" for="copyCheck">Kopieer data</label>
+        </div>
     </div>
 
     <div class="container-fluid mt-2">
@@ -63,6 +67,8 @@
     [Parameter]
     public List<Product> Products { get; set; } = new List<Product>();
 
+    private bool Copy { get; set; } = false;
+
     protected override void OnInitialized()
     {
         Product prod = new Product
@@ -77,11 +83,18 @@
     {
         Product? last = Products.OrderByDescending(c => c.ID).FirstOrDefault();
         string name = "";
+        int lenght=0;
+        int width = 0;
 
         if(last != null)
         {
             try
             {
+                if (Copy)
+                {
+                    lenght = last.Length;
+                    width = last.Width;
+                }
                 int number = Convert.ToInt16(last.ID.Substring(2, 1));
                 name = last.ID.Substring(0, last.ID.Length - 1);
                 name += number + 1;
@@ -99,7 +112,9 @@
         Product prod = new Product
             {
                 Quantity = 1,
-                ID = name
+                ID = name,
+                Length = lenght,
+                Width = width
             };
 
         Products.Add(prod);
