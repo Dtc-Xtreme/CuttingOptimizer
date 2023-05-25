@@ -76,7 +76,7 @@
     private void AddProduct()
     {
         Product? last = Products.OrderByDescending(c => c.ID).FirstOrDefault();
-        string name = "IX";
+        string name = "";
 
         if(last != null)
         {
@@ -88,9 +88,8 @@
             }
             catch (Exception ex)
             {
-                name += 1;
+                name = last.ID + 1;
             }
-
         }
         else
         {
@@ -102,6 +101,7 @@
                 Quantity = 1,
                 ID = name
             };
+
         Products.Add(prod);
     }
 
