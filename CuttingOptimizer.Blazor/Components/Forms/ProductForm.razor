@@ -68,17 +68,39 @@
         Product prod = new Product
             {
                 Quantity = 1,
-                ID = "IX0"
+                ID = "IX1"
             };
         if(Products.Count() == 0) Products.Add(prod);
     }
 
     private void AddProduct()
     {
+        Product? last = Products.OrderByDescending(c => c.ID).FirstOrDefault();
+        string name = "IX";
+
+        if(last != null)
+        {
+            try
+            {
+                int number = Convert.ToInt16(last.ID.Substring(2, 1));
+                name = last.ID.Substring(0, last.ID.Length - 1);
+                name += number + 1;
+            }
+            catch (Exception ex)
+            {
+                name += 1;
+            }
+
+        }
+        else
+        {
+            name += 1;
+        }
+
         Product prod = new Product
             {
                 Quantity = 1,
-                ID = "IX0"
+                ID = name
             };
         Products.Add(prod);
     }
