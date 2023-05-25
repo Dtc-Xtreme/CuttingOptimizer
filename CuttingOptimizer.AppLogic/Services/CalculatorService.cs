@@ -436,8 +436,8 @@ namespace CuttingOptimizer.AppLogic.Services
                 selectedProduct.Quantity--;
             }
 
-            Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, checkCount, false);
-            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, false, false);
+            Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, checkCount, true);
+            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, false, true);
 
             if (right != null) newGroups.Add(right);
             if (under != null) newGroups.Add(under);
