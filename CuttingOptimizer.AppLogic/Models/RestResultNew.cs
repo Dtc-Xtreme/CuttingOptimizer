@@ -9,20 +9,41 @@ namespace CuttingOptimizer.AppLogic.Models
 {
     public class NewRestResult
     {
+        //Max horizontal
+        //Max vertical
+        //QTY horizontal
+        //QTY vertical
+
         public NewRestResult(Group group, Product product, Saw saw, bool rotated=false)
         {
             Group = group;
             Product = product;
             Saw = saw;
             Rotated = rotated;
-            MaxQuantity = HorizontalAlignment ? CalculateMaxQuantityHorizontal() : CalculateMaxQuantityVertical();
-            Quantity = Product.Quantity <= MaxQuantity ? Product.Quantity : 0;
-            RestLineHorizontal = Group.Length - ((Product.Length * Quantity) - ((Quantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
-            RestLineVertical = Group.Width - Product.Width - Saw.Thickness - 1;
+
+            HorizontalMaxQuantity = CalculateMaxQuantityHorizontal();
+            HorizontalQuantity = Product.Quantity < HorizontalMaxQuantity ? Product.Quantity : HorizontalMaxQuantity;
+
+            VerticalMaxQuantity = CalculateMaxQuantityVertical();
+            VerticalQuantity = Product.Quantity < VerticalMaxQuantity ? Product.Quantity : VerticalMaxQuantity;
+
+            if (HorizontalAlignment)
+            {
+                RestLineHorizontal = Group.Length - ((Product.Length * HorizontalQuantity) - ((HorizontalQuantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
+                RestLineVertical = Group.Width - Product.Width;
+            }
+            else
+            {
+                RestLineHorizontal = Group.Length - Product.Length;
+                RestLineVertical = Group.Width - ((Product.Width * VerticalQuantity) - ((VerticalQuantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
+            }
         }
 
-        public int MaxQuantity { get; set; }
-        public int Quantity { get; set; }
+        public int HorizontalMaxQuantity { get; set; }
+        public int HorizontalQuantity { get; set; }
+
+        public int VerticalMaxQuantity { get; set; }
+        public int VerticalQuantity { get; set; }
 
         public int RestLineHorizontal { get; set; }
         public int RestLineVertical { get; set; }
@@ -52,7 +73,7 @@ namespace CuttingOptimizer.AppLogic.Models
             bool test = true;
             int amount = 0;
             int rest = Group.Length;
-            while (test)
+            while (test && Group.Width >= Product.Width)
             {
                 if (amount == 0)
                 {
@@ -82,7 +103,7 @@ namespace CuttingOptimizer.AppLogic.Models
             int rest = Group.Width;
 
 
-            while (test)
+            while (test && Group.Length >= Product.Length)
             {
                 if (amount == 0)
                 {

@@ -130,31 +130,34 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
+
             List<NewRestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw)
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
+                .Where(c => c.HorizontalQuantity != 0 || c.VerticalQuantity != 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
-                //.OrderByDescending(c => c.RestLineVertical)
                 .ToList();
 
-            NewRestResult? selectedResult = results.FirstOrDefault(c=>c.Rotated);
+            NewRestResult? selectedResult = results.FirstOrDefault();
 
-            if(selectedResult.HorizontalAlignment == true)
-            {
-                Group last = selectedResult.Group;
-                for (int x = 0; x < selectedResult.Quantity; x++)
-                {
-                    last = CalculateHorizontalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-                }
-            }
-            else
-            {
-                Group last = selectedResult.Group;
-                for (int x = 0; x < selectedResult.Quantity; x++)
-                {
-                    last = CalculateVerticalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-                }
-            }
-           
+            CalculateHorizontalGroup(selectedResult.Product, saw, selectedResult.Group, selectedResult.Quantity, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+
+            //if(selectedResult.HorizontalAlignment == true)
+            //{
+            //    Group last = selectedResult.Group;
+            //    for (int x = 0; x < selectedResult.Quantity; x++)
+            //    {
+            //        last = CalculateHorizontalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+            //    }
+            //}
+            //else
+            //{
+            //    Group last = selectedResult.Group;
+            //    for (int x = 0; x < selectedResult.Quantity; x++)
+            //    {
+            //        last = CalculateVerticalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+            //    }
+            //}
+
             //CalculateVerticalGroup(selectedResult.Product, saw, selectedResult.Group, selectedResult.Quantity, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
 
 
