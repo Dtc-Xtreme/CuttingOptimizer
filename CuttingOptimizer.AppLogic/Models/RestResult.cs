@@ -33,6 +33,13 @@ namespace CuttingOptimizer.AppLogic.Models
                 return a <= 0 ? 0 : a;
             }
         }
+        public int HorizontalRestLine
+        {
+            get
+            {
+                return Group.Length - ((Product.Length * HorizontalQuantity) - ((HorizontalQuantity - 1) * Saw.Thickness)) - Saw.Thickness -1;
+            }
+        }
 
         public int MaxVerticalQuantity { get; set; }
         public int VerticalScaleVsHorizontal { get; set; }
@@ -52,12 +59,18 @@ namespace CuttingOptimizer.AppLogic.Models
                 return a <= 0 ? 0 : a;
             }
         }
-
+        public int VerticalRestLine { 
+            get
+            {
+                return Group.Width - ((Product.Width * VerticalQuantity) - ((VerticalQuantity - 1) * Saw.Thickness)) - Saw.Thickness -1;
+            }
+        }
         public int Rest { get; set; }
 
         public bool Rotated { get; set; }
         public Group Group { get; set; }
         public Product Product { get; set; }
+        public Saw Saw { get; set; }
 
         public int CompareHighestArea()
         {
@@ -74,15 +87,16 @@ namespace CuttingOptimizer.AppLogic.Models
             return this.HorizontalQuantity > this.VerticalQuantity ? this.HorizontalQuantity : this.VerticalQuantity;
         }
 
-        public bool VerticalAlignment { 
+        public bool HorizontalAlignment { 
             get
             {
-                if (Rotated)
-                {
-                    return Product.Length >= Product.Width ? true : false;
-                }
+                //if (Rotated)
+                //{
+                //    return Product.Length >= Product.Width ? true : false;
+                //}
 
-                return Product.Length < Product.Width ? true : false;
+                //return Product.Length < Product.Width ? true : false;
+                return HorizontalRestLine < VerticalRestLine ? true : false;
 
             }
         }
