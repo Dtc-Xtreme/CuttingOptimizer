@@ -52,8 +52,8 @@ namespace CuttingOptimizer.AppLogic.Services
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
-                .ThenByDescending(c => c.Area)
                 .ThenBy(c => c.OrderOnRest())
+                .ThenByDescending(c => c.Area)
                 .ToList();
             // wissel area en orderonrest voor beter resultaat
 
