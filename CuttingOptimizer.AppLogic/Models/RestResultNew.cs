@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace CuttingOptimizer.AppLogic.Models
 {
+    public enum RestResultType
+    {
+        Horizontal,
+        HorizontalRotated,
+        Vertical,
+        VerticalRotated
+    }
+
     public class NewRestResult
     {
         //Max horizontal
@@ -38,7 +46,7 @@ namespace CuttingOptimizer.AppLogic.Models
                 RestLineVertical = Group.Width - ((Product.Width * VerticalQuantity) - ((VerticalQuantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
             }
         }
-
+        public RestResultType Type { get; set; }
         public int HorizontalMaxQuantity { get; set; }
         public int HorizontalQuantity { get; set; }
 
@@ -130,7 +138,6 @@ namespace CuttingOptimizer.AppLogic.Models
         {
             return RestLineHorizontal > result.RestLineHorizontal;
         }
-
         public bool BestFitVertical(NewRestResult result)
         {
             return RestLineVertical > result.RestLineVertical;

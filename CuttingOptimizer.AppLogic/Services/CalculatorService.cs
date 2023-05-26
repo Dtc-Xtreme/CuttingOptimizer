@@ -18,6 +18,7 @@ namespace CuttingOptimizer.AppLogic.Services
     public class CalculatorService : ICalculatorService
     {
         private int svgPrioCounter = 1;
+
         public List<Svg> Place(Saw saw, List<Plate> plates, List<Product> products)
         {
             // Creeer svgs and sorting
@@ -37,91 +38,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
             return svgs.Where(c => c.Groups.Any(c=>c.ID == 1)).OrderByDescending(c => c.Priority).ThenByDescending(c => c.Area).ToList();
         }
-
-        private void CalculateScale(ref List<Svg> svgs)
-        {
-            double scale = 0;
-            if (svgs.Count > 0)
-            {
-                int biggestLength = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Length);
-                int biggestWidth = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Width);
-
-                scale = biggestLength < biggestWidth ? biggestLength / (double)100 : biggestLength / (double)100;
-                bool lengthBiggest = biggestLength < biggestWidth ? true : false;
-
-                foreach (Svg s in svgs)
-                {
-                    s.Scale = biggestLength / s.ViewBox.Length;
-                }
-            }
-        }
-
-        private List<Svg> Init(List<Plate> plates)
-        {
-            List<Svg> svgs = new List<Svg>();
-
-            foreach (Plate plate in plates)
-            {
-                for (int x = 0; x < plate.Quantity; x++)
-                {
-                    if (plate.Priority != 0)
-                    {
-                        Svg svg = new Svg
-                        {
-                            ID = plate.ID,
-                            ViewBox = new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim),
-                            Priority = plate.Priority,
-                            Plate = new Plate(1, plate)
-                        };
-                        svgs.Add(svg);
-                    }
-                }
-            }
-
-            foreach (Svg svg in svgs)
-            {
-                Group newGroup = new Group
-                {
-                    ID = 0,
-                    X = 0,
-                    Y = 0,
-                    Length = svg.ViewBox.Length,
-                    Width = svg.ViewBox.Width,
-                    Svg = svg
-                };
-                svg.AddGroup(newGroup);
-            }
-            return svgs;
-        }
-
-        private List<Svg> AddSvg(List<Svg> svgs)
-        {
-            Svg baseSvg = svgs.First(c => c.Plate.Base == true);
-            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, baseSvg.ViewBox.Length, baseSvg.ViewBox.Width), svgPrioCounter, new Plate(1, baseSvg.Plate));
-            svgPrioCounter++;
-            newSvg.AddGroup(
-                new Group
-                {
-                    ID = 0,
-                    X = 0,
-                    Y = 0,
-                    Length = baseSvg.ViewBox.Length,
-                    Width = baseSvg.ViewBox.Width,
-                });
-                
-            if(svgs.Any(c=>c.Hash == newSvg.Hash))
-            {
-                throw new CreateSvgLoopException("Standaard plaat is te klein om te hergebruiken!");
-            }
-
-            svgs.Add(newSvg);
-            return svgs;
-        }
-        private void RemoveProductsWithQuantityZero(List<Product> products)
-        {
-            products.RemoveAll(c => c.Quantity <= 0);
-        }
-
         private void ChooseCalculation(ref List<Svg> svgs, Saw saw, List<Product> products)
         {
             List<Group> groups = new List<Group>();
@@ -131,15 +47,15 @@ namespace CuttingOptimizer.AppLogic.Services
             }
 
 
-            List<NewRestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw)
-                .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
-                .Where(c => c.HorizontalQuantity != 0 || c.VerticalQuantity != 0)
-                .OrderByDescending(c => c.Group.Svg.Priority)
-                .ToList();
+            //List<NewRestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw)
+            //    .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
+            //    //.Where(c => c.HorizontalQuantity != 0 || c.VerticalQuantity != 0)
+            //    .OrderByDescending(c => c.Group.Svg.Priority)
+            //    .ToList();
 
-            NewRestResult? selectedResult = results.FirstOrDefault();
+            //NewRestResult? selectedResult = results.FirstOrDefault();
 
-            CalculateHorizontalGroup(selectedResult.Product, saw, selectedResult.Group, selectedResult.Quantity, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+            CalculateGroups(products[0], saw, groups[0], 3, 3, false, true);
 
             //if(selectedResult.HorizontalAlignment == true)
             //{
@@ -186,15 +102,77 @@ namespace CuttingOptimizer.AppLogic.Services
             //AddSvg(svgs);
 
         }
-        private bool VerticalTest(Group group, Saw saw, Product product, int quantity)
+
+        private List<Svg> Init(List<Plate> plates)
         {
-            int length = product.Length * quantity + (saw.Thickness * (quantity - 1));
-            bool lengthCheck = group.Length >= length;
-            bool widthCheck = group.Width >= product.Width;
-            return lengthCheck && widthCheck;
+            List<Svg> svgs = new List<Svg>();
 
+            foreach (Plate plate in plates)
+            {
+                for (int x = 0; x < plate.Quantity; x++)
+                {
+                    if (plate.Priority != 0)
+                    {
+                        Svg svg = new Svg
+                        {
+                            ID = plate.ID,
+                            ViewBox = new ViewBox(0, 0, plate.LengthWithTrim, plate.WidthWithTrim),
+                            Priority = plate.Priority,
+                            Plate = new Plate(1, plate)
+                        };
+                        svgs.Add(svg);
+                    }
+                }
+            }
+
+            foreach (Svg svg in svgs)
+            {
+                Group newGroup = new Group
+                {
+                    ID = 0,
+                    X = 0,
+                    Y = 0,
+                    Length = svg.ViewBox.Length,
+                    Width = svg.ViewBox.Width,
+                    Svg = svg
+                };
+                svg.AddGroup(newGroup);
+            }
+            return svgs;
         }
+        private List<Svg> AddSvg(List<Svg> svgs)
+        {
+            Svg baseSvg = svgs.First(c => c.Plate.Base == true);
+            Svg newSvg = new Svg("Extra", new ViewBox(0, 0, baseSvg.ViewBox.Length, baseSvg.ViewBox.Width), svgPrioCounter, new Plate(1, baseSvg.Plate));
+            svgPrioCounter++;
+            newSvg.AddGroup(
+                new Group
+                {
+                    ID = 0,
+                    X = 0,
+                    Y = 0,
+                    Length = baseSvg.ViewBox.Length,
+                    Width = baseSvg.ViewBox.Width,
+                });
 
+            if (svgs.Any(c => c.Hash == newSvg.Hash))
+            {
+                throw new CreateSvgLoopException("Standaard plaat is te klein om te hergebruiken!");
+            }
+
+            svgs.Add(newSvg);
+            return svgs;
+        }
+        private void RotateProduct(Product product)
+        {
+            int t = product.Length;
+            product.Length = product.Width;
+            product.Width = t;
+        }
+        private void RemoveProductsWithQuantityZero(List<Product> products)
+        {
+            products.RemoveAll(c => c.Quantity <= 0);
+        }
         private List<NewRestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, List<Product> products, Saw saw)
         {
             List<NewRestResult> results = new List<NewRestResult>();
@@ -264,83 +242,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 return results;
         }
 
-        private int CalculateQuantityHorizontal(Saw saw, Group group, Product product)
-        {
-            bool test = true;
-            int amount = 0;
-            int rest = group.Length;
-            while (test)
-            {
-                if (amount == 0)
-                {
-                    rest -= product.Length;
-                }
-                else
-                {
-                    rest -= (saw.Thickness + product.Length + 1);
-
-                }
-
-                if (rest >= 0)
-                {
-                    amount++;
-                }
-                else
-                {
-                    test = false;
-                }
-            }
-            return amount;
-        }
-        private int CalculateQuantityVertical(Saw saw, Group group, Product product)
-        {
-            bool test = true;
-            int amount = 0;
-            int rest = group.Width;
-
-
-            while (test)
-            {
-                if (amount == 0)
-                {
-                    rest -= product.Width;
-                }
-                else
-                {
-                    rest -= (saw.Thickness + product.Width + 1);
-                }
-
-                if (rest >= 0)
-                {
-                    amount++;
-                }
-                else
-                {
-                    test = false;
-                }
-            }
-            return amount;
-        }
-
-        private bool MaxHorizontalFit(Group group, Product product, Saw saw)
-        {
-            int length = (product.Length * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
-            return group.Length >= length && group.Width >= product.Width;
-        }
-        private bool MaxVerticalFit(Group group, Product product, Saw saw)
-        {
-            int width = (product.Width * product.Quantity) + (saw.Thickness * (product.Quantity - 1));
-            return group.Width >= width && group.Length >= product.Length;
-        }
-
-        private void RotateProduct(Product product)
-        {
-            int t = product.Length;
-            product.Length = product.Width;
-            product.Width = t;
-        }
-
-        internal Group? CalculateHorizontalGroup(Product selectedProduct, Saw saw, Group group, int quantity, bool checkCount=true, bool horizontal=true, bool rotated=false)
+        internal Group? CalculateGroups(Product selectedProduct, Saw saw, Group group, int horizontalQuantity, int verticalQuantity, bool horizontal=true, bool rotated=false)
         {
             List<Group> newGroups = new List<Group>();
             Group lastCreated = new Group();
@@ -349,215 +251,153 @@ namespace CuttingOptimizer.AppLogic.Services
             int width = 0;
             int x = 0;
             int y = 0;
+            int xOffset = 0;
+            int yOffset = 0;
 
             if (rotated) RotateProduct(selectedProduct);
 
-            for (int i = 0; i < quantity && selectedProduct.Quantity > 0; i++)
+            for(int vert = 0; vert < verticalQuantity; vert++)
             {
-                length = selectedProduct.Length;
-                width = selectedProduct.Width;
-                x = group.X +lastCreated.X + lastCreated.Length;
+                for (int hor = 0; hor < horizontalQuantity; hor++)
+                {
+                    if (selectedProduct.Quantity != 0)
+                    {
+                        length = selectedProduct.Length;
+                        width = selectedProduct.Width;
+
+                        x = group.X + xOffset;
+                        y = group.Y + yOffset;
+
+                        lastCreated = new Group
+                        {
+                            ID = 1,
+                            X = x,
+                            Y = y,
+                            Length = length,
+                            Width = width,
+                            Product = selectedProduct,
+                            Svg = group.Svg,
+                            Rectangle = new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID))
+                        };
+
+                        newGroups.Add(lastCreated);
+                        selectedProduct.Quantity--;
+
+                        xOffset += selectedProduct.Length + saw.Thickness + 1;
+                    }
+                    else
+                    {
+                        Group? rest = CalculateGroupRight(saw, group, lastCreated, newGroups, true, true);
+                        if (rest != null) newGroups.Add(rest);
+                    }
+                    
+                }
+                x = 0;
+                xOffset = 0;
+                yOffset += selectedProduct.Width + 1 + saw.Thickness;
+            }
+
+            Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, horizontal);
+            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, horizontal);
+
+            if (right != null) newGroups.Add(right);
+            if (under != null) newGroups.Add(under);
+
+            group.Svg.Groups.AddRange(newGroups);
+            group.Svg.Groups.Remove(group);
+
+            if (rotated) RotateProduct(selectedProduct);
+
+            return null;
+        }
+        internal Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool horizontal = true, bool rest=false)
+        {
+            int length = 0;
+            int width = 0;
+            int x = 0;
+            int y = 0;
+            Group? maxX = newGroups.MaxBy(c => c.X);
+            Group? maxY = newGroups.MaxBy(c => c.Y);
+            int minColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).First().Count();
+            int maxColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).Last().Count();
+            int maxRowCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).First().Count();
+
+            if (horizontal)
+            {
+                if (rest)
+                {
+                    x = group.X + (maxX.Length * minColumnCount) + ((saw.Thickness + 1) * minColumnCount);
+                    y = maxY.Y;
+                    length = maxX.Length;
+                    width = maxX.Width;
+                }
+                else
+                {
+                    x = maxX.X + maxX.Length + saw.Thickness + 1;
+                    y = maxX.Y;
+                    length = group.Length - ((maxX.Length * maxColumnCount) + ((saw.Thickness + 1) * maxColumnCount));
+                    width = (maxY.Width * maxRowCount) + ((saw.Thickness + 1) * (maxRowCount-1));
+                }
+            }
+            else
+            {
+                x = maxX.X + maxX.Length + saw.Thickness + 1;
                 y = group.Y;
-
-                if (i > 0)
-                {
-                    x += saw.Thickness + 1;
-                    x -= group.X;
-                }
-
-                lastCreated = new Group
-                {
-                    ID = 1,
-                    X = x,
-                    Y = y,
-                    Length = length,
-                    Width = width,
-                    Product = selectedProduct,
-                    Svg = group.Svg,
-                    Rectangle = new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID))
-                };
-
-                newGroups.Add(lastCreated);
-                selectedProduct.Quantity--;
+                length = group.Length - ((maxX.Length * maxColumnCount) + ((saw.Thickness + 1) * maxColumnCount));
+                width = group.Width;
             }
 
-            Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, checkCount, horizontal, rotated);
-            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, checkCount, horizontal, rotated);
+            Group rightGroup = new Group
+            {
+                ID = 0,
+                X = x,
+                Y = y,
+                Length = length,
+                Width = width,
+                Rectangle = new Rectangle(0, x, y, length, width, new Label("0")),
+                Svg = group.Svg
+            };
 
-            if (right != null) newGroups.Add(right);
-            if (under != null) newGroups.Add(under);
-
-            group.Svg.Groups.AddRange(newGroups);
-            group.Svg.Groups.Remove(group);
-
-            if (rotated) RotateProduct(selectedProduct);
-
-            return right;
+            return rightGroup;
         }
-        internal Group? CalculateVerticalGroup(Product selectedProduct, Saw saw, Group group, int quantity, bool checkCount = true, bool horizontal = true, bool rotated = false)
+        internal Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool horizontal = true)
         {
-            List<Group> newGroups = new List<Group>();
-            Group lastCreated = new Group();
-
             int length = 0;
             int width = 0;
             int x = 0;
             int y = 0;
+            Group? maxX = newGroups.MaxBy(c => c.X);
+            Group? maxY = newGroups.MaxBy(c => c.Y);
+            int maxColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).Last().Count();
+            int maxRowCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).First().Count();
 
-            if (rotated) RotateProduct(selectedProduct);
-
-            for (int i = 0; i < quantity && selectedProduct.Quantity > 0; i++)
+            if (horizontal)
             {
-                length = selectedProduct.Length;
-                width = selectedProduct.Width;
                 x = group.X;
-                y = group.Y + lastCreated.Y + lastCreated.Width;
-
-                if (i > 0)
-                {
-                    y += saw.Thickness + 1;
-                    y -= group.Y;
-                }
-
-                lastCreated = new Group
-                {
-                    ID = 1,
-                    X = x,
-                    Y = y,
-                    Length = length,
-                    Width = width,
-                    Product = selectedProduct,
-                    Svg = group.Svg,
-                    Rectangle = new Rectangle(1, x, y, length, width, new Label(selectedProduct.ID))
-                };
-
-                newGroups.Add(lastCreated);
-                selectedProduct.Quantity--;
+                y = maxY.Y + maxY.Width + saw.Thickness + 1;
+                length = group.Length;
+                width = group.Width - ((maxY.Width * maxRowCount) + ((saw.Thickness + 1) * maxRowCount));
             }
-
-            Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, checkCount, horizontal);
-            Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, checkCount, horizontal);
-
-            if (right != null) newGroups.Add(right);
-            if (under != null) newGroups.Add(under);
-
-            group.Svg.Groups.AddRange(newGroups);
-            group.Svg.Groups.Remove(group);
-
-            if (rotated) RotateProduct(selectedProduct);
-
-            return right;
-        }
-
-        internal Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool checkCount = true, bool horizontal = true, bool rotated = false)
-        {
-            bool run = checkCount ? (lastCreated.Length * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count) < group.Length : lastCreated.Length < group.Length;
-
-            if (run)
+            else
             {
-                int length = 0;
-                int width = 0;
-                int x = 0;
-                int y = 0;
-
-                if (horizontal)
-                {
-                    length = group.Length - lastCreated.Length - saw.Thickness - 1;
-                    width = (lastCreated.Width * newGroups.Count) + (saw.Thickness * (newGroups.Count - 1)) + (1 * (newGroups.Count - 1));
-                    x = lastCreated.X + lastCreated.Length + 1 + saw.Thickness;
-                    y = group.Y;
-                }
-                else
-                {
-                    length = group.Length - lastCreated.Length - saw.Thickness - 1;
-                    width = group.Width;
-                    x = lastCreated.X + lastCreated.Length + 1 + saw.Thickness;
-                    y = group.Y;
-                }
-
-
-                Group rightGroup = new Group
-                {
-                    ID = 0,
-                    X = x,
-                    Y = y,
-                    Length = length,
-                    Width = width,
-                    Rectangle = new Rectangle(0, x, y, length, width, new Label("0")),
-                    Svg = group.Svg
-                };
-
-                return rightGroup;
+                x = group.X;
+                y = group.Y + (maxY.Width * maxRowCount) + ((saw.Thickness + 1) * maxRowCount);
+                length = (maxX.Length * maxColumnCount) + ((saw.Thickness + 1) * maxColumnCount) - saw.Thickness;
+                width = group.Width - ((maxY.Width * maxRowCount) + ((saw.Thickness + 1) * maxRowCount));
             }
-            return null;
-        }
-        internal Group? CalculateGroupUnder(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool checkCount = true, bool horizontal = true, bool rotated = false)
-        {
-            var a = (lastCreated.Width * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count);
 
-            bool run = checkCount ? (lastCreated.Width * newGroups.Count) + ((saw.Thickness + 1) * newGroups.Count) < group.Width : lastCreated.Width < group.Width;
-
-            if (run)
+            Group underGroup = new Group
             {
-                int length = 0;
-                int width = 0;
-                int x = 0;
-                int y = 0;
+                ID = 0,
+                X = x,
+                Y = y,
+                Length = length,
+                Width = width,
+                Rectangle = new Rectangle(0, x, y, length, width, new Label("0")),
+                Svg = group.Svg
+            };
 
-                if (horizontal)
-                {
-                    length = group.Length;
-                    width = group.Width - (lastCreated.Width * newGroups.Count) - (saw.Thickness * newGroups.Count) - (newGroups.Count * 1);
-                    x = group.X;
-                    y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
-                }
-                else
-                {
-                    length = lastCreated.Length;
-                    width = group.Width - (lastCreated.Width * newGroups.Count) - (saw.Thickness * newGroups.Count) - (newGroups.Count * 1);
-                    x = group.X;
-                    y = lastCreated.Y + lastCreated.Width + saw.Thickness + 1;
-                }
-
-                Group underGroup = new Group
-                {
-                    ID = 0,
-                    X = x,
-                    Y = y,
-                    Length = length,
-                    Width = width,
-                    Rectangle = new Rectangle(0, x, y, length, width, new Label("0")),
-                    Svg = group.Svg
-                };
-
-                return underGroup;
-            }
-            return null;
-        }
-
-        internal void CalculateEmptyGroups(List<Svg> svgs)
-        {
-            // y axis calc
-            var xGroup = svgs[0].Groups.Where(c => c.ID == 1).MaxBy(c => c.X);
-            var yGroup = svgs[0].Groups.Where(c => c.ID == 1).MaxBy(c => c.Y);
-
-            ViewBox vb = svgs[0].ViewBox;
-
-            int x = xGroup.X;
-            int y = xGroup.Y;
-            int length = 0;
-            int width = 0;
-
-
-
-        }
-
-        public int CalculateCutLines(Svg svg)
-        {
-            int x = svg.Groups.GroupBy(c => c.X).Count();
-            int y = svg.Groups.GroupBy(c => c.Y).Count();
-
-            return x + y - 2;
+            return underGroup;
         }
 
         public List<Product> CombineProductsWithSameDimentions(List<Product> products)
@@ -575,6 +415,30 @@ namespace CuttingOptimizer.AppLogic.Services
             }
 
             return newProductList;
+        }
+        private void CalculateScale(ref List<Svg> svgs)
+        {
+            double scale = 0;
+            if (svgs.Count > 0)
+            {
+                int biggestLength = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Length);
+                int biggestWidth = svgs.Where(c => c.Groups.Any(c => c.ID == 1)).Max(c => c.ViewBox.Width);
+
+                scale = biggestLength < biggestWidth ? biggestLength / (double)100 : biggestLength / (double)100;
+                bool lengthBiggest = biggestLength < biggestWidth ? true : false;
+
+                foreach (Svg s in svgs)
+                {
+                    s.Scale = biggestLength / s.ViewBox.Length;
+                }
+            }
+        }
+        public int CalculateCutLines(Svg svg)
+        {
+            int x = svg.Groups.GroupBy(c => c.X).Count();
+            int y = svg.Groups.GroupBy(c => c.Y).Count();
+
+            return x + y - 2;
         }
     }
 }

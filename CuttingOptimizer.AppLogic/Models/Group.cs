@@ -28,7 +28,7 @@ namespace CuttingOptimizer.AppLogic.Models
         }
         public override string ToString()
         {
-            return "L: " + Length + " | W: " + Width + " | Area: " + Area + " | ID: " + ID + " | SVG Prio: " + Svg.Priority;
+            return "L: " + Length + " | W: " + Width + " | X: " + X + " | Y: " + Y + " | Area: " + Area + " | ID: " + ID + " | SVG Prio: " + Svg.Priority;
         }
     }
 }
