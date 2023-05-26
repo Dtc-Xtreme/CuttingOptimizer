@@ -1,9 +1,5 @@
 ﻿using CuttingOptimizer.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Metadata.Ecma335;
 
 namespace CuttingOptimizer.AppLogic.Models
 {
@@ -17,57 +13,44 @@ namespace CuttingOptimizer.AppLogic.Models
 
     public class NewRestResult
     {
-        //Max horizontal
-        //Max vertical
-        //QTY horizontal
-        //QTY vertical
-
-        public NewRestResult(Group group, Product product, Saw saw, bool rotated=false)
+        public NewRestResult(Group group, Product product, Saw saw, RestResultType type)
         {
             Group = group;
             Product = product;
             Saw = saw;
-            Rotated = rotated;
+            Type = type;
 
-            HorizontalMaxQuantity = CalculateMaxQuantityHorizontal();
-            HorizontalQuantity = Product.Quantity < HorizontalMaxQuantity ? Product.Quantity : HorizontalMaxQuantity;
-
-            VerticalMaxQuantity = CalculateMaxQuantityVertical();
-            VerticalQuantity = Product.Quantity < VerticalMaxQuantity ? Product.Quantity : VerticalMaxQuantity;
-
-            if (HorizontalAlignment)
+            switch (Type)
             {
-                RestLineHorizontal = Group.Length - ((Product.Length * HorizontalQuantity) - ((HorizontalQuantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
-                RestLineVertical = Group.Width - Product.Width;
-            }
-            else
-            {
-                RestLineHorizontal = Group.Length - Product.Length;
-                RestLineVertical = Group.Width - ((Product.Width * VerticalQuantity) - ((VerticalQuantity - 1) * Saw.Thickness)) - Saw.Thickness - 1;
+                case RestResultType.Horizontal:
+                    CalculateHorizontal();
+                    break;
+                case RestResultType.HorizontalRotated:
+                    CalculateHorizontalRotated();
+                    break;
+                case RestResultType.Vertical:
+                    CalculateVertical();
+                    break;
+                case RestResultType.VerticalRotated:
+                    CalculateVerticalRotated();
+                    break;
             }
         }
+
         public RestResultType Type { get; set; }
-        public int HorizontalMaxQuantity { get; set; }
-        public int HorizontalQuantity { get; set; }
+        public int MaxQuantity { get; set; }
+        public int Quantity { get; set; }
+        public int Columns { get; set; }
+        public int Rows { get; set; }
 
-        public int VerticalMaxQuantity { get; set; }
-        public int VerticalQuantity { get; set; }
-
-        public int RestLineHorizontal { get; set; }
-        public int RestLineVertical { get; set; }
+        public int HorizontalRestLine { get; set; }
+        public int VerticalRestLine { get; set; }
 
         public bool HorizontalAlignment
         {
             get
             {
-                if(Rotated)
-                {
-                    return Product.Length > Product.Width ? false : true;
-                }
-                else
-                {
-                    return Product.Length > Product.Width ? true : false;
-                }
+                return VerticalRestLine > HorizontalRestLine ? true : false;
             }
         }
         public bool Rotated { get; set; }
@@ -75,6 +58,46 @@ namespace CuttingOptimizer.AppLogic.Models
         public Group Group { get; set; }
         public Product Product { get; set; }
         public Saw Saw { get; set; }
+
+        #region Calculations
+        private void CalculateHorizontal()
+        {
+            MaxQuantity = CalculateMaxQuantityHorizontal();
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity;
+            Rows = Quantity > 0 ? 1 : 0;
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
+        }
+        private void CalculateHorizontalRotated()
+        {
+            MaxQuantity = CalculateMaxQuantityVertical();
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity > 0 ? 1 : 0;
+            Rows = Quantity;
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
+            Rotated = true;
+        }
+        private void CalculateVertical()
+        {
+            MaxQuantity = CalculateMaxQuantityVertical();
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity > 0 ? 1 : 0;
+            Rows = Quantity;
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
+        }
+        private void CalculateVerticalRotated()
+        {
+            MaxQuantity = CalculateMaxQuantityHorizontal();
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity;
+            Rows = Quantity > 0 ? 1 : 0;
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
+            Rotated = true;
+        }
 
         private int CalculateMaxQuantityHorizontal()
         {
@@ -133,14 +156,20 @@ namespace CuttingOptimizer.AppLogic.Models
             }
             return amount;
         }
+        #endregion
 
-        public bool BestFitHorizontal(NewRestResult result)
+        #region Sorting
+        public int Area
         {
-            return RestLineHorizontal > result.RestLineHorizontal;
+            get
+            {
+                return Quantity * Product.Area;
+            }
         }
-        public bool BestFitVertical(NewRestResult result)
+        public int OrderOnRest()
         {
-            return RestLineVertical > result.RestLineVertical;
+            return HorizontalRestLine < VerticalRestLine ? HorizontalRestLine : VerticalRestLine;
         }
+        #endregion
     }
 }

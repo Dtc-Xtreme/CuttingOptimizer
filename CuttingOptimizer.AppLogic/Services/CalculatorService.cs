@@ -46,58 +46,20 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
+            List<NewRestResult> originalResults = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
 
-            //List<NewRestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw)
-            //    .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
-            //    //.Where(c => c.HorizontalQuantity != 0 || c.VerticalQuantity != 0)
-            //    .OrderByDescending(c => c.Group.Svg.Priority)
-            //    .ToList();
+            List<NewRestResult> results = originalResults
+                .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
+                .Where(c => c.Quantity > 0)
+                .OrderByDescending(c => c.Group.Svg.Priority)
+                .ThenByDescending(c => c.Area)
+                .ThenBy(c => c.OrderOnRest())
+                .ToList();
+            // wissel area en orderonrest voor beter resultaat
 
-            //NewRestResult? selectedResult = results.FirstOrDefault();
+            NewRestResult? selectedResult = results.FirstOrDefault();
 
-            CalculateGroups(products[0], saw, groups[0], 3, 3, false, true);
-
-            //if(selectedResult.HorizontalAlignment == true)
-            //{
-            //    Group last = selectedResult.Group;
-            //    for (int x = 0; x < selectedResult.Quantity; x++)
-            //    {
-            //        last = CalculateHorizontalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-            //    }
-            //}
-            //else
-            //{
-            //    Group last = selectedResult.Group;
-            //    for (int x = 0; x < selectedResult.Quantity; x++)
-            //    {
-            //        last = CalculateVerticalGroup(selectedResult.Product, saw, last, 1, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-            //    }
-            //}
-
-            //CalculateVerticalGroup(selectedResult.Product, saw, selectedResult.Group, selectedResult.Quantity, true, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-
-
-            //if (selectedResult != null)
-            //{
-            //    // Check and replace if vert or hor is bigger then product.qty
-            //    if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
-            //    int hor = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.MaxHorizontalQuantity : selectedResult.VerticalScaleVsHorizontal;
-            //    int vert = selectedResult.HorizontalUsed < selectedResult.VerticalUsed ? selectedResult.HorizontalScaleVsVertical : selectedResult.MaxVerticalQuantity;
-            //    if (vert > selectedResult.Product.Quantity) vert = selectedResult.Product.Quantity;
-            //    if (hor > selectedResult.Product.Quantity) hor = selectedResult.Product.Quantity;
-
-            //    if (selectedResult.Product.Quantity == 1)
-            //    {
-            //        CalculateGroupsVertical(selectedResult.Product, saw, selectedResult.Group, vert, true, selectedResult.HorizontalAlignment);
-            //    }
-            //    else
-            //    {
-            //        CalculateGroupBlock(selectedResult.Product, saw, selectedResult.Group, hor, vert);
-            //    }
-
-            //    if (selectedResult.Rotated) RotateProduct(selectedResult.Product);
-            //    return;
-            //}
+            CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
 
             //AddSvg(svgs);
 
@@ -181,65 +143,32 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 foreach (Group group in groups)
                 {
-                    //int maxHorizontal = CalculateQuantityHorizontal(saw, group, product);
-                    //int maxVertical = CalculateQuantityVertical(saw, group, product);
-                    //int rest = maxHorizontal > 0 ? product.Quantity % maxHorizontal : 0;
-                    //bool fit = maxHorizontal * maxVertical >= product.Quantity;
+                    // Horizontal
+                    NewRestResult result1 = new NewRestResult(group, product, saw, RestResultType.Horizontal);
+                    results.Add(result1);
 
-                    //int hor;
-                    //int horvsvert;
-                    //if (maxHorizontal == 0)
-                    //{
-                    //    horvsvert = 0;
-                    //    hor = 0;
-                    //}
-                    //else if (product.Quantity >= maxHorizontal)
-                    //{
-                    //    horvsvert = product.Quantity / maxHorizontal;
-                    //    hor = maxHorizontal * horvsvert;
-                    //    if (maxVertical != 0 && horvsvert > maxVertical) horvsvert = maxVertical; //?
-                    //}
-                    //else
-                    //{
-                    //    horvsvert = 1;
-                    //    hor = product.Quantity;
-                    //}
+                    // Vertical
+                    NewRestResult result3 = new NewRestResult(group, product, saw, RestResultType.Vertical);
+                    results.Add(result3);
 
-
-                    //int ver;
-                    //int vertvshor;
-                    //if (maxVertical == 0)
-                    //{
-                    //    vertvshor = 0;
-                    //    ver = 0;
-                    //}
-                    //else if (product.Quantity >= maxVertical)
-                    //{
-                    //    vertvshor = product.Quantity / maxVertical;
-                    //    ver = maxVertical * vertvshor;
-                    //    if (maxHorizontal != 0 && vertvshor > maxHorizontal) vertvshor = maxHorizontal; //?
-                    //}
-                    //else
-                    //{
-                    //    vertvshor = 1;
-                    //    ver = product.Quantity;
-                    //}
-
-                    NewRestResult result = new NewRestResult(group, product, saw);
-                    results.Add(result);
-
+                    // Rotated
                     if (!group.Svg.Plate.Veneer)
                     {
                         RotateProduct(product);
-                        NewRestResult resultRotated = new NewRestResult(group, product, saw, true);
+
+                        // Horizontal
+                        NewRestResult result2 = new NewRestResult(group, product, saw, RestResultType.HorizontalRotated);
+                        results.Add(result2);
+
+                        // Vertical
+                        NewRestResult result4 = new NewRestResult(group, product, saw, RestResultType.VerticalRotated);
+                        results.Add(result4);
+
                         RotateProduct(product);
-                        results.Add(resultRotated);
                     }
-
-
                 }
             }
-                return results;
+            return results;
         }
 
         internal Group? CalculateGroups(Product selectedProduct, Saw saw, Group group, int horizontalQuantity, int verticalQuantity, bool horizontal=true, bool rotated=false)
@@ -318,9 +247,9 @@ namespace CuttingOptimizer.AppLogic.Services
             int y = 0;
             Group? maxX = newGroups.MaxBy(c => c.X);
             Group? maxY = newGroups.MaxBy(c => c.Y);
-            int minColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).First().Count();
-            int maxColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).Last().Count();
-            int maxRowCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).First().Count();
+            int minColumnCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).First().Count();
+            int maxColumnCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).Last().Count();
+            int maxRowCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).First().Count();
 
             if (horizontal)
             {
@@ -368,8 +297,8 @@ namespace CuttingOptimizer.AppLogic.Services
             int y = 0;
             Group? maxX = newGroups.MaxBy(c => c.X);
             Group? maxY = newGroups.MaxBy(c => c.Y);
-            int maxColumnCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).Last().Count();
-            int maxRowCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).First().Count();
+            int maxColumnCount = newGroups.GroupBy(c => c.Y).OrderBy(c => c.Count()).Last().Count();
+            int maxRowCount = newGroups.GroupBy(c => c.X).OrderBy(c => c.Count()).First().Count();
 
             if (horizontal)
             {

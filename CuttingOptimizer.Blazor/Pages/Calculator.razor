@@ -278,7 +278,8 @@
             {
                 CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
             }
-
+            SearchQuotation = 2300001;
+            await Load(); 
             StateHasChanged();
         }
     }
