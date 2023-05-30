@@ -25,6 +25,9 @@ namespace CuttingOptimizer.AppLogic.Models
             Saw = saw;
             Type = type;
 
+            CalculateMaxQuantityHorizontal();
+            CalculateMaxQuantityVertical();
+
             switch (Type)
             {
                 case RestResultType.Horizontal:
@@ -52,6 +55,9 @@ namespace CuttingOptimizer.AppLogic.Models
                     CalculateBlockVerticalRotated();
                     break;
             }
+
+            CalculateHorizontalRestLine();
+            CalculateVerticalRestLine();
         }
 
         public RestResultType Type { get; set; }
@@ -64,6 +70,11 @@ namespace CuttingOptimizer.AppLogic.Models
 
         public int HorizontalRestLine { get; set; }
         public int VerticalRestLine { get; set; }
+        public int RestArea { get
+            {
+                return 0;
+            } 
+        }
 
         public bool HorizontalAlignment
         {
@@ -85,8 +96,6 @@ namespace CuttingOptimizer.AppLogic.Models
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Columns = Quantity;
             Rows = Quantity > 0 ? 1 : 0;
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
         }
         private void CalculateHorizontalRotated()
         {
@@ -94,8 +103,6 @@ namespace CuttingOptimizer.AppLogic.Models
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Columns = Quantity > 0 ? 1 : 0;
             Rows = Quantity;
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
             Rotated = true;
         }
         private void CalculateVertical()
@@ -104,8 +111,6 @@ namespace CuttingOptimizer.AppLogic.Models
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Columns = Quantity > 0 ? 1 : 0;
             Rows = Quantity;
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
         }
         private void CalculateVerticalRotated()
         {
@@ -113,23 +118,15 @@ namespace CuttingOptimizer.AppLogic.Models
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Columns = Quantity;
             Rows = Quantity > 0 ? 1 : 0;
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
             Rotated = true;
         }
 
         private void CalculateBlockHorizontal()
         {
-            MaxHorizontalQuantity = CalculateMaxQuantityHorizontal();
-            MaxVerticalQuantity = CalculateMaxQuantityVertical();
             MaxQuantity = MaxHorizontalQuantity * MaxVerticalQuantity;
-
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Columns = Quantity < MaxHorizontalQuantity ? Quantity : MaxHorizontalQuantity;
             Rows = Quantity != 0 && Columns != 0 ? Quantity / Columns : 0;
-
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns)); // bereken opp ipv lengte of breedte
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows)); // bereken opp ipv lengte of breedte
             Quantity = Columns * Rows;
         }
         private void CalculateBlockHorizontalRotated()
@@ -141,19 +138,25 @@ namespace CuttingOptimizer.AppLogic.Models
             Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
             Rows = Quantity < MaxVerticalQuantity ? Quantity : MaxVerticalQuantity;
             Columns = Quantity != 0 && Rows !=0 ? Quantity / Rows : 0;
-            
-            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns)); // bereken opp ipv lengte of breedte
-            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows)); // bereken opp ipv lengte of breedte
             Quantity = Columns * Rows;
             Rotated = true;
         }
         private void CalculateBlockVertical()
         {
-
+            MaxQuantity = MaxHorizontalQuantity * MaxVerticalQuantity;
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Rows = Quantity < MaxVerticalQuantity ? Quantity : MaxVerticalQuantity;
+            Columns = Quantity != 0 && Rows != 0 ? Quantity / Rows : 0;
+            Quantity = Columns * Rows;
         }
         private void CalculateBlockVerticalRotated()
         {
-
+            MaxQuantity = MaxHorizontalQuantity * MaxVerticalQuantity;
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity < MaxHorizontalQuantity ? Quantity : MaxHorizontalQuantity;
+            Rows = Quantity != 0 && Columns != 0 ? Quantity / Columns : 0;
+            Quantity = Columns * Rows;
+            Rotated = true;
         }
 
         private int CalculateMaxQuantityHorizontal()
@@ -182,7 +185,7 @@ namespace CuttingOptimizer.AppLogic.Models
                     test = false;
                 }
             }
-            return amount;
+            return MaxHorizontalQuantity = amount;
         }
         private int CalculateMaxQuantityVertical()
         {
@@ -211,7 +214,15 @@ namespace CuttingOptimizer.AppLogic.Models
                     test = false;
                 }
             }
-            return amount;
+            return MaxVerticalQuantity = amount;
+        }
+        private int CalculateHorizontalRestLine()
+        {
+            return HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
+        }
+        private int CalculateVerticalRestLine()
+        {
+            return VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
         }
         #endregion
 

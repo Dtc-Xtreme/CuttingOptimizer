@@ -52,11 +52,11 @@ namespace CuttingOptimizer.AppLogic.Services
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
+                //.OrderBy(c => c.Group.Area)
                 .ThenByDescending(c => c.Size())
                 .ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
-            // wissel area en orderonrest voor beter resultaat
 
             NewRestResult? selectedResult = results.FirstOrDefault();
 
@@ -156,12 +156,13 @@ namespace CuttingOptimizer.AppLogic.Services
                     //NewRestResult result3 = new NewRestResult(group, product, saw, RestResultType.Vertical);
                     //results.Add(result3);
 
-                    // Block
-                    //NewRestResult result5 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontal);
-                    //results.Add(result5);
+                    #region Block
+                    NewRestResult result5 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontal);
+                    results.Add(result5);
 
-                    NewRestResult result7 = new NewRestResult(group, product, saw, RestResultType.BlockVertical);
-                    results.Add(result7);
+                    //NewRestResult result7 = new NewRestResult(group, product, saw, RestResultType.BlockVertical);
+                    //results.Add(result7);
+                    #endregion
 
                     // Rotated
                     if (!group.Svg.Plate.Veneer)
@@ -169,15 +170,20 @@ namespace CuttingOptimizer.AppLogic.Services
                         RotateProduct(product);
 
                         // Horizontal
-                        //NewRestResult result6 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontalRotated);
-                        //results.Add(result6);
-
                         //    NewRestResult result2 = new NewRestResult(group, product, saw, RestResultType.HorizontalRotated);
                         //    results.Add(result2);
 
                         //    // Vertical
                         //    NewRestResult result4 = new NewRestResult(group, product, saw, RestResultType.VerticalRotated);
                         //    results.Add(result4);
+
+                        #region Block
+                        //NewRestResult result6 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontalRotated);
+                        //results.Add(result6);
+
+                        //NewRestResult result8 = new NewRestResult(group, product, saw, RestResultType.BlockVerticalRotated);
+                        //results.Add(result8);
+                        #endregion
 
                         RotateProduct(product);
                     }
