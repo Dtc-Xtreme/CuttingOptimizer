@@ -52,6 +52,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
+                .ThenByDescending(c => c.Size())
                 .ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
@@ -59,10 +60,14 @@ namespace CuttingOptimizer.AppLogic.Services
 
             NewRestResult? selectedResult = results.FirstOrDefault();
 
-            CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
-
-            //AddSvg(svgs);
-
+            if (selectedResult != null)
+            {
+                CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+            }
+            else
+            {
+                AddSvg(svgs);
+            }
         }
 
         private List<Svg> Init(List<Plate> plates)
@@ -143,13 +148,20 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 foreach (Group group in groups)
                 {
-                    // Horizontal
-                    NewRestResult result1 = new NewRestResult(group, product, saw, RestResultType.Horizontal);
-                    results.Add(result1);
+                    //// Horizontal
+                    //NewRestResult result1 = new NewRestResult(group, product, saw, RestResultType.Horizontal);
+                    //results.Add(result1);
 
-                    // Vertical
-                    NewRestResult result3 = new NewRestResult(group, product, saw, RestResultType.Vertical);
-                    results.Add(result3);
+                    //// Vertical
+                    //NewRestResult result3 = new NewRestResult(group, product, saw, RestResultType.Vertical);
+                    //results.Add(result3);
+
+                    // Block
+                    //NewRestResult result5 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontal);
+                    //results.Add(result5);
+
+                    NewRestResult result7 = new NewRestResult(group, product, saw, RestResultType.BlockVertical);
+                    results.Add(result7);
 
                     // Rotated
                     if (!group.Svg.Plate.Veneer)
@@ -157,12 +169,15 @@ namespace CuttingOptimizer.AppLogic.Services
                         RotateProduct(product);
 
                         // Horizontal
-                        NewRestResult result2 = new NewRestResult(group, product, saw, RestResultType.HorizontalRotated);
-                        results.Add(result2);
+                        //NewRestResult result6 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontalRotated);
+                        //results.Add(result6);
 
-                        // Vertical
-                        NewRestResult result4 = new NewRestResult(group, product, saw, RestResultType.VerticalRotated);
-                        results.Add(result4);
+                        //    NewRestResult result2 = new NewRestResult(group, product, saw, RestResultType.HorizontalRotated);
+                        //    results.Add(result2);
+
+                        //    // Vertical
+                        //    NewRestResult result4 = new NewRestResult(group, product, saw, RestResultType.VerticalRotated);
+                        //    results.Add(result4);
 
                         RotateProduct(product);
                     }

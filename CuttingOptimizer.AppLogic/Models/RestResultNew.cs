@@ -1,5 +1,6 @@
 ﻿using CuttingOptimizer.Domain.Models;
 using System.Reflection.Metadata.Ecma335;
+using System.Transactions;
 
 namespace CuttingOptimizer.AppLogic.Models
 {
@@ -8,7 +9,11 @@ namespace CuttingOptimizer.AppLogic.Models
         Horizontal,
         HorizontalRotated,
         Vertical,
-        VerticalRotated
+        VerticalRotated,
+        BlockHorizontal,
+        BlockHorizontalRotated,
+        BlockVertical,
+        BlockVerticalRotated,
     }
 
     public class NewRestResult
@@ -34,11 +39,25 @@ namespace CuttingOptimizer.AppLogic.Models
                 case RestResultType.VerticalRotated:
                     CalculateVerticalRotated();
                     break;
+                case RestResultType.BlockHorizontal:
+                    CalculateBlockHorizontal();
+                    break;
+                case RestResultType.BlockHorizontalRotated:
+                    CalculateBlockHorizontalRotated();
+                    break;
+                case RestResultType.BlockVertical:
+                    CalculateBlockVertical();
+                    break;
+                case RestResultType.BlockVerticalRotated:
+                    CalculateBlockVerticalRotated();
+                    break;
             }
         }
 
         public RestResultType Type { get; set; }
         public int MaxQuantity { get; set; }
+        public int MaxHorizontalQuantity { get; set; }
+        public int MaxVerticalQuantity { get; set; }
         public int Quantity { get; set; }
         public int Columns { get; set; }
         public int Rows { get; set; }
@@ -97,6 +116,44 @@ namespace CuttingOptimizer.AppLogic.Models
             HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
             VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
             Rotated = true;
+        }
+
+        private void CalculateBlockHorizontal()
+        {
+            MaxHorizontalQuantity = CalculateMaxQuantityHorizontal();
+            MaxVerticalQuantity = CalculateMaxQuantityVertical();
+            MaxQuantity = MaxHorizontalQuantity * MaxVerticalQuantity;
+
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Columns = Quantity < MaxHorizontalQuantity ? Quantity : MaxHorizontalQuantity;
+            Rows = Quantity != 0 && Columns != 0 ? Quantity / Columns : 0;
+
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns)); // bereken opp ipv lengte of breedte
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows)); // bereken opp ipv lengte of breedte
+            Quantity = Columns * Rows;
+        }
+        private void CalculateBlockHorizontalRotated()
+        {
+            MaxHorizontalQuantity = CalculateMaxQuantityHorizontal();
+            MaxVerticalQuantity = CalculateMaxQuantityVertical();
+            MaxQuantity = MaxHorizontalQuantity * MaxVerticalQuantity;
+
+            Quantity = Product.Quantity < MaxQuantity ? Product.Quantity : MaxQuantity;
+            Rows = Quantity < MaxVerticalQuantity ? Quantity : MaxVerticalQuantity;
+            Columns = Quantity != 0 && Rows !=0 ? Quantity / Rows : 0;
+            
+            HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns)); // bereken opp ipv lengte of breedte
+            VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows)); // bereken opp ipv lengte of breedte
+            Quantity = Columns * Rows;
+            Rotated = true;
+        }
+        private void CalculateBlockVertical()
+        {
+
+        }
+        private void CalculateBlockVerticalRotated()
+        {
+
         }
 
         private int CalculateMaxQuantityHorizontal()
@@ -165,6 +222,10 @@ namespace CuttingOptimizer.AppLogic.Models
             {
                 return Quantity * Product.Area;
             }
+        }
+        public int Size()
+        {
+            return Product.Width > Product.Length ? Product.Width : Product.Length;
         }
         public int OrderOnRest()
         {
