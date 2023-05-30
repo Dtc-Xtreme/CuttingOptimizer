@@ -74,7 +74,7 @@
         Product prod = new Product
             {
                 Quantity = 1,
-                ID = "IX1"
+                ID = "A1"
             };
         if(Products.Count() == 0) Products.Add(prod);
     }
@@ -95,7 +95,7 @@
                     lenght = last.Length;
                     width = last.Width;
                 }
-                int number = Convert.ToInt16(last.ID.Substring(2, 1));
+                int number = Convert.ToInt16(last.ID.Substring(last.ID.Length - 1, 1));
                 name = last.ID.Substring(0, last.ID.Length - 1);
                 name += number + 1;
             }

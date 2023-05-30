@@ -46,19 +46,19 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            List<NewRestResult> originalResults = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
+            List<RestResult> originalResults = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
 
-            List<NewRestResult> results = originalResults
+            List<RestResult> results = originalResults
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
-                //.OrderBy(c => c.Group.Area)
+                .OrderBy(c => c.Group.Area)
                 .ThenByDescending(c => c.Size())
                 .ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
 
-            NewRestResult? selectedResult = results.FirstOrDefault();
+            RestResult? selectedResult = results.FirstOrDefault();
 
             if (selectedResult != null)
             {
@@ -140,9 +140,9 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             products.RemoveAll(c => c.Quantity <= 0);
         }
-        private List<NewRestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, List<Product> products, Saw saw)
+        private List<RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, List<Product> products, Saw saw)
         {
-            List<NewRestResult> results = new List<NewRestResult>();
+            List<RestResult> results = new List<RestResult>();
 
             foreach (Product product in products)
             {
@@ -157,11 +157,11 @@ namespace CuttingOptimizer.AppLogic.Services
                     //results.Add(result3);
 
                     #region Block
-                    NewRestResult result5 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontal);
+                    RestResult result5 = new RestResult(group, product, saw, RestResultType.BlockHorizontal);
                     results.Add(result5);
 
-                    //NewRestResult result7 = new NewRestResult(group, product, saw, RestResultType.BlockVertical);
-                    //results.Add(result7);
+                    RestResult result7 = new RestResult(group, product, saw, RestResultType.BlockVertical);
+                    results.Add(result7);
                     #endregion
 
                     // Rotated
@@ -178,11 +178,11 @@ namespace CuttingOptimizer.AppLogic.Services
                         //    results.Add(result4);
 
                         #region Block
-                        //NewRestResult result6 = new NewRestResult(group, product, saw, RestResultType.BlockHorizontalRotated);
-                        //results.Add(result6);
+                        RestResult result6 = new RestResult(group, product, saw, RestResultType.BlockHorizontalRotated);
+                        results.Add(result6);
 
-                        //NewRestResult result8 = new NewRestResult(group, product, saw, RestResultType.BlockVerticalRotated);
-                        //results.Add(result8);
+                        RestResult result8 = new RestResult(group, product, saw, RestResultType.BlockVerticalRotated);
+                        results.Add(result8);
                         #endregion
 
                         RotateProduct(product);

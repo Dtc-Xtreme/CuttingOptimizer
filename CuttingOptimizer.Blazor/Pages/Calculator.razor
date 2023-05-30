@@ -278,8 +278,8 @@
             {
                 CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
             }
-            SearchQuotation = 2300002;
-            await Load(); 
+            //SearchQuotation = 2300002;
+            //await Load(); 
             StateHasChanged();
         }
     }
@@ -303,18 +303,15 @@
                 break;
         }
     }
+
     private async void Reset()
     {
         Svgs = new();
         CalculatorFormModel = new();
+        await OnAfterRenderAsync(true);
         SaveButtonDisabled = true;
         PrintButtonDisabled = true;
-        if (await localStorage.ContainKeyAsync("userID"))
-        {
-            CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
-        }
         await JSRuntime.InvokeAsync<object>("changeTitle", "Platen Optimalisatie");
-
     }
 
     private async void Save()
