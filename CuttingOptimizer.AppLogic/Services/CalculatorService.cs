@@ -63,8 +63,6 @@ namespace CuttingOptimizer.AppLogic.Services
 
             if (selectedResult != null)
             {
-                var a = selectedResult.RestArea;
-
                 CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
             }
             else

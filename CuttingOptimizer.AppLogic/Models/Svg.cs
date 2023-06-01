@@ -50,6 +50,32 @@ namespace CuttingOptimizer.AppLogic.Models
             Groups.Add(group);
         }
 
+        public int CutLines
+        {
+            get
+            {
+                var x = Groups.Where(c => c.X != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.X).Count();
+                var y = Groups.Where(c => c.Y != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.Y).Count();
+                return x + y; // + 4 voor haaksnijde
+            }
+        }
+        public int CutLineLength {
+            get {
+                var omtrek = (ViewBox.Length * 2) + (ViewBox.Width * 2);
+                var x = Groups.Where(c=>c.X != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.X);
+                var y = Groups.Where(c=>c.Y != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.Y);
+                int total = 0;
+                foreach (var x2 in x)
+                {
+                    total += x2.Sum(c => c.Width);
+                }
+                foreach (var y2 in y)
+                {
+                    total += y2.Sum(c => c.Length);
+                }
+                return total; // + omtrek??
+            } 
+        }
         public double AreaLossPercentage
         {
             get

@@ -77,13 +77,18 @@
     </div>
     <div class="row mb-3">
         <h4 class="col-12 title-border">Parameters</h4>
-        <div class="col-6 pl-3 pr-3 pt-0">
+        <div class="col-4 pl-3 pr-3 pt-0">
             <label class="fw-bold">Verlies:</label>
             <span>@Svg.AreaLossPercentage.ToString("P", CultureInfo.InvariantCulture)</span>
         </div>
-        <div class="col-6 pl-3 pr-3 pt-0">
+        <div class="col-4 pl-3 pr-3 pt-0">
             <label class="fw-bold">Snijlijnen:</label>
-            <span>@CutLines</span>
+@*            <span>@CutLines</span>
+*@            <span>@Svg.CutLines</span>
+        </div>
+        <div class="col-4 pl-3 pr-3 pt-0">
+            <label class="fw-bold">Snijlengte:</label>
+            <span>@Svg.CutLineLength</span>
         </div>
     </div>
 </div>
@@ -98,6 +103,7 @@
     [Parameter]
     public int Count { get; set; }
 
+    // Niet meer nodig als Svg.CutLines goed werkt.
     private int CutLines
     {
         get
