@@ -194,7 +194,6 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return results;
         }
-
         internal Group? CalculateGroups(Product selectedProduct, Saw saw, Group group, int horizontalQuantity, int verticalQuantity, bool horizontal=true, bool rotated=false)
         {
             List<Group> newGroups = new List<Group>();
