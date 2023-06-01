@@ -54,15 +54,17 @@ namespace CuttingOptimizer.AppLogic.Services
                 .OrderByDescending(c => c.Group.Svg.Priority)
                 .OrderBy(c => c.Group.Area)
                 .ThenByDescending(c => c.Size())
-                .ThenBy(c => c.OrderOnRest())
+                .ThenBy(c => c.RestArea)
+                //.ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
 
             RestResult? selectedResult = results.FirstOrDefault();
 
-            var a = selectedResult.RestArea;
             if (selectedResult != null)
             {
+                var a = selectedResult.RestArea;
+
                 CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
             }
             else

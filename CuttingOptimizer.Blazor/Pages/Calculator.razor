@@ -85,7 +85,7 @@
 
     @if (Svgs != null && Svgs.Count() != 0 && Errors.Count() == 0)
     {
-        <div>
+        <div >
             @{
                 var groupSvg = Svgs.GroupBy(c => c.Hash);
             }
@@ -277,9 +277,7 @@
             if (await localStorage.ContainKeyAsync("userID"))
             {
                 CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
-            }
-            //SearchQuotation = 2300002;
-            //await Load(); 
+            } 
             StateHasChanged();
         }
     }
@@ -313,7 +311,6 @@
         PrintButtonDisabled = true;
         await JSRuntime.InvokeAsync<object>("changeTitle", "Platen Optimalisatie");
     }
-
     private async void Save()
     {
         SaveButtonDisabled = true;
@@ -335,39 +332,33 @@
         SaveButtonDisabled = false;
         StateHasChanged();
     }
-
     private async Task Load()
     {
-        if (Blueprint.ID != SearchQuotation)
+        LoadButtonDisabled = true;
+        try
         {
-            LoadButtonDisabled = true;
-            try
+            Blueprint? result = await api.GetBlueprintById(SearchQuotation);
+            if (result != null && result.JsonString != null)
             {
+                Blueprint = result;
+                CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
 
-                Blueprint? result = await api.GetBlueprintById(SearchQuotation);
-                if (result != null && result.JsonString != null)
+                if (calc != null)
                 {
-                    Blueprint = result;
-                    CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
-
-                    if (calc != null)
-                    {
-                        CalculatorFormModel = calc;
-                        HandleSubmit();
-                    }
+                    CalculatorFormModel = calc;
+                    HandleSubmit();
                 }
-                else
-                {
-                    await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
-                }
-
-            }catch(Exception ex)
-            {
-                await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
             }
-            LoadButtonDisabled = false;
-            StateHasChanged();
+            else
+            {
+                await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
+            }
+        }catch(Exception ex)
+        {
+            await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
         }
+        LoadButtonDisabled = false;
+        StateHasChanged();
     }
     private async Task Print()
     {
