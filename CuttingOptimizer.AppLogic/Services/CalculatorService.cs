@@ -60,6 +60,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             RestResult? selectedResult = results.FirstOrDefault();
 
+            var a = selectedResult.RestArea;
             if (selectedResult != null)
             {
                 CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
@@ -332,7 +333,7 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 x = group.X;
                 y = group.Y + (maxY.Width * maxRowCount) + ((saw.Thickness + 1) * maxRowCount);
-                length = (maxX.Length * maxColumnCount) + ((saw.Thickness + 1) * maxColumnCount) - saw.Thickness;
+                length = (maxX.Length * maxColumnCount) + ((saw.Thickness + 1) * (maxColumnCount - 1));
                 width = group.Width - ((maxY.Width * maxRowCount) + ((saw.Thickness + 1) * maxRowCount));
             }
 

@@ -70,8 +70,24 @@ namespace CuttingOptimizer.AppLogic.Models
 
         public int HorizontalRestLine { get; set; }
         public int VerticalRestLine { get; set; }
-        public int RestArea { get
+        public int RestArea { 
+            get
             {
+                int saws = 0;
+                switch (Type)
+                {
+                    case RestResultType.BlockHorizontal:
+                        saws = (Rows - 1) * (Saw.Thickness + 1);
+                        return HorizontalRestLine * (saws + (Product.Width * Rows));
+                    case RestResultType.BlockVertical:
+                        return 0;
+                    case RestResultType.BlockHorizontalRotated:
+                        saws = (Columns - 1) * (Saw.Thickness + 1);
+                        int w = (saws + (Product.Width * Columns));
+                        return VerticalRestLine * w;
+                    case RestResultType.BlockVerticalRotated:
+                        return 0;
+                }
                 return 0;
             } 
         }
@@ -218,11 +234,11 @@ namespace CuttingOptimizer.AppLogic.Models
         }
         private int CalculateHorizontalRestLine()
         {
-            return HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * (Columns - 1)));
+            return HorizontalRestLine = Group.Length - ((Product.Length * Columns) + ((Saw.Thickness + 1) * Columns));
         }
         private int CalculateVerticalRestLine()
         {
-            return VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * (Rows - 1)));
+            return VerticalRestLine = Group.Width - ((Product.Width * Rows) + ((Saw.Thickness + 1) * Rows));
         }
         #endregion
 
