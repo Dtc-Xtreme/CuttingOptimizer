@@ -265,8 +265,8 @@ namespace CuttingOptimizer.AppLogic.Services
             Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, horizontal);
             Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, horizontal);
 
-            if (right != null && right.Length > 0 && right.Width > 0) newGroups.Add(right);
-            if (under != null && under.Length > 0 && under.Width > 0) newGroups.Add(under);
+            if (right != null && right.Length >= 0 && right.Width >= 0) newGroups.Add(right);
+            if (under != null && under.Length >= 0 && under.Width >= 0) newGroups.Add(under);
 
             group.Svg.Groups.AddRange(newGroups);
             group.Svg.Groups.Remove(group);

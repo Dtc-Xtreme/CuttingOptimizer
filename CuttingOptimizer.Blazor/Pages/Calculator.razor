@@ -369,7 +369,7 @@
         }
         else
         {
-            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Blueprint.ID);            
+            await JSRuntime.InvokeAsync<object>("Print", "Plaatoptimalisatie_" + Blueprint.ID + "_" + DateTime.Now.ToShortDateString());
         }
     }
 }
