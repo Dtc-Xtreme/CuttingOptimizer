@@ -54,16 +54,16 @@ namespace CuttingOptimizer.AppLogic.Models
         {
             get
             {
-                var x = Groups.Where(c => c.X != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.X).Count();
-                var y = Groups.Where(c => c.Y != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.Y).Count();
+                var x = Groups.Where(c => c.X != 0).GroupBy(c => c.X).Count();
+                var y = Groups.Where(c => c.Y != 0).GroupBy(c => c.Y).Count();
                 return x + y; // + 4 voor haaksnijde
             }
         }
         public int CutLineLength {
             get {
                 var omtrek = (ViewBox.Length * 2) + (ViewBox.Width * 2);
-                var x = Groups.Where(c=>c.X != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.X);
-                var y = Groups.Where(c=>c.Y != 0 && c.Width > 0 && c.Length > 0).GroupBy(c => c.Y);
+                var x = Groups.Where(c=>c.X != 0).GroupBy(c => c.X);
+                var y = Groups.Where(c=>c.Y != 0).GroupBy(c => c.Y);
                 int total = 0;
                 foreach (var x2 in x)
                 {

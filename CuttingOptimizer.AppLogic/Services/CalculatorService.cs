@@ -46,9 +46,22 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            List<RestResult> originalResults = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
+            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
 
-            List<RestResult> results = originalResults
+            if (svgs.Any(c => c.Plate.Veneer))
+            {
+                results = results
+                .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
+                .Where(c => c.Quantity > 0)
+                .OrderByDescending(c => c.Group.Svg.Priority)
+                .OrderBy(c => c.Group.Area)
+                .ThenBy(c => c.RestArea)
+                .ThenByDescending(c => c.Area)
+                .ToList();
+            }
+            else
+            {
+                results = results
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
@@ -58,11 +71,13 @@ namespace CuttingOptimizer.AppLogic.Services
                 //.ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
+            }
 
             RestResult? selectedResult = results.FirstOrDefault();
 
             if (selectedResult != null)
             {
+                // If veneer does not work properly set the HorizontalAlignment always on true this could make it better.
                 CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
             }
             else
@@ -250,8 +265,8 @@ namespace CuttingOptimizer.AppLogic.Services
             Group? right = CalculateGroupRight(saw, group, lastCreated, newGroups, horizontal);
             Group? under = CalculateGroupUnder(saw, group, lastCreated, newGroups, horizontal);
 
-            if (right != null) newGroups.Add(right);
-            if (under != null) newGroups.Add(under);
+            if (right != null && right.Length > 0 && right.Width > 0) newGroups.Add(right);
+            if (under != null && under.Length > 0 && under.Width > 0) newGroups.Add(under);
 
             group.Svg.Groups.AddRange(newGroups);
             group.Svg.Groups.Remove(group);
