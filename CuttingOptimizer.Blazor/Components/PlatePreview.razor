@@ -51,7 +51,7 @@
                             if (group.Rectangle.Label != null && !group.Rectangle.Label.ToString().Equals("0"))
                             {
                                 <text>
-                                    <text x="@(CalculateLabelX(group))" y="@(CalculateLabelY(group))" font-family="Verdana" font-size="1.5rem" fill="blue" text-anchor="end">@(group.Length >= 65 && group.Width >=65 ? group.Rectangle.Label : group.Rectangle.Label.ToString().Substring(0, 3))</text>
+                                    <text x="@(CalculateLabelX(group))" y="@(CalculateLabelY(group))" font-family="Verdana" font-size="1.5rem" fill="blue" text-anchor="end">@(group.Length >= 40 && group.Width >= 30 ? group.Rectangle.Label : "")</text>
                                 </text>
                             }
                         }

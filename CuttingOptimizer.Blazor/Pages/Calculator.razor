@@ -23,16 +23,17 @@
         </div>
 
         <div class="col-auto mb-4">
-            <div class="row">
+            <EditForm Model=@SearchQuotation OnSubmit="Load" class="row">
                 <div class="col">
-                    <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
+                    <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer"/>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-secondary" disabled=@LoadButtonDisabled @onclick=Load>Ophalen van optimalisatieplan
+                    <button type="button" class="btn btn-secondary" disabled=@LoadButtonDisabled @onclick=Load>
+                        Ophalen van optimalisatieplan
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@(!LoadButtonDisabled)"></span>
                     </button>
                 </div>
-            </div>
+            </EditForm>
         </div>
     </div>
 
@@ -85,6 +86,14 @@
 
     @if (Svgs != null && Svgs.Count() != 0 && Errors.Count() == 0)
     {
+        <div>
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
+        </div>
+
+        <div>
+            <PlatesOverview Svgs=@Svgs />
+        </div>
+
         <div >
             @{
                 var groupSvg = Svgs.GroupBy(c => c.Hash);
@@ -93,14 +102,6 @@
             {
                 <PlateOverview Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
-        </div>
-
-        <div>
-            <PlatesOverview Svgs=@Svgs />
-        </div>
-
-        <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
         </div>
     }
 
