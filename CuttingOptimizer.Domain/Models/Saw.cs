@@ -26,7 +26,7 @@ namespace CuttingOptimizer.Domain.Models
         public string ID { get; set; }
 
         [Required(ErrorMessage = "Zaagsnede is een verplicht veld.")]
-        [Range(1,50, ErrorMessageResourceName = "Zaagsneden moet tussen 1 en 50 zijn.")]
+        [Range(1,50, ErrorMessage = "Zaagsneden moet tussen 1 en 50 zijn.")]
         public int Thickness { get; set; }
 
         public override string ToString()

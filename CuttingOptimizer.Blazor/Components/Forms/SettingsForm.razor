@@ -80,24 +80,39 @@
 
     private async void SearchOrSelect(ChangeEventArgs args)
     {
-         if(SearchSaws != null && SearchSaws.Count > 0)
+        try
         {
-            Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
-            if (sawResult != null)
+            if (SearchSaws != null && SearchSaws.Count > 0)
             {
-                CalculatorFormModel.Saw.ID = sawResult.ID;
-                CalculatorFormModel.Saw.Thickness = sawResult.Thickness;
+                Saw? sawResult = SearchSaws != null ? SearchSaws.FirstOrDefault(c => c.ID.ToLower().Equals(args.Value.ToString().ToLower())) : null;
+                if (sawResult != null)
+                {
+                    CalculatorFormModel.Saw.ID = sawResult.ID;
+                    CalculatorFormModel.Saw.Thickness = sawResult.Thickness;
+                }
             }
+        }
+        catch (Exception ex)
+        {
+
         }
     }
 
     private async Task Save()
     {
+
         SaveButtonDisabled = true;
-        await localStorage.SetItemAsync("currentSaw", CalculatorFormModel.Saw);
-        await localStorage.SetItemAsync("currentVeneer", CalculatorFormModel.Veneer);
-        await localStorage.SetItemAsync("userID", CalculatorFormModel.UserID);
-        await JSRuntime.InvokeAsync<object>("Alert", "Instellingen zijn opgeslagen!");
+        try
+        {
+            await localStorage.SetItemAsync("currentSaw", CalculatorFormModel.Saw);
+            await localStorage.SetItemAsync("currentVeneer", CalculatorFormModel.Veneer);
+            await localStorage.SetItemAsync("userID", CalculatorFormModel.UserID);
+            await JSRuntime.InvokeAsync<object>("Alert", "Instellingen zijn opgeslagen!");
+        }catch(Exception ex)
+        {
+            
+        }
+
         SaveButtonDisabled = false;
     }
 }

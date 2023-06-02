@@ -20,27 +20,27 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
             calculatorService = new CalculatorService();
         }
 
-        [TestCase(1,200,30, 1000, 300, 5)]
-        [TestCase(2, 200, 30, 200, 66, 5)]
-        public void CalculateGroupsVertical(int prodQty, int prodLength, int prodWidth, int groupLength, int groupWidth, int sawThickness)
-        {
-            //Arange
-            Product sp = new Product(prodQty, "X1", prodLength, prodWidth, 0);
-            Saw sw = new Saw("SX1", sawThickness);
-            Svg svg = new Svg();
-            Group sg = new Group { 
-                ID = 0,
-                X = 0,
-                Y = 0,
-                Length = groupLength,
-                Width = groupWidth,
-                Svg = svg
-            };
-            int qty = 2;
+        //[TestCase(1,200,30, 1000, 300, 5)]
+        //[TestCase(2, 200, 30, 200, 66, 5)]
+        //public void CalculateGroupsVertical(int prodQty, int prodLength, int prodWidth, int groupLength, int groupWidth, int sawThickness)
+        //{
+        //    //Arange
+        //    Product sp = new Product(prodQty, "X1", prodLength, prodWidth, 0);
+        //    Saw sw = new Saw("SX1", sawThickness);
+        //    Svg svg = new Svg();
+        //    Group sg = new Group { 
+        //        ID = 0,
+        //        X = 0,
+        //        Y = 0,
+        //        Length = groupLength,
+        //        Width = groupWidth,
+        //        Svg = svg
+        //    };
+        //    int qty = 2;
 
-            //Act
-            Group? result = calculatorService.CalculateGroupsVertical(sp, sw, sg, qty);
-        }
+        //    //Act
+        //    Group? result = calculatorService.CalculateGroupsVertical(sp, sw, sg, qty);
+        //}
 
         [TestCase(200, 50, 200, 50, false)]
         [TestCase(200, 50, 100, 50, true)]

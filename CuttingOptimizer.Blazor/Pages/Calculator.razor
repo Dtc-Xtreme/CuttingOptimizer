@@ -23,16 +23,17 @@
         </div>
 
         <div class="col-auto mb-4">
-            <div class="row">
+            <EditForm Model=@SearchQuotation OnSubmit="Load" class="row">
                 <div class="col">
-                    <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer" />
+                    <input type="number" class="form-control" @bind-value="SearchQuotation" placeholder="plan nummer"/>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-secondary" disabled=@LoadButtonDisabled @onclick=Load>Ophalen van optimalisatieplan
+                    <button type="button" class="btn btn-secondary" disabled=@LoadButtonDisabled @onclick=Load>
+                        Ophalen van optimalisatieplan
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" hidden="@(!LoadButtonDisabled)"></span>
                     </button>
                 </div>
-            </div>
+            </EditForm>
         </div>
     </div>
 
@@ -86,6 +87,14 @@
     @if (Svgs != null && Svgs.Count() != 0 && Errors.Count() == 0)
     {
         <div>
+            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
+        </div>
+
+        <div>
+            <PlatesOverview Svgs=@Svgs />
+        </div>
+
+        <div >
             @{
                 var groupSvg = Svgs.GroupBy(c => c.Hash);
             }
@@ -93,14 +102,6 @@
             {
                 <PlateOverview Svg=group.First() Saw=@CalculatorFormModel.Saw Count=group.Count()/>
             }
-        </div>
-
-        <div>
-            <PlatesOverview Svgs=@Svgs />
-        </div>
-
-        <div>
-            <Overview Svgs=@Svgs Saw=@CalculatorFormModel.Saw BlueprintID=@Blueprint.ID QuotationID=@CalculatorFormModel.QuotationID UserID=@CalculatorFormModel.UserID />
         </div>
     }
 
@@ -277,8 +278,7 @@
             if (await localStorage.ContainKeyAsync("userID"))
             {
                 CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
-            }
-
+            } 
             StateHasChanged();
         }
     }
@@ -302,20 +302,16 @@
                 break;
         }
     }
+
     private async void Reset()
     {
         Svgs = new();
         CalculatorFormModel = new();
+        await OnAfterRenderAsync(true);
         SaveButtonDisabled = true;
         PrintButtonDisabled = true;
-        if (await localStorage.ContainKeyAsync("userID"))
-        {
-            CalculatorFormModel.UserID = await localStorage.GetItemAsync<string>("userID");
-        }
         await JSRuntime.InvokeAsync<object>("changeTitle", "Platen Optimalisatie");
-
     }
-
     private async void Save()
     {
         SaveButtonDisabled = true;
@@ -337,39 +333,33 @@
         SaveButtonDisabled = false;
         StateHasChanged();
     }
-
     private async Task Load()
     {
-        if (Blueprint.ID != SearchQuotation)
+        LoadButtonDisabled = true;
+        try
         {
-            LoadButtonDisabled = true;
-            try
+            Blueprint? result = await api.GetBlueprintById(SearchQuotation);
+            if (result != null && result.JsonString != null)
             {
+                Blueprint = result;
+                CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
 
-                Blueprint? result = await api.GetBlueprintById(SearchQuotation);
-                if (result != null && result.JsonString != null)
+                if (calc != null)
                 {
-                    Blueprint = result;
-                    CalculatorFormModel? calc = JsonSerializer.Deserialize<CalculatorFormModel>(Blueprint.JsonString);
-
-                    if (calc != null)
-                    {
-                        CalculatorFormModel = calc;
-                        HandleSubmit();
-                    }
+                    CalculatorFormModel = calc;
+                    HandleSubmit();
                 }
-                else
-                {
-                    await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
-                }
-
-            }catch(Exception ex)
-            {
-                await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
             }
-            LoadButtonDisabled = false;
-            StateHasChanged();
+            else
+            {
+                await JSRuntime.InvokeAsync<object>("Alert", "Geen optimalistatieplan gevonden voor nummer " + SearchQuotation);
+            }
+        }catch(Exception ex)
+        {
+            await JSRuntime.InvokeAsync<object>("Alert", "Het ophalen van gegeven is mislukt!");
         }
+        LoadButtonDisabled = false;
+        StateHasChanged();
     }
     private async Task Print()
     {
