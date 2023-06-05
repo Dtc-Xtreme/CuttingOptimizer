@@ -53,10 +53,11 @@ namespace CuttingOptimizer.AppLogic.Services
                 results = results
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
-                .OrderByDescending(c => c.Group.Svg.Priority)
-                .OrderBy(c => c.Group.Area)
+                //.OrderByDescending(c => c.Group.Svg.Priority)
+                //.OrderBy(c => c.Group.Area)
+                .OrderByDescending(c => c.Area)
                 .ThenBy(c => c.RestArea)
-                .ThenByDescending(c => c.Area)
+                
                 .ToList();
             }
             else
