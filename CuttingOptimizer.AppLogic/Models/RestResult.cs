@@ -277,5 +277,10 @@ namespace CuttingOptimizer.AppLogic.Models
             return HorizontalRestLine < VerticalRestLine ? HorizontalRestLine : VerticalRestLine;
         }
         #endregion
+
+        public override string ToString()
+        {
+            return "Qty: | " + Quantity + " | Hor: " + HorizontalAlignment + " | GL: " + Group.Length + " | GW: " + Group.Width; 
+        }
     }
 }
