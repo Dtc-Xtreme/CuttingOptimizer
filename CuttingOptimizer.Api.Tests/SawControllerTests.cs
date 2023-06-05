@@ -1,6 +1,8 @@
 ﻿using CuttingOptimizer.Api.Controllers;
+using CuttingOptimizer.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,15 @@ namespace CuttingOptimizer.Api.Tests
 {
     public class SawControllerTests
     {
+        //private Mock<ISawRepository> sawRepository;
         //private SawController controller;
 
+
         //[SetUp]
-        //public void SetUp() {
-        //    this.controller = new SawController();
+        //public void SetUp()
+        //{
+        //    this.sawRepository = new Mock<ISawRepository>();
+        //    this.controller = new SawController(sawRepository.Object);
         //}
 
         //[Test]
@@ -23,7 +29,7 @@ namespace CuttingOptimizer.Api.Tests
         //{
 
         //    //Act
-        //    var result = controller.GetAll().Result as OkObjectResult;
+        //    var result = await controller.GetAll().Result as OkObjectResult;
 
         //    //Assert
         //    Assert.That(result.StatusCode, Is.EqualTo(200));

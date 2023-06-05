@@ -156,7 +156,7 @@ namespace CuttingOptimizer.AppLogic.Services
         {
             products.RemoveAll(c => c.Quantity <= 0);
         }
-        private List<RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, List<Product> products, Saw saw)
+        internal List<RestResult> CalculateDiffrentPossibilitiesForGroups(List<Group> groups, List<Product> products, Saw saw)
         {
             List<RestResult> results = new List<RestResult>();
 
@@ -207,7 +207,7 @@ namespace CuttingOptimizer.AppLogic.Services
             }
             return results;
         }
-        internal Group? CalculateGroups(Product selectedProduct, Saw saw, Group group, int horizontalQuantity, int verticalQuantity, bool horizontal=true, bool rotated=false)
+        internal bool CalculateGroups(Product selectedProduct, Saw saw, Group group, int horizontalQuantity, int verticalQuantity, bool horizontal=true, bool rotated=false)
         {
             List<Group> newGroups = new List<Group>();
             Group lastCreated = new Group();
@@ -273,7 +273,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             if (rotated) RotateProduct(selectedProduct);
 
-            return null;
+            return newGroups != null && newGroups.Count > 0 ? true : false;
         }
         internal Group? CalculateGroupRight(Saw saw, Group group, Group lastCreated, List<Group> newGroups, bool horizontal = true, bool rest=false)
         {
