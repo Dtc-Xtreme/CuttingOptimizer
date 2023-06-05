@@ -12,17 +12,65 @@
             <div>
                 <h5> Materialen:</h5>
                 <ul>
+                    <li>Materiaal, aantal, lengte, breedte en dikte zijn verplicht.</li>
+                    <li>Als de API beschikbaar is kan je materialen opzoeken aan de hand van suggesties die je verkrijgt als je begint te typen in het materiaalveld.</li>
                     <li>Trim zorgt er voor dat je de hoeveel die je ingeeft aftrekt van de lengte en breedte (materiaal haakszagen).</li>
                     <li>Prio 0 word niet meegenomen in de berekening.</li>
                     <li>Volgorde van prio word van klein (het eerste uitgevoerd) naar het grootst (laatste uitgevoerd).</li>
-                    <li>Standaard geeft aan welke plaat gebruikt mag worden als er geen plaats meer is.</li>
+                    <li>Standaard geeft aan welke plaat gebruikt mag worden als er geen plaats meer is. Er moet altijd 1 materiaal als standaard gemarkeerk zijn.</li>
                 </ul>
             </div>
             <div>
-                <h5>Settings:</h5>
+                <h5> Items:</h5>
                 <ul>
-                    <li>Zaagblad instellen</li>
-                    <li>Fineer aan/uitzetten</li>
+                    <li>Item, aantal, lengte en breedte zijn verplicht.</li>
+                    <li>Als je een item toevoegt, kun je het selectievakje voor het kopiëren van gegevens aanvinken om de laatst ingevoerde gegevens te kopiëren.</li>
+                </ul>
+            </div>
+            <div>
+                <h5>Instellingen (wordt lokaal per browser onthouden): </h5>
+                <ul>
+                    <li>Zaagblad en zaagsnede is verplicht. </li>
+                    <li>Als de API beschikbaar is kan je een zaagblad opzoeken aan de hand van suggesties die je verkrijgt als je begint te typen in het zaagbladveld.</li>
+                    <li>Fineer aan/uitzetten.</li>
+                    <li>Initiale: dit gegeven vind je terug in het overzicht en wordt mee opgeslagen.</li>
+                </ul>
+            </div>
+            <div>
+                <h5>Offerte:</h5>
+                <ul>
+                    <li>Hier kan je een offertenummer ingeven die in het overzicht staat en opgeslagen wordt.</li>
+                </ul>
+            </div>
+            <div>
+                <h5>Overzicht:</h5>
+                <ul>
+                    <li>Ooptimalisatieplan nummer: als het opgeslagen geweest is.</li>
+                    <li>Offerte</li>
+                    <li>Initiale</li>
+                    <li>Fineer</li>
+                    <li>Zaagblad gegevens</li>
+                    <li>Benodigde materialen</li>
+                </ul>
+            </div>
+            <div>
+                <h5>Plannen overzicht:</h5>
+                <ul>
+                    <li>Hier vind je een overzicht van alle resulaten visueel.</li>
+                    <li>Materiaal</li>
+                    <li>Aantal: hoeveel er versneden moeten worden van dit plan</li>
+                    <li>Verlies</li>
+                </ul>
+            </div>
+            <div>
+                <h5>Plan overzicht:</h5>
+                <ul>
+                    <li>Materiaal gegevens</li>
+                    <li>Aantal: hoeveel er versneden moeten worden van dit plan.</li>
+                    <li>Items: oplijsting van items die versneden worden op dit plan.</li>
+                    <li>Verlies.</li>
+                    <li>Snijlijnen: min 4 snijlijnen voor het trimmen van de plaat + gezammelijke snijlijnen.</li>
+                    <li>Snijlengte: omtrek + gezammelijke snijlengtes.</li>
                 </ul>
             </div>
         </div>
