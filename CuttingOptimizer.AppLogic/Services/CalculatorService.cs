@@ -46,8 +46,7 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            List<RestResult> originalResults = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
-            List<RestResult> results;
+            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw); ;
 
             RestResult? selectedResult = null;
 
@@ -55,24 +54,25 @@ namespace CuttingOptimizer.AppLogic.Services
 
             if (veneer)
             {
-                results = originalResults
+                results = results
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
-                .ThenByDescending(c => c.Group.Width)
-                //.ThenBy(c => c.HorizontalRestLine)
+                .ThenByDescending(c => c.Product.Width)
+                .ThenByDescending(c => c.Product.Length)
+                .ThenBy(c => c.Group.Area)
+                .ThenBy(c => c.RestArea)
                 .ToList();
             }
             else
             {
-                results = originalResults
+                results = results
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
                 .OrderBy(c => c.Group.Area)
                 .ThenByDescending(c => c.Size())
                 .ThenBy(c => c.RestArea)
-                //.ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
             }
@@ -83,8 +83,9 @@ namespace CuttingOptimizer.AppLogic.Services
             {
                 if (veneer)
                 {
-                    CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, true, selectedResult.Rotated);
-
+                    bool horizontal = true;
+                    if(selectedResult.Product.Length <= selectedResult.Product.Width) horizontal = false;
+                    CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, horizontal, selectedResult.Rotated);
                 }
                 else
                 {
