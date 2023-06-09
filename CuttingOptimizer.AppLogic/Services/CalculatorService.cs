@@ -46,17 +46,22 @@ namespace CuttingOptimizer.AppLogic.Services
                 groups.AddRange(svg.Groups.Where(c => c.ID == 0));
             }
 
-            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw);
+            List<RestResult> results = CalculateDiffrentPossibilitiesForGroups(groups, products, saw); ;
 
-            if (svgs.Any(c => c.Plate.Veneer))
+            RestResult? selectedResult = null;
+
+            bool veneer = svgs.Any(c => c.Plate.Veneer);
+
+            if (veneer)
             {
                 results = results
                 .Where(c => c.Group.Width > 0 && c.Group.Length > 0)
                 .Where(c => c.Quantity > 0)
                 .OrderByDescending(c => c.Group.Svg.Priority)
-                .OrderBy(c => c.Group.Area)
+                .ThenByDescending(c => c.Product.Width)
+                .ThenByDescending(c => c.Product.Length)
+                .ThenBy(c => c.Group.Area)
                 .ThenBy(c => c.RestArea)
-                .ThenByDescending(c => c.Area)
                 .ToList();
             }
             else
@@ -68,17 +73,24 @@ namespace CuttingOptimizer.AppLogic.Services
                 .OrderBy(c => c.Group.Area)
                 .ThenByDescending(c => c.Size())
                 .ThenBy(c => c.RestArea)
-                //.ThenBy(c => c.OrderOnRest())
                 .ThenByDescending(c => c.Area)
                 .ToList();
             }
 
-            RestResult? selectedResult = results.FirstOrDefault();
+            selectedResult = results.FirstOrDefault();
 
             if (selectedResult != null)
             {
-                // If veneer does not work properly set the HorizontalAlignment always on true this could make it better.
-                CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+                if (veneer)
+                {
+                    bool horizontal = true;
+                    if(selectedResult.Product.Length <= selectedResult.Product.Width) horizontal = false;
+                    CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, horizontal, selectedResult.Rotated);
+                }
+                else
+                {
+                    CalculateGroups(selectedResult.Product, saw, selectedResult.Group, selectedResult.Columns, selectedResult.Rows, selectedResult.HorizontalAlignment, selectedResult.Rotated);
+                }
             }
             else
             {
@@ -140,7 +152,7 @@ namespace CuttingOptimizer.AppLogic.Services
 
             if (svgs.Any(c => c.Hash == newSvg.Hash))
             {
-                throw new CreateSvgLoopException("Standaard plaat is te klein om te hergebruiken!");
+                throw new CreateSvgLoopException("Er is al een standaard plaat toegevoegd zonder items!");
             }
 
             svgs.Add(newSvg);
