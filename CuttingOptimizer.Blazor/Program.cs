@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<ICalculatorService, CalculatorService>();
-builder.Services.AddDbContext<CuttingOptimizerDbContext>();
+//builder.Services.AddDbContext<CuttingOptimizerDbContext>();
 //builder.Services.AddScoped<ISawRepository, SawRepository>();
 //builder.Services.AddScoped<IPlateRepository, PlateRepository>();
 builder.Services.AddScoped<IApiService, ApiService>();
