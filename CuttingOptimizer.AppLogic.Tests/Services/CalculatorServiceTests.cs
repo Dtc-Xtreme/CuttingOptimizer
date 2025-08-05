@@ -71,7 +71,7 @@ namespace CuttingOptimizer.AppLogic.Tests.Services
             bool result = calculatorService.CalculateGroups(sp, sw, sg, horQty, vertQty, horizontal, rotated);
 
             //Assert
-            Assert.IsTrue(result);
+            Assert.That(result);
             Assert.That(svg.Groups.Count, Is.EqualTo(resultGroupCount));
         }
 

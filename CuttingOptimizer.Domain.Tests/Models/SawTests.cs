@@ -19,8 +19,8 @@ namespace CuttingOptimizer.Domain.Tests.Models
             Saw saw = new Saw();
 
             //Assert
-            Assert.IsNotNull(saw);
-            Assert.IsNull(saw.ID);
+            Assert.That(saw, Is.Not.Null);
+            Assert.That(saw.ID, Is.Null);
             Assert.That(saw.Thickness, Is.EqualTo(0));
         }
 
@@ -36,7 +36,7 @@ namespace CuttingOptimizer.Domain.Tests.Models
             Saw saw = new Saw(id, thickness);
 
             //Assert
-            Assert.IsNotNull(saw);
+            Assert.That(saw, Is.Not.Null);
             Assert.That(saw.ID, Is.EqualTo(id));
             Assert.That(saw.Thickness, Is.EqualTo(thickness));
             Assert.That( Validation.ValidateModel(saw).Count, Is.EqualTo(errors));

@@ -34,8 +34,8 @@ namespace CuttingOptimizer.Domain.Tests.Models
             plate = new Plate();
 
             //Assert
-            Assert.IsNotNull(plate);
-            Assert.IsNull(plate.ID);
+            Assert.That(plate, Is.Not.Null);
+            Assert.That(plate.ID, Is.Null);
             Assert.That(plate.Length, Is.EqualTo(0));
             Assert.That(plate.Width, Is.EqualTo(0));
             Assert.That(plate.Height, Is.EqualTo(0));
@@ -53,7 +53,7 @@ namespace CuttingOptimizer.Domain.Tests.Models
             Plate newPlate = new Plate(plate);
 
             //Assert
-            Assert.IsNotNull(plate);
+            Assert.That(plate, Is.Not.Null);
             Assert.That(newPlate.ID, Is.EqualTo(plate.ID));
             Assert.That(newPlate.Length, Is.EqualTo(plate.Length));
             Assert.That(newPlate.Width, Is.EqualTo(plate.Width));
